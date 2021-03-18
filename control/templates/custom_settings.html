@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+<div class="col-sm-6">
+<h2 style="text-align: center">Ваши переменные</h2>
+        {% if your_variables %}
+        <table class="table" id='new_variable_table'>
+        <tr>
+        <th>Path</th>
+        <th>Source</th>
+        <th>Interval</th>
+        </tr>
+        {% for data in your_variables %}
+        <tr class="paths_data" id="your_variables">
+            <td>{{ data.path }}</td>
+            <td>{{ data.source }}</td>
+            <td>{{ data.interval_time }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+            <p>У вас нет данных</p>
+        {% endif %}
+        </table>
+ <button  id="add_new_variable">Add a new one</button>
+</div>
+    <div class="col-sm-6">
+    <h2 style="text-align: center">Ваши условия</h2>
+</div>
+    </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="add_new_variable_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавление новой переменной</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+             <form method="POST" id="post_new_var_form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label style="color: black">Source</label>
+                <p><select id="source">
+                    <option value="tem">TemBase</option>
+                    <option>Another</option>
+                </select></p>
+            </div>
+            <div class="form-group">
+                <label style="color: aliceblue">Path</label>
+                <input type="text" class="form-control" id="path" placeholder="insert path">
+            </div>
+            <div class="form-group">
+                <label style="color: aliceblue">Interval Time</label>
+                <input type="number" class="form-control" id="interval_time" placeholder="insert interval time in seconds (INTEGER)">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+    $("#new_variable_table tr").click(function(){
+   $(this).addClass('selected').siblings().removeClass('selected');
+   var value=$(this).find('td:first').html();
+   alert(value);
+});
+
+
+    </script>
+
+    <script>
+            $('#add_new_variable').on('click',function () {
+            $('#add_new_variable_modal').modal('show');
+
+    })
+    </script>
+
+
+        <script>
+    {#Форма с POST#}
+    $(document).on('submit', '#post_new_var_form',function(e){
+        e.preventDefault();
+    $.ajax({
+        type:'POST',
+        url : "{% url 'add_new_variable' %}",
+        data:{
+            source:$('#source').val(),
+            var_path:$('#path').val(),
+            interval_time:$('#interval_time').val(),
+            status:'Online',
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success: function (response) {
+                    $('#post_new_var_form').trigger('reset');
+                    $('.paths_data').remove();
+                    for(i=0;i<response.length;i++) {
+                    $('#new_variable_table').append('<tr class="paths_data"><td>'+response[i]['fields']['path']+'</td><td>'+response[i]['fields']['source']+'</td><td>'+response[i]['fields']['interval_time']+'</td><td>');
+                    $('#add_new_variable_modal').modal('hide');
+                    }
+
+            },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
+});
+</script>
+
+{% endblock javascript %}

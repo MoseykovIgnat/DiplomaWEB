@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="features">
+        <h1>Info in Django Data Base</h1>
+        <div class="info col-sm-6">
+        {% if info %}
+        <table class="table" id='success'>
+        <tr>
+        <th>Path</th>
+        <th>Value</th>
+        <th>Flag</th>
+        <th>Submission date</th>
+        </tr>
+        {% for data in info %}
+        <tr class="Sc_results_data">
+            <td>{{ data.var_title }}</td>
+            <td>{{ data.value }}</td>
+            <td>{{ data.flag }}</td>
+            <td>{{ data.submission_date }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+             </div>
+        {% else %}
+            <p>У вас нет данных</p>
+        {% endif %}
+
+    </div>
+            <button id="getUpdated">Update</button>
+    <div>
+              <table id="servers">
+                          </table>
+{#    Форма для POST#}
+{#    <form method="POST" id="post-form">#}
+{#  {% csrf_token %}#}
+{#  <div class="form-group">#}
+{#    <label>path</label>#}
+{#    <input type="text" class="form-control" id="path" placeholder="Path">#}
+{#  </div>#}
+{#   <div class="form-group">#}
+{#     <label>interval_time</label>#}
+{#     <textarea class="form-control" id="interval_time" placeholder="interval_time"></textarea>#}
+{#   </div>#}
+{#   <button type="submit" class="btn btn-primary">Submit</button>#}
+{#    </form>#}
+
+    </div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+    function Update_info(){
+                $.ajax({
+            type: 'GET',
+            url: "{% url 'display_data' %}",
+            datatype: 'json',
+
+            success: function (response) {
+                    $('.Sc_results_data').remove()
+                    for(i=0;i<response.length;i++) {
+                    $('#success').append('<tr class="Sc_results_data"><td>'+response[i]['pk']+'</td><td>'+response[i]['fields']['value']+'</td><td>'+response[i]['fields']['flag']+'</td><td>'+response[i]['fields']['submission_date']+'</td><td>');
+                    }
+
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+    }
+    $(document).ready(function (){
+        setInterval(Update_info,5000)
+    })
+{##}
+{#        $('button').on('click',function (e) {#}
+{#        e.preventDefault();#}
+{#        // GET AJAX request#}
+{#        $.ajax({#}
+{#            type: 'GET',#}
+{#            url: "{% url 'display_data' %}",#}
+{#            datatype: 'json',#}
+{##}
+{#            success: function (response) {#}
+{#                    for(i=0;i<response.length;i++) {#}
+{#                    $('#success').append('<tr><td>'+response[i]['pk']+'</td><td>'+response[i]['fields']['value']+'</td><td>'+response[i]['fields']['flag']+'</td><td>'+response[i]['fields']['submission_date']+'</td><td>');#}
+{#                    }#}
+{##}
+{#            },#}
+{#            error: function (response) {#}
+{#                console.log(response)#}
+{#            }#}
+{#        })#}
+{#    })#}
+    </script>
+
+{#    <script>#}
+    {#Форма с POST#}
+{#    $(document).on('submit', '#post-form',function(e){#}
+{#        e.preventDefault();#}
+{#    $.ajax({#}
+{#        type:'POST',#}
+{#        url : "{% url 'create_post' %}",#}
+{#        data:{#}
+{#            path:$('#path').val(),#}
+{#            interval_time:$('#interval_time').val(),#}
+{#            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),#}
+{#            action: 'post'#}
+{#        },#}
+{#        success:function(json){#}
+{#            document.getElementById("post-form").reset();#}
+{#            $("body").prepend(#}
+{#                    `#}
+{#                    <p>${json.path}</p>#}
+{#                    `#}
+{#                )#}
+{#            $(".info").prepend('<div class="col-md-6">'+#}
+{#                '<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">' +#}
+{#                    '<div class="col p-4 d-flex flex-column position-static">' +#}
+{#                        '<h3 class="mb-0">' + json.path + '</h3>' +#}
+{#                        '<p class="mb-auto">' + json.interval_time + '</p>' +#}
+{#                    '</div>' +#}
+{#                '</div>' +#}
+{#            '</div>'#}
+{#            )#}
+{#        },#}
+{#        error : function(xhr,errmsg,err) {#}
+{#        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console#}
+{#    }#}
+{#    });#}
+{#});#}
+{#</script>#}
+
+{% endblock javascript %}

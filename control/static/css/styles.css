@@ -1,0 +1,12 @@
+.sidebar-nav {
+    margin-top: 10%;
+    padding: 0;
+    list-style: none;
+}
+
+
+
+.selected {
+    background-color: brown;
+    color: #FFF;
+}

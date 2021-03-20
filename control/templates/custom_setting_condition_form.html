@@ -1,0 +1,6 @@
+<form action="{% url 'condition_create' %}" method="post">
+{% csrf_token %}
+ <div class="new_condition_form">
+ {{ form.as_p }}
+</div>
+</form>

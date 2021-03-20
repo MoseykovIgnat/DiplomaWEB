@@ -1,17 +1,19 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import ScUsers, ScPaths, ScresultsTest
+from .models import ScUsers, ScPaths, ScresultsTest, ScConditions
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.http import JsonResponse
 from django.dispatch import receiver
-from .forms import ScUsersForm
+from .forms import ScUsersForm, ScConditionsForm
 from django.core.serializers import serialize
 from django.contrib.auth import update_session_auth_hash
 from django.views import generic
 from django.http import HttpResponse
 from . import models
 from . import forms
+from django.shortcuts import get_object_or_404, redirect, render
+
 
 # Create your views here.
 @receiver(user_logged_in)
@@ -60,16 +62,45 @@ def add_new_variable(request):
         data = serialize("json", ScPaths.objects.filter(user_id=user_id.id))
         return HttpResponse(data, content_type='application/json')
 
+
+def del_exist_variable(request):
+    var_path = request.GET.get('var_path')
+    user = request.user.username
+    user_id_for_del = ScUsers.objects.get(name=user)
+    ScPaths.objects.filter(path=var_path, user_id=user_id_for_del.id).delete()
+    data = serialize("json", ScPaths.objects.filter(user_id=user_id_for_del.id))
+    return HttpResponse(data, content_type='application/json')
+
+
 def custom_settings(request):
     user = request.user.username
     user_id = ScUsers.objects.get(name=user)
-    print(user_id.id)
     your_variables = ScPaths.objects.filter(user_id=user_id.id)
+    your_conditions = ScConditions.objects.filter(user_id=user_id.id)
     return render(
         request,
         'custom_settings.html',
-        context={'your_variables': your_variables},
+        context={'your_variables': your_variables, 'your_conditions': your_conditions},
     )
+
+
+def condition_create(request):
+    user = request.user
+    username = request.user.username
+    user_id = ScUsers.objects.get(name=username)
+    if request.method == 'POST':
+        form = ScConditionsForm(user_id, request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user_id = user_id.id
+            instance.save()
+            return redirect('custom_settings')
+    else:
+        form = ScConditionsForm(user_id)
+    return render(request,
+                  'custom_setting_condition_form.html',
+                  context={'form': form}
+                  )
 
 
 def create_post(request):
@@ -83,6 +114,10 @@ def create_post(request):
         print(response_data)
         return JsonResponse(response_data)
     return print('dsfg')
+
+
+
+
 
 def post_new(request):
     form = ScUsersForm()

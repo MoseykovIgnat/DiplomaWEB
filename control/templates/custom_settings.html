@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="row">
-<div class="col-sm-6">
-<h2 style="text-align: center">Ваши переменные</h2>
+<div class="row">
+    <div class="col-sm-6">
+    <h2 style="text-align: center">Ваши переменные</h2>
         {% if your_variables %}
-        <table class="table" id='new_variable_table'>
+        <table class="table new_variable_table" >
         <tr>
         <th>Path</th>
         <th>Source</th>
@@ -18,19 +18,103 @@
             <td>{{ data.interval_time }}</td>
         </tr>
         {% endfor %}
+
         {% else %}
             <p>У вас нет данных</p>
         {% endif %}
         </table>
- <button  id="add_new_variable">Add a new one</button>
-</div>
-    <div class="col-sm-6">
-    <h2 style="text-align: center">Ваши условия</h2>
-</div>
+    <div class="row">
+        <button class="col-sm-5" id="add_new_variable">Add a new variable</button>
+        <button disabled class="col-sm-5 del_exist_variable" >Delete selected variable</button>
+    </div>
     </div>
 
-    <!-- Modal -->
+    <div class="col-sm-6">
+    <h2 style="text-align: center">Ваши условия</h2>
+         {% if your_conditions %}
+        <table class="table new_variable_table" >
+        <tr>
+        <th>Name of your condition</th>
+        <th>formula</th>
+        <th>v1</th>
+        <th>v2</th>
+        <th>v3</th>
+        <th>v4</th>
+        <th>v5</th>
+        <th>Condition type</th>
+        <th>Max value</th>
+        <th>Min value</th>
+        <th>Limit value</th>
+
+        </tr>
+        {% for data in your_conditions %}
+        <tr class="paths_data" id="your_variables">
+            <td>{{ data.comment }}</td>
+            <td>{{ data.formula }}</td>
+            <td>{{ data.v1 }}</td>
+            <td>{{ data.v2 }}</td>
+            <td>{{ data.v3 }}</td>
+            <td>{{ data.v4 }}</td>
+            <td>{{ data.v5 }}</td>
+            <td>{{ data.cond_type }}</td>
+            <td>{{ data.max_val }}</td>
+            <td>{{ data.min_val }}</td>
+            <td>{{ data.limit_val }}</td>
+
+        </tr>
+        {% endfor %}
+
+        {% else %}
+            <p>У вас нет данных</p>
+        {% endif %}
+        </table>
+    <div class="row">
+        <button class="col-sm-5" id="add_new_condition">Add a new condition</button>
+        <button disabled class="col-sm-5 del_exist_condition" >Delete selected condition</button>
+    </div>
+
+    </div>
+
+</div>
+
+    <!-- Modal for variable-->
 <div class="modal fade" id="add_new_variable_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавление новой переменной</h5>
+        <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+             <form method="POST" id="post_new_var_form">
+            {% csrf_token %}
+            <div class="form-group">
+                 <label style="color: black">Source</label>
+                <p><select  class="form-select collectes-date-chargement-min text-center" aria-label="Default select example" id="source">
+                    <option selected>Choose source of variable</option>
+                    <option value="tem">TemBase</option>
+                    <option>Another</option>
+                </select></p>
+            </div>
+            <div class="form-group">
+                <label style="color: black">Path</label>
+                <input type="text" class="form-control collectes-date-chargement-min text-center" id="path" placeholder="Insert path">
+            </div>
+            <div class="form-group">
+                <label style="color: black">Interval Time</label>
+                <input type="number" class="form-control collectes-date-chargement-min text-center" id="interval_time" placeholder="Insert interval time in seconds (INTEGER)">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Modal for condition-->
+<div class="modal fade" id="add_new_condition_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -40,54 +124,58 @@
         </button>
       </div>
       <div class="modal-body" >
-             <form method="POST" id="post_new_var_form">
-            {% csrf_token %}
-            <div class="form-group">
-                <label style="color: black">Source</label>
-                <p><select id="source">
-                    <option value="tem">TemBase</option>
-                    <option>Another</option>
-                </select></p>
-            </div>
-            <div class="form-group">
-                <label style="color: aliceblue">Path</label>
-                <input type="text" class="form-control" id="path" placeholder="insert path">
-            </div>
-            <div class="form-group">
-                <label style="color: aliceblue">Interval Time</label>
-                <input type="number" class="form-control" id="interval_time" placeholder="insert interval time in seconds (INTEGER)">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <form action="{% url 'condition_create' %}"
+                method="post">
+                {% csrf_token %}
+                <div class="new_condition_form">
+
+                </div>
+                <button class="button" type="submit">Create!</button>
             </form>
       </div>
     </div>
   </div>
 </div>
-</div>
 {% endblock %}
 
 {% block javascript %}
+    <!-- JavaScript for variables-->
 
-    <script>
-    $("#new_variable_table tr").click(function(){
-   $(this).addClass('selected').siblings().removeClass('selected');
-   var value=$(this).find('td:first').html();
-   alert(value);
+    <!-- Delete exist variable -->
+<script>
+    $(document).on('click',".del_exist_variable",function (e){
+    var value =($(".new_variable_table tr.selected td:first").html());
+    e.preventDefault();
+    $.ajax({
+        type:'GET',
+        url : "{% url 'del_exist_variable' %}",
+        data:{
+            var_path:value,
+        },
+        success: function (response) {
+                    $('.paths_data').remove();
+                    for(i=0;i<response.length;i++) {
+                 $('.new_variable_table').append('<tr class="paths_data"><td>'+response[i]['fields']['path']+'</td><td>'+response[i]['fields']['source']+'</td><td>'+response[i]['fields']['interval_time']+'</td><td>');
+                }
+                  $('.del_exist_variable').prop('disabled',true);
+
+            },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
 });
+</script>
 
+    <!-- Button for open modal window for new variables -->
+<script>
+    $('#add_new_variable').on('click',function () {
+    $('#add_new_variable_modal').modal('show')
+    });
+</script>
 
-    </script>
-
-    <script>
-            $('#add_new_variable').on('click',function () {
-            $('#add_new_variable_modal').modal('show');
-
-    })
-    </script>
-
-
-        <script>
-    {#Форма с POST#}
+    <!-- Form for new variables -->
+<script>
     $(document).on('submit', '#post_new_var_form',function(e){
         e.preventDefault();
     $.ajax({
@@ -105,7 +193,7 @@
                     $('#post_new_var_form').trigger('reset');
                     $('.paths_data').remove();
                     for(i=0;i<response.length;i++) {
-                    $('#new_variable_table').append('<tr class="paths_data"><td>'+response[i]['fields']['path']+'</td><td>'+response[i]['fields']['source']+'</td><td>'+response[i]['fields']['interval_time']+'</td><td>');
+                    $('.new_variable_table').append('<tr class="paths_data"><td>'+response[i]['fields']['path']+'</td><td>'+response[i]['fields']['source']+'</td><td>'+response[i]['fields']['interval_time']+'</td><td>');
                     $('#add_new_variable_modal').modal('hide');
                     }
 
@@ -117,4 +205,88 @@
 });
 </script>
 
+    <!-- Highlighting lines of table -->
+        <script>
+    $(".new_variable_table").on('click','tr',function(){
+        var clickedObj = $(this);
+   clickedObj.addClass('selected').siblings().removeClass('selected');
+   $('.del_exist_variable').prop('disabled',false);
+});
+    </script>
+
+
+    <!-- JavaScript for conditions-->
+
+<script>
+
+    <!-- Validation CondType select -->
+
+$(document).on("change","select#id_cond_type", function(){
+        var val = $(this).val();
+        if (val==1){
+            $('input#id_max_val').prop('disabled',true);
+            $('input#id_min_val').prop('disabled',true);
+            $('input#id_limit_val').prop('disabled',true);
+        }
+        if (val==2 || val==3 || val==4 || val==5){
+            $('input#id_max_val').prop('disabled',true);
+            $('input#id_min_val').prop('disabled',true);
+            $('input#id_limit_val').prop('disabled',false);
+        }
+        if (val==6){
+            $('input#id_max_val').prop('disabled',false);
+            $('input#id_min_val').prop('disabled',false);
+            $('input#id_limit_val').prop('disabled',true);
+        }
+
+
+    });
+    <!-- Button for open modal window for new variables -->
+$(document).on('click',"#add_new_condition",function (e){
+    e.preventDefault();
+    $.ajax({
+        type:'GET',
+        url : "{% url 'condition_create' %}",
+        success: function (response) {
+                $('.new_condition_form').html(response);
+                $('#add_new_condition_modal').modal('show')
+            },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
+});
+
+
+</script>
+
+<script>
+    $(document).on('submit', '#post_new_var_form',function(e){
+        e.preventDefault();
+    $.ajax({
+        type:'POST',
+        url : "{% url 'condition_create' %}",
+        data:{
+            source:$('#source').val(),
+            var_path:$('#path').val(),
+            interval_time:$('#interval_time').val(),
+            status:'Online',
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success: function (response) {
+                    $('#post_new_var_form').trigger('reset');
+                    $('.paths_data').remove();
+                    for(i=0;i<response.length;i++) {
+                    $('.new_variable_table').append('<tr class="paths_data"><td>'+response[i]['fields']['path']+'</td><td>'+response[i]['fields']['source']+'</td><td>'+response[i]['fields']['interval_time']+'</td><td>');
+                    $('#add_new_variable_modal').modal('hide');
+                    }
+
+            },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
+});
+</script>
 {% endblock javascript %}

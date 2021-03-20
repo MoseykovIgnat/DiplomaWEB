@@ -17,7 +17,7 @@ class ScPaths(models.Model):
         db_table = 'sc_paths'
 
     def __str__(self):
-        return "%s the path" % self.path
+        return "%s" % self.path
 
 
 class ScUsers(models.Model):
@@ -45,6 +45,7 @@ class ScConditions(models.Model):
     max_val = models.FloatField(blank=True, null=True)
     min_val = models.FloatField(blank=True, null=True)
     limit_val = models.FloatField(blank=True, null=True)
+    comment = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False

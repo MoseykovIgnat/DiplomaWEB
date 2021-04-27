@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 
-
 urlpatterns = [
     path('', views.index, name='home'),
     path('custom_settings/', views.custom_settings, name='custom_settings'),
@@ -11,4 +10,5 @@ urlpatterns = [
     path('display/data', views.display_data, name='display_data'),
     path('del_exist_variable/', views.del_exist_variable, name='del_exist_variable'),
     path('condition_create', views.condition_create, name='condition_create'),
+    path('del_exist_condition/', views.del_exist_condition, name='del_exist_condition'),
 ]

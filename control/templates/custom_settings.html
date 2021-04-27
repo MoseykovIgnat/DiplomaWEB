@@ -2,19 +2,17 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-3">
     <h2 style="text-align: center">Ваши переменные</h2>
         {% if your_variables %}
         <table class="table new_variable_table" >
         <tr>
-        <th>Path</th>
-        <th>Source</th>
-        <th>Interval</th>
+        <th>Variable</th>
+        <th>Interval time</th>
         </tr>
         {% for data in your_variables %}
         <tr class="paths_data" id="your_variables">
             <td>{{ data.path }}</td>
-            <td>{{ data.source }}</td>
             <td>{{ data.interval_time }}</td>
         </tr>
         {% endfor %}
@@ -29,37 +27,47 @@
     </div>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-8">
     <h2 style="text-align: center">Ваши условия</h2>
          {% if your_conditions %}
-        <table class="table new_variable_table" >
+        <table class="table new_condition_table" >
         <tr>
         <th>Name of your condition</th>
         <th>formula</th>
-        <th>v1</th>
-        <th>v2</th>
-        <th>v3</th>
-        <th>v4</th>
-        <th>v5</th>
         <th>Condition type</th>
+        <th>Display Method</th>
         <th>Max value</th>
         <th>Min value</th>
         <th>Limit value</th>
 
         </tr>
         {% for data in your_conditions %}
-        <tr class="paths_data" id="your_variables">
-            <td>{{ data.comment }}</td>
-            <td>{{ data.formula }}</td>
-            <td>{{ data.v1 }}</td>
-            <td>{{ data.v2 }}</td>
-            <td>{{ data.v3 }}</td>
-            <td>{{ data.v4 }}</td>
-            <td>{{ data.v5 }}</td>
-            <td>{{ data.cond_type }}</td>
-            <td>{{ data.max_val }}</td>
-            <td>{{ data.min_val }}</td>
-            <td>{{ data.limit_val }}</td>
+        <tr class="cond_data" id="your_conditions">
+            <td>{{ data.comment|default_if_none:"&times;" }}</td>
+            <td>{{ data.formula|default_if_none:"&times;" }}</td>
+            {% if data.cond_type == '1' %}
+            <td>Result of formula</td>
+            {% endif %}
+            {% if data.cond_type == '2' %}
+            <td><</td>
+            {% endif %}
+            {% if data.cond_type == '3' %}
+            <td>></td>
+            {% endif %}
+            {% if data.cond_type == '4' %}
+            <td>>=</td>
+            {% endif %}
+            {% if data.cond_type == '5' %}
+            <td><=</td>
+            {% endif %}
+            {% if data.cond_type == '6' %}
+            <td>Is result in interval</td>
+            {% endif %}
+            <td>{{ data.display_method }}</td>
+            <td>{{ data.max_val|default_if_none:"&times;" }}</td>
+            <td>{{ data.min_val|default_if_none:"&times;" }}</td>
+            <td>{{ data.limit_val|default_if_none:"&times;" }}</td>
+
 
         </tr>
         {% endfor %}
@@ -130,7 +138,7 @@
                 <div class="new_condition_form">
 
                 </div>
-                <button class="button" type="submit">Create!</button>
+                <button class="button btn btn-primary" type="submit">Create!</button>
             </form>
       </div>
     </div>
@@ -205,22 +213,22 @@
 });
 </script>
 
-    <!-- Highlighting lines of table -->
-        <script>
+    <!-- Highlighting lines of path table -->
+<script>
     $(".new_variable_table").on('click','tr',function(){
         var clickedObj = $(this);
    clickedObj.addClass('selected').siblings().removeClass('selected');
    $('.del_exist_variable').prop('disabled',false);
 });
-    </script>
+</script>
+
+
 
 
     <!-- JavaScript for conditions-->
 
+     <!-- Validation CondType select -->
 <script>
-
-    <!-- Validation CondType select -->
-
 $(document).on("change","select#id_cond_type", function(){
         var val = $(this).val();
         if (val==1){
@@ -241,7 +249,10 @@ $(document).on("change","select#id_cond_type", function(){
 
 
     });
-    <!-- Button for open modal window for new variables -->
+</script>
+
+    <!-- Button for open modal window for new conditions -->
+<script>
 $(document).on('click',"#add_new_condition",function (e){
     e.preventDefault();
     $.ajax({
@@ -256,37 +267,49 @@ $(document).on('click',"#add_new_condition",function (e){
     }
     });
 });
-
-
 </script>
 
+
+        <!-- Delete exist condition -->
 <script>
-    $(document).on('submit', '#post_new_var_form',function(e){
-        e.preventDefault();
+    $(document).on('click',".del_exist_condition",function (e){
+    var value =($(".new_condition_table tr.selected td:first").html());
+    e.preventDefault();
     $.ajax({
-        type:'POST',
-        url : "{% url 'condition_create' %}",
+        type:'GET',
+        url : "{% url 'del_exist_condition' %}",
         data:{
-            source:$('#source').val(),
-            var_path:$('#path').val(),
-            interval_time:$('#interval_time').val(),
-            status:'Online',
-            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-            action: 'post'
+            cond_name:value,
         },
         success: function (response) {
-                    $('#post_new_var_form').trigger('reset');
-                    $('.paths_data').remove();
-                    for(i=0;i<response.length;i++) {
-                    $('.new_variable_table').append('<tr class="paths_data"><td>'+response[i]['fields']['path']+'</td><td>'+response[i]['fields']['source']+'</td><td>'+response[i]['fields']['interval_time']+'</td><td>');
-                    $('#add_new_variable_modal').modal('hide');
-                    }
-
-            },
+            location.reload();
+        },
+        {#success: function (response) {#}
+        {#    var comment;#}
+        {#            $('.cond_data').remove();#}
+        {#            if (response){#}
+        {#            for(i=0;i<response.length;i++) {#}
+        {#                comment = response[i]['fields']['comment'];#}
+        {#         $('.new_condition_table').append('<tr class="paths_data"><td>'+comment+'</td><td>'+response[i]['fields']['formula']+'</td><td>'+response[i]['fields']['cond_type']+'</td><td>'+'</td><td>'+response[i]['fields']['display_method']+'</td><td>'+'</td><td>'+response[i]['fields']['v1']+'</td><td>'+'</td><td>'+response[i]['fields']['v2']+'</td><td>'+'</td><td>'+response[i]['fields']['v3']+'</td><td>'+'</td><td>'+response[i]['fields']['v4']+'</td><td>'+'</td><td>'+response[i]['fields']['v5']+'</td><td>'+'</td><td>'+response[i]['fields']['max_val']+'</td><td>'+'</td><td>'+response[i]['fields']['min_val']+'</td><td>'+'</td><td>'+response[i]['fields']['limit_val']+'</td><td>');#}
+        {#        }#}
+        {#          $('.del_exist_condition').prop('disabled',true);#}
+        {##}
+        {#    }#}
+        {#            },#}
         error : function(xhr,errmsg,err) {
         console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
     }
     });
 });
 </script>
+
+    <!-- Highlighting lines of cond table -->
+<script>
+    $(".new_condition_table").on('click','tr',function(){
+        var clickedObj = $(this);
+   clickedObj.addClass('selected').siblings().removeClass('selected');
+   $('.del_exist_condition').prop('disabled',false);
+});
+</script>
+
 {% endblock javascript %}

@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import ScUsers, ScPaths, ScresultsTest
+from .models import ScUsers, ScPaths, ScresultsTest, ScConditions
 admin.site.register(ScPaths)
 admin.site.register(ScUsers)
+admin.site.register(ScConditions)
 
 class ScresultsTestAdmin(admin.ModelAdmin):
     list_display = ('var_title', 'value', 'flag', 'submission_date', 'comment')

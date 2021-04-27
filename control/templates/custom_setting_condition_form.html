@@ -1,6 +1,10 @@
 <form action="{% url 'condition_create' %}" method="post">
+{% load crispy_forms_tags %}
+
 {% csrf_token %}
- <div class="new_condition_form">
- {{ form.as_p }}
+ <div class="new_condition_form ">
+{{ form|crispy }}
+     <div class="col-6">
+      </div>
 </div>
 </form>

@@ -6,11 +6,10 @@ from django.contrib.auth.models import User
 
 class ScPaths(models.Model):
     path_id = models.AutoField(primary_key=True)
-    path = models.CharField(max_length=40)
+    path = models.CharField(max_length=100)
     interval_time = models.IntegerField()
     status = models.CharField(max_length=10)
     user = models.ForeignKey('ScUsers', models.DO_NOTHING)
-    source = models.CharField(max_length=10)
 
     class Meta:
         managed = False
@@ -35,17 +34,13 @@ class ScUsers(models.Model):
 class ScConditions(models.Model):
     cond_id = models.AutoField(primary_key=True)
     user = models.ForeignKey('ScUsers', models.DO_NOTHING)
-    v1 = models.CharField(max_length=40)
-    v2 = models.CharField(max_length=40, blank=True, null=True)
-    v3 = models.CharField(max_length=40, blank=True, null=True)
-    v4 = models.CharField(max_length=40, blank=True, null=True)
-    v5 = models.CharField(max_length=40, blank=True, null=True)
-    formula = models.CharField(max_length=100)
+    formula = models.CharField(max_length=250)
     cond_type = models.CharField(max_length=15, blank=True, null=True)
-    max_val = models.FloatField(blank=True, null=True)
-    min_val = models.FloatField(blank=True, null=True)
-    limit_val = models.FloatField(blank=True, null=True)
+    max_val = models.CharField(max_length=250)
+    min_val = models.CharField(max_length=250)
+    limit_val = models.CharField(max_length=250)
     comment = models.CharField(max_length=100, blank=True, null=True)
+    display_method = models.CharField(max_length=10, blank=True, null=False)
 
     class Meta:
         managed = False
@@ -53,7 +48,7 @@ class ScConditions(models.Model):
 
 
 class ScresultsTest(models.Model):
-    var_title = models.CharField(primary_key=True, max_length=40)
+    var_title = models.CharField(primary_key=True, max_length=100)
     value = models.FloatField(blank=True, null=True)
     flag = models.IntegerField(blank=True, null=True)
     submission_date = models.DateTimeField(blank=True, null=True)

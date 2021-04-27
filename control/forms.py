@@ -2,7 +2,7 @@ from django import forms
 from .models import ScUsers, ScPaths, ScresultsTest, ScConditions
 from django.core.exceptions import ValidationError
 
-GEEKS_CHOICES = (
+type_cond_choices = (
     (1, "Result of formula"),
     (2, "<"),
     (3, ">"),
@@ -10,28 +10,32 @@ GEEKS_CHOICES = (
     (5, "<="),
     (6, "Result in interval"),
 )
+display_method_choices = (
+    ('Text', "Text"),
+    ('Image', "Image"),
+    ('Siren', "Siren"),
+    ('Text+Siren', "Text+Siren"),
+)
 
 
 class ScConditionsForm(forms.ModelForm):
     def __init__(self, form_user_id, *args, **kwargs):
         super(ScConditionsForm, self).__init__(*args, **kwargs)
-        self.fields['v1'] = forms.ModelChoiceField(queryset=ScPaths.objects.filter(user_id=form_user_id))
-        self.fields['v2'] = forms.ModelChoiceField(required=False, queryset=ScPaths.objects.filter(user_id=form_user_id))
-        self.fields['v3'] = forms.ModelChoiceField(required=False, queryset=ScPaths.objects.filter(user_id=form_user_id))
-        self.fields['v4'] = forms.ModelChoiceField(required=False, disabled=False, queryset=ScPaths.objects.filter(user_id=form_user_id))
-        self.fields['v5'] = forms.ModelChoiceField(required=False, queryset=ScPaths.objects.filter(user_id=form_user_id))
-        self.fields['cond_type'] = forms.TypedChoiceField(choices=GEEKS_CHOICES, initial='Your formula (Example (v1+v2)/v3)', coerce=str)
-        self.fields['min_val'] = forms.FloatField(disabled=True, required=False)
-        self.fields['max_val'] = forms.FloatField(disabled=True, required=False)
-        self.fields['limit_val'] = forms.FloatField(disabled=True, required=False)
 
-    # def save(self, user_name, *args, **kwargs):
-    #     super(ScConditionsForm, self).save(*args, **kwargs)
-    #     ScConditions.user = user_name
+    comment = forms.CharField(label='Name of your condition')
+    cond_type = forms.TypedChoiceField(choices=type_cond_choices, coerce=str, label='Conditional type')
+    min_val = forms.CharField(required=False, label='Minimum value',
+                              widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
+    max_val = forms.CharField(required=False, label='Maximum value',
+                              widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
+    limit_val = forms.CharField(required=False, label='Limit value',
+                                widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
+    display_method = forms.TypedChoiceField(choices=display_method_choices, label='Display method', coerce=str)
+    formula = forms.CharField(label='Formula', widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
 
     class Meta:
         model = ScConditions
-        fields = ['comment', 'v1', 'v2', 'v3', 'v4', 'v5', 'formula', 'cond_type', 'max_val', 'min_val', 'limit_val']
+        fields = ['comment', 'formula', 'cond_type', 'min_val', 'max_val', 'limit_val', 'display_method']
 
 
 class ScUsersForm(forms.ModelForm):

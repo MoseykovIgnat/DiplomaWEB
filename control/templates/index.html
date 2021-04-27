@@ -1,36 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="features">
-        <h1>Info in Django Data Base</h1>
+    <div class="row">
         <div class="info col-sm-6">
+        <h1>Info in Django Data Base</h1>
         {% if info %}
         <table class="table" id='success'>
         <tr>
         <th>Path</th>
-        <th>Value</th>
-        <th>Flag</th>
+        <th>Result</th>
         <th>Submission date</th>
         </tr>
-        {% for data in info %}
-        <tr class="Sc_results_data">
-            <td>{{ data.var_title }}</td>
-            <td>{{ data.value }}</td>
-            <td>{{ data.flag }}</td>
-            <td>{{ data.submission_date }}</td>
-        </tr>
-        {% endfor %}
+        <tr class="Sc_results_data"></tr>
         </table>
-             </div>
+
         {% else %}
             <p>У вас нет данных</p>
         {% endif %}
+        </div>
+
+        <div class="info col-sm-5">
+            <h1>Information from your conditions</h1>
+            <h2>Text display</h2>
+            <div class="col-sm-6">
+            <table class="tablышe">
+                <tr>
+                    <th >Info</th>
+                    <th>Name of condition</th>
+                    <th>Result</th>
+                    <th>Siren on?</th>
+                </tr>
+                {% for data in condition_result %}
+                <tr class="Cond_res">
+                     <td title="Info about condition:&#013;{% if data.result_formula %}Result: {{ data.result_formula }}&#013;{% endif %}Value Formula: {{ data.val_formula }}&#013;Text Formula: {{ data.text_formula }}&#013;{% if data.cond_type == '1' %}Condition type: Text only! &#013; {% endif %}{% if data.empty_values %}This sample(s) is(are) empty: {{ data.empty_values }}&#013;{% endif %}"
+                        style="text-align: center">&times;</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.result }}</td>
+                    <td>{% if data.display_method == 'Text+Siren' %} Yes! {% else %} No! {% endif %}</td>
+                </tr>
+        {% endfor %}
+            </table>
+            </div>
+
+
+        </div>
 
     </div>
-            <button id="getUpdated">Update</button>
+
     <div>
-              <table id="servers">
-                          </table>
+
 {#    Форма для POST#}
 {#    <form method="POST" id="post-form">#}
 {#  {% csrf_token %}#}
@@ -55,6 +73,11 @@
 {% endblock %}
 
 {% block javascript %}
+    <script>
+    window.onload = function () {
+      Update_info();
+    };
+    </script>
 
     <script>
     function Update_info(){
@@ -64,10 +87,23 @@
             datatype: 'json',
 
             success: function (response) {
+
+                    var stamp_date;
+                    var submission_date;
                     $('.Sc_results_data').remove()
-                    for(i=0;i<response.length;i++) {
-                    $('#success').append('<tr class="Sc_results_data"><td>'+response[i]['pk']+'</td><td>'+response[i]['fields']['value']+'</td><td>'+response[i]['fields']['flag']+'</td><td>'+response[i]['fields']['submission_date']+'</td><td>');
+                for (i = 0; i < response.length; i++) {
+                    if ((response[i]['fields']['stamp_date'])) {
+                        stamp_date = new Date((response[i]['fields']['stamp_date']) / 1000);
+                        stamp_date.toISOString();
+                        stamp_date = moment(stamp_date.toISOString()).format('DD-MM-YYYY, h:mm:ss');
+                    } else {
+                        stamp_date = 'NULL';
                     }
+                    submission_date = new Date(response[i]['fields']['submission_date']);
+                    submission_date.toISOString();
+                    submission_date = moment(submission_date.toISOString()).format('DD-MM-YYYY, h:mm:ss');
+                    $('#success').append('<tr class="Sc_results_data"><td>' + response[i]['pk'] + '</td><td>' + response[i]['fields']['value'] + '</td><td>' + submission_date + '</td><td>');
+                }
 
             },
             error: function (response) {

@@ -1,29 +1,98 @@
 {% extends "base.html" %}
-
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/d3-context-menu.css' %}">
 {% block content %}
-    <div class="row">
-        <div class="info col-sm-6">
-        <h1>Info in Django Data Base</h1>
-        {% if info %}
-        <table class="table" id='success'>
-        <tr>
-        <th>Path</th>
-        <th>Result</th>
-        <th>Submission date</th>
-        </tr>
-        <tr class="Sc_results_data"></tr>
-        </table>
+<div class="row main-info">
+        {% load static %}
+    <div class="col-sm-6">
+        <div style="">
+            <div >
 
-        {% else %}
-            <p>У вас нет данных</p>
-        {% endif %}
+                <h1>Information on scheme</h1>
+              <svg width="598" height="299" style="background-image: url({% static 'img/img.png' %}); border: 4px double darkblue;">
+              <defs>
+                <marker id="end-arrow" viewBox="0 -5 10 10" refX="32" markerWidth="3.5" markerHeight="3.5" orient="auto">
+                  <path d="M0,-5L10,0L0,5"></path>
+                </marker>
+                <marker id="mark-end-arrow" viewBox="0 -5 10 10" refX="7" markerWidth="3.5" markerHeight="3.5" orient="auto">
+                  <path d="M0,-5L10,0L0,5"></path>
+                </marker>
+              </defs>
+              <g class="graph">
+                <g></g>
+                <g>
+                  <g class="conceptG" transform="translate(374,53)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(374,78)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(374,104)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(374,133)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(374,161)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(573,108)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(573,94)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(573,80)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(573,66)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(368,185)">
+                    <circle r="5" data-condname="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            </div>
         </div>
+    </div>
 
         <div class="info col-sm-5">
             <h1>Information from your conditions</h1>
             <h2>Text display</h2>
             <div class="col-sm-6">
-            <table class="tablышe">
+            <table class="table" id="condTable">
                 <tr>
                     <th >Info</th>
                     <th>Name of condition</th>
@@ -32,7 +101,7 @@
                 </tr>
                 {% for data in condition_result %}
                 <tr class="Cond_res">
-                     <td title="Info about condition:&#013;{% if data.result_formula %}Result: {{ data.result_formula }}&#013;{% endif %}Value Formula: {{ data.val_formula }}&#013;Text Formula: {{ data.text_formula }}&#013;{% if data.cond_type == '1' %}Condition type: Text only! &#013; {% endif %}{% if data.empty_values %}This sample(s) is(are) empty: {{ data.empty_values }}&#013;{% endif %}"
+                     <td title="Info about condition:&#013;{% if data.result_formula %}Result: {{ data.result_formula }}&#013;{% endif %}Value Formula: {{ data.val_formula }}&#013;Text Formula: {{ data.text_formula }}&#013;{% if data.empty_values %}This sample(s) is(are) empty: {{ data.empty_values }}&#013;{% endif %}"
                         style="text-align: center">&times;</td>
                     <td>{{ data.name }}</td>
                     <td>{{ data.result }}</td>
@@ -41,13 +110,28 @@
         {% endfor %}
             </table>
             </div>
-
-
         </div>
 
-    </div>
 
+        <div class="info col-sm-6">
+                <h1>Info in Django Data Base</h1>
+                {% if info %}
+                <table class="table" id='varTable'>
+                <tr>
+                    <th>Path</th>
+                    <th>Result</th>
+                    <th>Submission date</th>
+                </tr>
+                <tr class="Sc_results_data"></tr>
+                </table>
+
+                {% else %}
+                    <p>У вас нет данных</p>
+                {% endif %}
+        </div>
+    </div>
     <div>
+
 
 {#    Форма для POST#}
 {#    <form method="POST" id="post-form">#}
@@ -73,17 +157,70 @@
 {% endblock %}
 
 {% block javascript %}
+{#    Contex menu for circles#}
+    {% load static %}
+    <script src="{% static 'js/d3-context-menu.js' %}"></script>
+    <script>
+
+		// My menu
+		var menu = [
+		{
+            title: 'Change Condition',
+            children: function() {
+                var conditions = ['red', 'blue', 'green', 'yellow', 'orange', 'black', 'white'];
+                return conditions.map(function(condition) {
+                    return {
+                        title: condition,
+                        action: function (data, event) {
+                            console.log('condition changed from ' + data + ' to ' + condition);
+                            d3.select(this)
+                                .datum(condition)
+                                .attr('data-condname', condition);
+                        },
+
+                    }
+                })
+            }
+
+        },
+
+
+		]
+		var selection = d3.selectAll('circle')
+
+		selection.on('contextmenu', d3.contextMenu(menu, {
+				onOpen: function (data, event) {
+					var index = selection.nodes().indexOf(this);
+					console.log('Menu Opened!', 'element:', this, 'data:', data, 'event:', event, 'index:', index);
+				},
+				onClose: function (data, event) {
+					var index = selection.nodes().indexOf(this);
+					console.log('Menu Closed!', 'element:', this, 'data:', data, 'event:', event, 'index:', index);
+				},
+				position: function (data, event) {
+					var bounds = this.getBoundingClientRect();
+					if (data === 'green') {
+						// first circle will have the menu aligned top-right
+						return {
+							left: bounds.left + bounds.width + 10,
+							top: bounds.top
+						}
+					}
+				}
+			})); // attach menu to element
+	</script>
+
     <script>
     window.onload = function () {
-      Update_info();
+      update_info_about_variables();
     };
     </script>
 
     <script>
-    function Update_info(){
+    function update_info_about_variables(){
                 $.ajax({
             type: 'GET',
-            url: "{% url 'display_data' %}",
+            url: "{% url 'update_info_about_variables' %}",
             datatype: 'json',
 
             success: function (response) {
@@ -102,7 +239,7 @@
                     submission_date = new Date(response[i]['fields']['submission_date']);
                     submission_date.toISOString();
                     submission_date = moment(submission_date.toISOString()).format('DD-MM-YYYY, h:mm:ss');
-                    $('#success').append('<tr class="Sc_results_data"><td>' + response[i]['pk'] + '</td><td>' + response[i]['fields']['value'] + '</td><td>' + submission_date + '</td><td>');
+                    $('#varTable').append('<tr class="Sc_results_data"><td>' + response[i]['pk'] + '</td><td>' + response[i]['fields']['value'] + '</td><td>' + submission_date + '</td>');
                 }
 
             },
@@ -111,8 +248,73 @@
             }
         });
     }
+    function update_info_about_conditions(){
+                $.ajax({
+            type: 'GET',
+            url: "{% url 'update_info_about_conditions' %}",
+            datatype: 'json',
+
+            success: function (response) {
+
+                    $('.Cond_res').remove()
+                for (i = 0; i < response.length; i++) {
+                    var condTitle = 'Info about condition:&#013' + (response[i]['result_formula'] ? 'Result: ' + response[i]['result_formula']+'&#013' : '') + (response[i]['val_formula'] ? 'Value Formula: ' + response[i]['val_formula']+'&#013' : '')+ (response[i]['text_formula'] ? 'Text Formula: ' + response[i]['text_formula']+'&#013' : '')+ (response[i]['empty_values'] ? 'This sample(s) is(are) empty: ' + response[i]['empty_values']+'&#013' : '');
+                    var condInfo = '<td title="'+ condTitle +'">&times;</td>';
+                    var sirenOption = (response[i]['display_method'] === 'Text+Siren' ? 'Yes!':'No!');
+                    $('#condTable').append('<tr class="Cond_res">'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + response[i]['result'] + '</td>+<td>' + sirenOption + '</td>');
+
+
+                }
+                {#<tr class="Cond_res">#}
+                {#     <td title="Info about condition:&#013;{% if data.result_formula %}Result: {{ data.result_formula }}&#013;{% endif %}Value Formula: {{ data.val_formula }}&#013;Text Formula: {{ data.text_formula }}&#013;{% if data.cond_type == '1' %}Condition type: Text only! &#013; {% endif %}{% if data.empty_values %}This sample(s) is(are) empty: {{ data.empty_values }}&#013;{% endif %}"#}
+                {#        style="text-align: center">&times;</td>#}
+                {#    <td>{{ data.name }}</td>#}
+                {#    <td>{{ data.result }}</td>#}
+                {#    <td>{% if data.display_method == 'Text+Siren' %} Yes! {% else %} No! {% endif %}</td>#}
+                {#</tr>#}
+
+
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+    }
+    {#function update_leds(){#}
+    {#            $.ajax({#}
+    {#        type: 'GET',#}
+    {#        url: "{% url 'update_leds' %}",#}
+    {#        datatype: 'json',#}
+    {##}
+            {#success: function (response) {#}
+            {##}
+            {#        $('.Cond_res').remove()#}
+            {#    for (i = 0; i < response.length; i++) {#}
+            {#        var condTitle = 'Info about condition:&#013' + (response[i]['result_formula'] ? 'Result: ' + response[i]['result_formula']+'&#013' : '') + (response[i]['val_formula'] ? 'Value Formula: ' + response[i]['val_formula']+'&#013' : '')+ (response[i]['text_formula'] ? 'Text Formula: ' + response[i]['text_formula']+'&#013' : '')+ (response[i]['empty_values'] ? 'This sample(s) is(are) empty: ' + response[i]['empty_values']+'&#013' : '');#}
+            {#        var condInfo = '<td title="'+ condTitle +'">&times;</td>';#}
+            {#        var sirenOption = (response[i]['display_method'] ? 'Yes!':'No!');#}
+            {#        $('#condTable').append('<tr class="Cond_res">'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + response[i]['result'] + '</td>+<td>' + sirenOption + '</td>');#}
+            {##}
+            {##}
+            {#    }#}
+                {#<tr class="Cond_res">#}
+                {#     <td title="Info about condition:&#013;{% if data.result_formula %}Result: {{ data.result_formula }}&#013;{% endif %}Value Formula: {{ data.val_formula }}&#013;Text Formula: {{ data.text_formula }}&#013;{% if data.cond_type == '1' %}Condition type: Text only! &#013; {% endif %}{% if data.empty_values %}This sample(s) is(are) empty: {{ data.empty_values }}&#013;{% endif %}"#}
+                {#        style="text-align: center">&times;</td>#}
+                {#    <td>{{ data.name }}</td>#}
+                {#    <td>{{ data.result }}</td>#}
+                {#    <td>{% if data.display_method == 'Text+Siren' %} Yes! {% else %} No! {% endif %}</td>#}
+                {#</tr>#}
+            {##}
+            {##}
+            {#},#}
+    {#        error: function (response) {#}
+    {#            console.log(response)#}
+    {#        }#}
+    {#    });#}
+    {#}#}
     $(document).ready(function (){
-        setInterval(Update_info,5000)
+        setInterval(update_info_about_variables,5000);
+        setInterval(update_info_about_conditions,5000);
     })
 {##}
 {#        $('button').on('click',function (e) {#}
@@ -172,5 +374,9 @@
 {#    });#}
 {#});#}
 {#</script>#}
+
+<script>
+
+</script>
 
 {% endblock javascript %}

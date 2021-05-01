@@ -15,6 +15,7 @@ from . import forms
 from django.forms.models import model_to_dict
 from django.shortcuts import get_object_or_404, redirect, render
 import re
+import json
 
 
 # Create your views here.
@@ -52,123 +53,155 @@ def get_vars_formula(formula):
     return vars_formula
 
 
+def calculate_conditions(request):
+    global bool_result
+    '''Время волшебства'''
+    user = request.user.username
+    user_id = ScUsers.objects.get(name=user)
+    data = ScConditions.objects.filter(user_id=user_id)
+    condition_result = list()
+    for condition in data:
+        formula = condition.formula
+        vars_formula = get_vars_formula(formula)
+        empty_values = list()
+        for var_formula in vars_formula:
+            formula = formula.replace(str(var_formula),
+                                      str(ScresultsTest.objects.filter(var_title=var_formula)[0].value))
+            if str(ScresultsTest.objects.filter(var_title=var_formula)[0].comment) == 'Empty':
+                empty_values.append(str(ScresultsTest.objects.filter(var_title=var_formula)[0].var_title))
+        digit_formula = formula
+        if empty_values:
+            cond_data = {"name": condition.comment, "result": '0', "display_method": condition.display_method,
+                         "val_formula": formula, "text_formula": condition.formula,
+                         "cond_type": condition.cond_type, 'empty_values': empty_values}
+            condition_result.append(cond_data)
+        else:
+            result = eval(digit_formula)
+            if condition.cond_type == '1':
+                cond_data = {"name": condition.comment, "result": result, "display_method": condition.display_method,
+                             "val_formula": formula, "text_formula": condition.formula,
+                             "cond_type": condition.cond_type}
+                condition_result.append(cond_data)
+            if condition.cond_type == '6':
+                if not condition.max_val.isdigit():
+                    formula = condition.max_val
+                    vars_max_val = get_vars_formula(formula)
+                    for var_max_val in vars_max_val:
+                        formula = formula.replace(str(var_max_val),
+                                                  str(ScresultsTest.objects.filter(var_title=var_max_val)[0].value))
+                    digit_max_val = formula
+                    max_val = eval(formula)
+                else:
+                    max_val = float(condition.max_val)
+                    digit_max_val = max_val
+                if not condition.min_val.isdigit():
+                    formula = condition.min_val
+                    vars_min_val = get_vars_formula(formula)
+                    for var_min_val in vars_min_val:
+                        formula = formula.replace(str(var_min_val),
+                                                  str(ScresultsTest.objects.filter(var_title=var_min_val)[0].value))
+                    digit_min_val = formula
+                    min_val = eval(formula)
+                else:
+                    min_val = float(condition.min_val)
+                    digit_min_val = min_val
+                val_formula = digit_formula + ' in ' + '[' + str(digit_min_val) + ' ; ' + str(
+                    digit_max_val) + '] ?'
+                text_formula = condition.formula + ' in ' + '[' + str(condition.min_val) + ' ; ' + str(
+                    condition.max_val) + '] ?'
+                result_formula = str(eval(str(digit_formula))) + ' in ' + '[' + str(
+                    eval(str(digit_min_val))) + ' ; ' + str(eval(str(digit_max_val))) + '] ?'
+                bool_result = bool(max_val >= result >= min_val)
+                cond_data = {"name": condition.comment, "result": bool_result,
+                             "display_method": condition.display_method,
+                             "val_formula": val_formula, "text_formula": text_formula,
+                             "cond_type": condition.cond_type,
+                             "value_result": result, "result_formula": result_formula}
+                condition_result.append(cond_data)
+            if condition.cond_type == '2' or condition.cond_type == '3' or condition.cond_type == '4' or condition.cond_type == '5':
+                if not condition.limit_val.isdigit():
+                    formula = condition.limit_val
+                    vars_limit_val = get_vars_formula(formula)
+                    for var_limit_val in vars_limit_val:
+                        formula = formula.replace(str(var_limit_val),
+                                                  str(ScresultsTest.objects.filter(var_title=var_limit_val)[0].value))
+                    digit_limit_val = formula
+                    limit_val = eval(formula)
+                else:
+                    limit_val = float(condition.limit_val)
+                    digit_limit_val = limit_val
+                if condition.cond_type == '2':
+                    val_formula = digit_formula + '<' + str(digit_limit_val)
+                    text_formula = condition.formula + '<' + condition.limit_val
+                    result_formula = str(eval(str(digit_formula))) + '<' + str(eval(str(digit_limit_val)))
+                    bool_result = bool(result < limit_val)
+                if condition.cond_type == '3':
+                    val_formula = digit_formula + '>' + str(digit_limit_val)
+                    text_formula = condition.formula + '>' + condition.limit_val
+                    result_formula = str(eval(str(digit_formula))) + '>' + str(eval(str(digit_limit_val)))
+                    bool_result = bool(result > limit_val)
+                if condition.cond_type == '4':
+                    val_formula = digit_formula + '>=' + str(digit_limit_val)
+                    text_formula = condition.formula + '>=' + condition.limit_val
+                    result_formula = str(eval(str(digit_formula))) + '>=' + str(eval(str(digit_limit_val)))
+                    bool_result = bool(result >= limit_val)
+                if condition.cond_type == '5':
+                    val_formula = digit_formula + '<=' + str(digit_limit_val)
+                    text_formula = condition.formula + '<=' + condition.limit_val
+                    result_formula = str(eval(str(digit_formula))) + '<=' + str(eval(str(digit_limit_val)))
+                    bool_result = bool(result <= limit_val)
+                cond_data = {"name": condition.comment, "result": bool_result,
+                             "display_method": condition.display_method,
+                             "val_formula": val_formula, "text_formula": text_formula,
+                             "cond_type": condition.cond_type,
+                             "value_result": result, "result_formula": result_formula}
+                condition_result.append(cond_data)
+            if condition.display_method == 'Text+Siren':
+                if not bool_result:
+                    print("!!!!!!СИРЕНА!!!!!!!")
+    return condition_result
+
+
 def index(request):
+
     global bool_result
     if not request.user.is_authenticated:
         return render(request, 'index_not_login.html')
     else:
+        condition_result = calculate_conditions(request)
         info = ScresultsTest.objects.all()
-
-        '''Время волшебства'''
-        user = request.user.username
-        user_id = ScUsers.objects.get(name=user)
-        data = ScConditions.objects.filter(user_id=user_id)
-        condition_result = list()
-        for condition in data:
-            formula = condition.formula
-            vars_formula = get_vars_formula(formula)
-            empty_values = list()
-            for var_formula in vars_formula:
-                formula = formula.replace(str(var_formula),
-                                          str(ScresultsTest.objects.filter(var_title=var_formula)[0].value))
-                if str(ScresultsTest.objects.filter(var_title=var_formula)[0].comment) == 'Empty':
-                    empty_values.append(str(ScresultsTest.objects.filter(var_title=var_formula)[0].var_title))
-            digit_formula = formula
-            if empty_values:
-                cond_data = {"name": condition.comment, "result": '0', "display_method": condition.display_method,
-                             "val_formula": formula, "text_formula": condition.formula,
-                             "cond_type": condition.cond_type, 'empty_values': empty_values}
-                condition_result.append(cond_data)
-            else:
-                result = eval(digit_formula)
-                if condition.cond_type == '1':
-                    cond_data = {"name": condition.comment, "result": result, "display_method": condition.display_method,
-                                 "val_formula": formula, "text_formula": condition.formula,
-                                 "cond_type": condition.cond_type}
-                    condition_result.append(cond_data)
-                if condition.cond_type == '6':
-                    if not condition.max_val.isdigit():
-                        formula = condition.max_val
-                        vars_max_val = get_vars_formula(formula)
-                        for var_max_val in vars_max_val:
-                            formula = formula.replace(str(var_max_val),
-                                                      str(ScresultsTest.objects.filter(var_title=var_max_val)[0].value))
-                        digit_max_val = formula
-                        max_val = eval(formula)
-                    else:
-                        max_val = float(condition.max_val)
-                        digit_max_val = max_val
-                    if not condition.min_val.isdigit():
-                        formula = condition.min_val
-                        vars_min_val = get_vars_formula(formula)
-                        for var_min_val in vars_min_val:
-                            formula = formula.replace(str(var_min_val),
-                                                      str(ScresultsTest.objects.filter(var_title=var_min_val)[0].value))
-                        digit_min_val = formula
-                        min_val = eval(formula)
-                    else:
-                        min_val = float(condition.min_val)
-                        digit_min_val = min_val
-                    val_formula = digit_formula + ' in ' + '[' + str(digit_min_val) + ' ; ' + str(
-                        digit_max_val) + '] ?'
-                    text_formula = condition.formula + ' in ' + '[' + str(condition.min_val) + ' ; ' + str(
-                        condition.max_val) + '] ?'
-                    result_formula = str(eval(str(digit_formula))) + ' in ' + '[' + str(
-                        eval(str(digit_min_val))) + ' ; ' + str(eval(str(digit_max_val))) + '] ?'
-                    bool_result = bool(max_val >= result >= min_val)
-                    cond_data = {"name": condition.comment, "result": bool_result,
-                                 "display_method": condition.display_method,
-                                 "val_formula": val_formula, "text_formula": text_formula,
-                                 "cond_type": condition.cond_type,
-                                 "value_result": result, "result_formula": result_formula}
-                    condition_result.append(cond_data)
-                if condition.cond_type == '2' or condition.cond_type == '3' or condition.cond_type == '4' or condition.cond_type == '5':
-                    if not condition.limit_val.isdigit():
-                        formula = condition.limit_val
-                        vars_limit_val = get_vars_formula(formula)
-                        for var_limit_val in vars_limit_val:
-                            formula = formula.replace(str(var_limit_val),
-                                                      str(ScresultsTest.objects.filter(var_title=var_limit_val)[0].value))
-                        digit_limit_val = formula
-                        limit_val = eval(formula)
-                    else:
-                        limit_val = float(condition.limit_val)
-                        digit_limit_val = limit_val
-                    if condition.cond_type == '2':
-                        val_formula = digit_formula + '<' + str(digit_limit_val)
-                        text_formula = condition.formula + '<' + condition.limit_val
-                        result_formula = str(eval(str(digit_formula))) + '<' + str(eval(str(digit_limit_val)))
-                        bool_result = bool(result < limit_val)
-                    if condition.cond_type == '3':
-                        val_formula = digit_formula + '>' + str(digit_limit_val)
-                        text_formula = condition.formula + '>' + condition.limit_val
-                        result_formula = str(eval(str(digit_formula))) + '>' + str(eval(str(digit_limit_val)))
-                        bool_result = bool(result > limit_val)
-                    if condition.cond_type == '4':
-                        val_formula = digit_formula + '>=' + str(digit_limit_val)
-                        text_formula = condition.formula + '>=' + condition.limit_val
-                        result_formula = str(eval(str(digit_formula))) + '>=' + str(eval(str(digit_limit_val)))
-                        bool_result = bool(result >= limit_val)
-                    if condition.cond_type == '5':
-                        val_formula = digit_formula + '<=' + str(digit_limit_val)
-                        text_formula = condition.formula + '<=' + condition.limit_val
-                        result_formula = str(eval(str(digit_formula))) + '<=' + str(eval(str(digit_limit_val)))
-                        bool_result = bool(result <= limit_val)
-                    cond_data = {"name": condition.comment, "result": bool_result,
-                                 "display_method": condition.display_method,
-                                 "val_formula": val_formula, "text_formula": text_formula,
-                                 "cond_type": condition.cond_type,
-                                 "value_result": result, "result_formula": result_formula}
-                    condition_result.append(cond_data)
-                if condition.display_method == 'Text+Siren':
-                    if not bool_result:
-                        print("!!!!!!СИРЕНА!!!!!!!")
-
         return render(
             request,
             'index.html',
             context={'info': info, 'condition_result': condition_result},
         )
+
+
+def update_leds(request):
+    if request.method == 'GET' and request.is_ajax():
+        response_data = {}
+        current_user = request.user.username
+        data = json.dumps(calculate_conditions(request))
+        # print(data)
+        return HttpResponse(data, content_type='application/json')
+
+
+def update_info_about_conditions(request):
+    if request.method == 'GET' and request.is_ajax():
+        response_data = {}
+        current_user = request.user.username
+        data = json.dumps(calculate_conditions(request))
+        # print(data)
+        return HttpResponse(data, content_type='application/json')
+
+
+def update_info_about_variables(request):
+    if request.method == 'GET' and request.is_ajax():
+        response_data = {}
+        current_user = request.user.username
+        data = serialize("json", ScresultsTest.objects.all())
+        # print(data)
+        return HttpResponse(data, content_type='application/json')
 
 
 def del_exist_condition(request):
@@ -192,12 +225,7 @@ def del_exist_condition(request):
 
 
 
-def display_data(request):
-    if request.method == 'GET' and request.is_ajax():
-        response_data = {}
-        current_user = request.user.username
-        data = serialize("json", ScresultsTest.objects.all())
-        return HttpResponse(data, content_type='application/json')
+
 
 
 def add_new_variable(request):

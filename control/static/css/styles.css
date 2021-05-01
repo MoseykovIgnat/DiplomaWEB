@@ -4,9 +4,33 @@
     list-style: none;
 }
 
-
+.main-info{
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .selected {
     background-color: brown;
     color: #FFF;
 }
+
+g.conceptG circle{
+    fill: #F6FBFF;
+    stroke: #333;
+    stroke-width: 2px;
+}
+
+g.conceptG:hover circle{
+    fill: rgb(200, 238, 241);
+}
+
+path.link {
+    fill: none;
+    stroke: #333;
+    stroke-width: 6px;
+    cursor: default;
+}
+path.link:hover{
+    stroke: rgb(94, 196, 204);
+}
+

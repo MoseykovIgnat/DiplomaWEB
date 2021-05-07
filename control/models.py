@@ -57,3 +57,18 @@ class ScresultsTest(models.Model):
     class Meta:
         managed = False
         db_table = 'scresults_test'
+
+
+class ScConditionsResult(models.Model):
+    cond_id = models.IntegerField(primary_key=True)
+    val_result = models.FloatField(blank=True, null=True)
+    bool_result = models.IntegerField(blank=True, null=True)
+    val_formula = models.CharField(max_length=1500, blank=True, null=True)
+    text_formula = models.CharField(max_length=1500, blank=True, null=True)
+    result_formula = models.CharField(max_length=1000, blank=True, null=True)
+    time_calc = models.DateTimeField(blank=True, null=True)
+    empty_values = models.CharField(max_length=1500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_conditions_result'

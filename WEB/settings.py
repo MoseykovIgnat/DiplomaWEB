@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'control.apps.ControlConfig',
+    'django_crontab',
     'crispy_forms',
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -88,6 +90,14 @@ DATABASES = {
 }
 
 
+CRONJOBS = [
+    ('*/1 * * * *', 'control.cron.test', '>> /tmp/test.log'),
+]
+
+CRONTAB_LOCK_JOBS = False
+
+# CRONTAB_COMMAND_SUFFIX = '2>&1'
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -112,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Novosibirsk'
 
 USE_I18N = True
 

@@ -86,6 +86,22 @@
             </svg>
             </div>
         </div>
+        <div>
+            <h1>Info in Django Data Base</h1>
+            {% if info %}
+            <table class="table" id='varTable'>
+                <tr>
+                    <th>Path</th>
+                    <th>Result</th>
+                    <th>Submission date</th>
+                </tr>
+                <tr class="Sc_results_data"></tr>
+            </table>
+
+            {% else %}
+                <p>У вас нет данных</p>
+            {% endif %}
+        </div>
     </div>
 
         <div class="info col-sm-5">
@@ -99,36 +115,13 @@
                     <th>Result</th>
                     <th>Siren on?</th>
                 </tr>
-                {% for data in condition_result %}
-                <tr class="Cond_res">
-                     <td title="Info about condition:&#013;{% if data.result_formula %}Result: {{ data.result_formula }}&#013;{% endif %}Value Formula: {{ data.val_formula }}&#013;Text Formula: {{ data.text_formula }}&#013;{% if data.empty_values %}This sample(s) is(are) empty: {{ data.empty_values }}&#013;{% endif %}"
-                        style="text-align: center">&times;</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.result }}</td>
-                    <td>{% if data.display_method == 'Text+Siren' %} Yes! {% else %} No! {% endif %}</td>
-                </tr>
-        {% endfor %}
+                <tr class="Cond_res"></tr>
             </table>
             </div>
         </div>
 
 
-        <div class="info col-sm-6">
-                <h1>Info in Django Data Base</h1>
-                {% if info %}
-                <table class="table" id='varTable'>
-                <tr>
-                    <th>Path</th>
-                    <th>Result</th>
-                    <th>Submission date</th>
-                </tr>
-                <tr class="Sc_results_data"></tr>
-                </table>
 
-                {% else %}
-                    <p>У вас нет данных</p>
-                {% endif %}
-        </div>
     </div>
     <div>
 
@@ -213,10 +206,25 @@
     <script>
     window.onload = function () {
       update_info_about_variables();
+      update_info_about_conditions();
     };
     </script>
 
     <script>
+    function get_all_conditions(){
+                $.ajax({
+            type: 'GET',
+            url: "{% url 'get_conditions' %}",
+            datatype: 'json',
+
+            success: function (response) {
+                return response;
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+    }
     function update_info_about_variables(){
                 $.ajax({
             type: 'GET',
@@ -258,10 +266,26 @@
 
                     $('.Cond_res').remove()
                 for (i = 0; i < response.length; i++) {
-                    var condTitle = 'Info about condition:&#013' + (response[i]['result_formula'] ? 'Result: ' + response[i]['result_formula']+'&#013' : '') + (response[i]['val_formula'] ? 'Value Formula: ' + response[i]['val_formula']+'&#013' : '')+ (response[i]['text_formula'] ? 'Text Formula: ' + response[i]['text_formula']+'&#013' : '')+ (response[i]['empty_values'] ? 'This sample(s) is(are) empty: ' + response[i]['empty_values']+'&#013' : '');
+                    var condTitle = 'Info about condition:&#013' + (response[i]['time_calc'] ? 'The condition was calculated in ' + response[i]['time_calc']+'&#013' : '')  + (response[i]['result_formula'] ? 'Result formula: ' + response[i]['result_formula']+'&#013' : '') + (response[i]['val_formula'] ? 'Value Formula: ' + response[i]['val_formula']+'&#013' : '')+ (response[i]['text_formula'] ? 'Text Formula: ' + response[i]['text_formula']+'&#013' : '')+ (response[i]['empty_values'] ? 'This sample(s) is(are) empty: ' + response[i]['empty_values']+'&#013' : '');
                     var condInfo = '<td title="'+ condTitle +'">&times;</td>';
                     var sirenOption = (response[i]['display_method'] === 'Text+Siren' ? 'Yes!':'No!');
-                    $('#condTable').append('<tr class="Cond_res">'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + response[i]['result'] + '</td>+<td>' + sirenOption + '</td>');
+                    var result;
+                    if (response[i]['empty_values']){
+                        result='Empty value!';
+                    } else {
+                        if (response[i]['bool_result']){
+                            if(response[i]['bool_result']===1){
+                                result='True';
+                            }
+                            else{
+                                result='False';
+                            }
+                        }
+                        else {
+                            result = response[i]['val_result'];
+                        }
+                    }
+                    $('#condTable').append('<tr class="Cond_res">'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
 
 
                 }

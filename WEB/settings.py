@@ -94,7 +94,7 @@ CRONJOBS = [
     ('*/1 * * * *', 'control.cron.test', '>> /tmp/test.log'),
 ]
 
-CRONTAB_LOCK_JOBS = False
+CRONTAB_LOCK_JOBS = True
 
 # CRONTAB_COMMAND_SUFFIX = '2>&1'
 
@@ -121,6 +121,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'Asia/Novosibirsk'
 
 
 USE_I18N = True

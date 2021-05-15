@@ -41,6 +41,10 @@ class ScConditions(models.Model):
     limit_val = models.CharField(max_length=250)
     comment = models.CharField(max_length=100, blank=True, null=True)
     display_method = models.CharField(max_length=10, blank=True, null=False)
+    priority = models.IntegerField(blank=True, null=True)
+    isalert = models.IntegerField(blank=True, null=True)
+    alert_interval = models.IntegerField(blank=True, null=True)
+    time_create_or_alert = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -72,3 +76,23 @@ class ScConditionsResult(models.Model):
     class Meta:
         managed = False
         db_table = 'sc_conditions_result'
+
+
+class ScConditionsOnlweb(models.Model):
+    cond_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey('ScUsers', models.DO_NOTHING)
+    formula = models.CharField(max_length=250)
+    cond_type = models.CharField(max_length=15, blank=True, null=True)
+    max_val = models.CharField(max_length=250)
+    min_val = models.CharField(max_length=250)
+    limit_val = models.CharField(max_length=250)
+    comment = models.CharField(max_length=100, blank=True, null=True)
+    display_method = models.CharField(max_length=10, blank=True, null=False)
+    priority = models.IntegerField(blank=True, null=True)
+    isalert = models.IntegerField(blank=True, null=True)
+    alert_interval = models.IntegerField(blank=True, null=True)
+    time_create_or_alert = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_conditions_onlweb'

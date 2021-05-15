@@ -12,8 +12,8 @@ type_cond_choices = (
 )
 display_method_choices = (
     ('Text', "Text"),
-    ('Image', "Image"),
-    ('Siren', "Siren"),
+    # ('Image', "Image"),
+    # ('Siren', "Siren"),
     ('Text+Siren', "Text+Siren"),
 )
 
@@ -32,10 +32,15 @@ class ScConditionsForm(forms.ModelForm):
                                 widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
     display_method = forms.TypedChoiceField(choices=display_method_choices, label='Display method', coerce=str)
     formula = forms.CharField(label='Formula', widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
+    priority = forms.IntegerField(required=False, min_value=0, max_value=10,
+                                  label='Condition priority for signal alert')
+    alert_interval = forms.IntegerField(required=False, min_value=30, max_value=600,
+                                        label='Interval for condition signal alert')
 
     class Meta:
         model = ScConditions
-        fields = ['comment', 'formula', 'cond_type', 'min_val', 'max_val', 'limit_val', 'display_method']
+        fields = ['comment', 'formula', 'cond_type', 'min_val', 'max_val', 'limit_val', 'display_method', 'priority',
+                  'alert_interval']
 
 
 class ScUsersForm(forms.ModelForm):

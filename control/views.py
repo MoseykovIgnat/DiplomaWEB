@@ -17,6 +17,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from background_task import background
 import re
 import json
+from datetime import datetime, timedelta
+from django.utils import timezone
+import time
+
 
 
 # Create your views here.
@@ -47,120 +51,9 @@ def get_vars_formula(formula):
         "(([A-Za-z0-9_]+):((?:\\.|[A-Za-z0-9_.\-\/])+):([A-Za-z0-9_]+)(?:\(([+-]?\d+)([a-z]+)(?:,([+-]?\d+)([a-z]+))\))?)",
         formula)
     vars_formula = list()
-    # print(x)
     for i in range(len(x)):
         vars_formula.append(x[i][0])
-    # print(vars_formula)
     return vars_formula
-
-
-# def calculate_conditions(request):
-#     global bool_result
-#     '''Время волшебства'''
-#     user = request.user.username
-#     user_id = ScUsers.objects.get(name=user)
-#     data = ScConditions.objects.all()
-#     condition_result = list()
-#     for condition in data:
-#         formula = condition.formula
-#         vars_formula = get_vars_formula(formula)
-#         empty_values = list()
-#         for var_formula in vars_formula:
-#             formula = formula.replace(str(var_formula),
-#                                       str(ScresultsTest.objects.filter(var_title=var_formula)[0].value))
-#             if str(ScresultsTest.objects.filter(var_title=var_formula)[0].comment) == 'Empty':
-#                 empty_values.append(str(ScresultsTest.objects.filter(var_title=var_formula)[0].var_title))
-#         digit_formula = formula
-#         if empty_values:
-#             cond_data = {"name": condition.comment, "result": '0', "display_method": condition.display_method,
-#                          "val_formula": formula, "text_formula": condition.formula,
-#                          "cond_type": condition.cond_type, 'empty_values': empty_values}
-#             condition_result.append(cond_data)
-#         else:
-#             result = eval(digit_formula)
-#             if condition.cond_type == '1':
-#                 cond_data = {"name": condition.comment, "result": result, "display_method": condition.display_method,
-#                              "val_formula": formula, "text_formula": condition.formula,
-#                              "cond_type": condition.cond_type}
-#                 condition_result.append(cond_data)
-#             if condition.cond_type == '6':
-#                 if not condition.max_val.isdigit():
-#                     formula = condition.max_val
-#                     vars_max_val = get_vars_formula(formula)
-#                     for var_max_val in vars_max_val:
-#                         formula = formula.replace(str(var_max_val),
-#                                                   str(ScresultsTest.objects.filter(var_title=var_max_val)[0].value))
-#                     digit_max_val = formula
-#                     max_val = eval(formula)
-#                 else:
-#                     max_val = float(condition.max_val)
-#                     digit_max_val = max_val
-#                 if not condition.min_val.isdigit():
-#                     formula = condition.min_val
-#                     vars_min_val = get_vars_formula(formula)
-#                     for var_min_val in vars_min_val:
-#                         formula = formula.replace(str(var_min_val),
-#                                                   str(ScresultsTest.objects.filter(var_title=var_min_val)[0].value))
-#                     digit_min_val = formula
-#                     min_val = eval(formula)
-#                 else:
-#                     min_val = float(condition.min_val)
-#                     digit_min_val = min_val
-#                 val_formula = digit_formula + ' in ' + '[' + str(digit_min_val) + ' ; ' + str(
-#                     digit_max_val) + '] ?'
-#                 text_formula = condition.formula + ' in ' + '[' + str(condition.min_val) + ' ; ' + str(
-#                     condition.max_val) + '] ?'
-#                 result_formula = str(eval(str(digit_formula))) + ' in ' + '[' + str(
-#                     eval(str(digit_min_val))) + ' ; ' + str(eval(str(digit_max_val))) + '] ?'
-#                 bool_result = bool(max_val >= result >= min_val)
-#                 cond_data = {"name": condition.comment, "result": bool_result,
-#                              "display_method": condition.display_method,
-#                              "val_formula": val_formula, "text_formula": text_formula,
-#                              "cond_type": condition.cond_type,
-#                              "value_result": result, "result_formula": result_formula}
-#                 condition_result.append(cond_data)
-#             if condition.cond_type == '2' or condition.cond_type == '3' or condition.cond_type == '4' or condition.cond_type == '5':
-#                 if not condition.limit_val.isdigit():
-#                     formula = condition.limit_val
-#                     vars_limit_val = get_vars_formula(formula)
-#                     for var_limit_val in vars_limit_val:
-#                         formula = formula.replace(str(var_limit_val),
-#                                                   str(ScresultsTest.objects.filter(var_title=var_limit_val)[0].value))
-#                     digit_limit_val = formula
-#                     limit_val = eval(formula)
-#                 else:
-#                     limit_val = float(condition.limit_val)
-#                     digit_limit_val = limit_val
-#                 if condition.cond_type == '2':
-#                     val_formula = digit_formula + '<' + str(digit_limit_val)
-#                     text_formula = condition.formula + '<' + condition.limit_val
-#                     result_formula = str(eval(str(digit_formula))) + '<' + str(eval(str(digit_limit_val)))
-#                     bool_result = bool(result < limit_val)
-#                 if condition.cond_type == '3':
-#                     val_formula = digit_formula + '>' + str(digit_limit_val)
-#                     text_formula = condition.formula + '>' + condition.limit_val
-#                     result_formula = str(eval(str(digit_formula))) + '>' + str(eval(str(digit_limit_val)))
-#                     bool_result = bool(result > limit_val)
-#                 if condition.cond_type == '4':
-#                     val_formula = digit_formula + '>=' + str(digit_limit_val)
-#                     text_formula = condition.formula + '>=' + condition.limit_val
-#                     result_formula = str(eval(str(digit_formula))) + '>=' + str(eval(str(digit_limit_val)))
-#                     bool_result = bool(result >= limit_val)
-#                 if condition.cond_type == '5':
-#                     val_formula = digit_formula + '<=' + str(digit_limit_val)
-#                     text_formula = condition.formula + '<=' + condition.limit_val
-#                     result_formula = str(eval(str(digit_formula))) + '<=' + str(eval(str(digit_limit_val)))
-#                     bool_result = bool(result <= limit_val)
-#                 cond_data = {"name": condition.comment, "result": bool_result,
-#                              "display_method": condition.display_method,
-#                              "val_formula": val_formula, "text_formula": text_formula,
-#                              "cond_type": condition.cond_type,
-#                              "value_result": result, "result_formula": result_formula}
-#                 condition_result.append(cond_data)
-#             if condition.display_method == 'Text+Siren':
-#                 if not bool_result:
-#                     print("!!!!!!СИРЕНА!!!!!!!")
-#     return condition_result
 
 
 def index(request):
@@ -177,35 +70,51 @@ def index(request):
 
 def get_conditions(request):
     if request.method == 'GET' and request.is_ajax():
-        data = ScConditions.objects.values_list('')
-        return HttpResponse(data, content_type='application/json')
+        result = list()
+        data = ScConditions.objects.all()
+        for i in data:
+            condition_result = ScConditionsResult.objects.get(cond_id=i.cond_id)
+            if condition_result.bool_result == 0 or condition_result.bool_result == 1:
+                result.append(i.comment)
+        result = json.dumps(result)
+        return HttpResponse(result, content_type='application/json')
 
 
 def update_leds(request):
-    pass
-    # if request.method == 'GET' and request.is_ajax():
-    #     response_data = {}
-    #     current_user = request.user.username
-    #     data = json.dumps(calculate_conditions(request))
-    #     # print(data)
-    #     return HttpResponse(data, content_type='application/json')
+    if request.method == 'GET' and request.is_ajax():
+        result_conditions = list()
+        conditions = ScConditionsResult.objects.all()
+        for condition in conditions:
+            if condition.bool_result == 0 or condition.bool_result == 1:
+                cond_name = ScConditions.objects.get(cond_id=condition.cond_id)
+                result_condition = {'cond_name': cond_name.comment, 'bool_result': condition.bool_result}
+                result_conditions.append(result_condition)
+        result_conditions = json.dumps(result_conditions)
+        return HttpResponse(result_conditions, content_type='application/json')
 
 
 def update_info_about_conditions(request):
+    # condition = ScConditions.objects.get(cond_id=140)
+    # condition_result = ScConditionsResult.objects.get(cond_id=140)
+    # print((condition.time_create_or_alert + timedelta(hours=7)))
     if request.method == 'GET' and request.is_ajax():
         current_user = request.user.username
         user = ScUsers.objects.get(name=current_user)
         condition_result = list()
         a = ScConditions.objects.filter(user_id=user.id)
+
         for i in a:
-            b = ScConditionsResult.objects.get(cond_id=i.cond_id)
-            cond_data = {"name": i.comment, "val_result": b.val_result, "bool_result": b.bool_result,
-                         "display_method": i.display_method,
-                         "val_formula": b.val_formula, "text_formula": b.text_formula,
-                         "cond_type": i.cond_type,
-                         "value_result": b.val_result, "result_formula": b.result_formula,
-                         "empty_values": b.empty_values, "time_calc": str(b.time_calc)}
-            condition_result.append(cond_data)
+            try:
+                b = ScConditionsResult.objects.get(cond_id=i.cond_id)
+                cond_data = {"name": i.comment, "val_result": b.val_result, "bool_result": b.bool_result,
+                             "display_method": i.display_method,
+                             "val_formula": b.val_formula, "text_formula": b.text_formula,
+                             "cond_type": i.cond_type,
+                             "value_result": b.val_result, "result_formula": b.result_formula,
+                             "empty_values": b.empty_values, "time_calc": str(b.time_calc)}
+                condition_result.append(cond_data)
+            except:
+                print("Condition isn't ready")
         data = json.dumps(condition_result)
         return HttpResponse(data, content_type='application/json')
 
@@ -220,6 +129,8 @@ def del_exist_condition(request):
     cond_name = request.GET.get('cond_name')
     user = request.user.username
     user_id_for_del = ScUsers.objects.get(name=user)
+    cond_id = ScConditions.objects.get(user_id=user_id_for_del, comment=cond_name)
+    ScConditionsResult.objects.filter(cond_id=cond_id.cond_id).delete()
     data = ScConditions.objects.filter(user_id=user_id_for_del)
     conditions = ScConditions.objects.filter(user_id=user_id_for_del, comment=cond_name)
     for condition in conditions:
@@ -277,11 +188,12 @@ def condition_create(request):
     username = request.user.username
     user_id = ScUsers.objects.get(name=username)
     if request.method == 'POST':
+        print(request)
         if '0)' in request.POST['formula']:
             request.POST = request.POST.copy()
             request.POST['formula'] = request.POST['formula'].replace('0)', '0sec)')
-        # print(request.POST)
         form = ScConditionsForm(user_id, request.POST)
+        print(form)
         if form.is_valid():
             formula = request.POST.get('formula')
             formula = formula.replace('0)', '0sec)')
@@ -296,6 +208,8 @@ def condition_create(request):
                     scpaths_model.save()
             instance = form.save(commit=False)
             instance.user_id = user_id.id
+            instance.isalert = 0;
+            instance.time_create_or_alert = datetime.now(tz=timezone.utc)
             instance.save()
             return redirect('custom_settings')
     else:
@@ -320,4 +234,3 @@ def create_post(request):
 def post_new(request):
     form = ScUsersForm()
     return JsonResponse(form)
-

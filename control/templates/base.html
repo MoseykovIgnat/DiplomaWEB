@@ -48,7 +48,7 @@
                 {% block sidebar %}
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                    <p class="text-danger" style="margin-top: 8%">{{ user.get_username }}</p>
+                    <a class="text-danger" style="margin-top: 8%">{{ user.get_username }}</a>
                 </li>
                     
                     <p>&nbsp;&nbsp;&nbsp;&nbsp; </p>
@@ -104,5 +104,6 @@ $(document).ready(function() {
 </script>
 </body>
 </html>
+
 
 

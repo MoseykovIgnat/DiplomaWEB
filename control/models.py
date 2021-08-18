@@ -19,6 +19,21 @@ class ScPaths(models.Model):
         return "%s" % self.path
 
 
+class ScPathsOnline(models.Model):
+    path_id = models.AutoField(primary_key=True)
+    path = models.CharField(max_length=100)
+    interval_time = models.IntegerField()
+    status = models.CharField(max_length=10)
+    user = models.ForeignKey('ScUsers', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_paths_online'
+
+    def __str__(self):
+        return "%s" % self.path
+
+
 class ScUsers(models.Model):
     name = models.CharField(unique=True, max_length=150)
     status = models.CharField(max_length=10)
@@ -51,7 +66,7 @@ class ScConditions(models.Model):
         db_table = 'sc_conditions'
 
 
-class ScresultsTest(models.Model):
+class ScResults(models.Model):
     var_title = models.CharField(primary_key=True, max_length=100)
     value = models.FloatField(blank=True, null=True)
     flag = models.IntegerField(blank=True, null=True)
@@ -78,7 +93,7 @@ class ScConditionsResult(models.Model):
         db_table = 'sc_conditions_result'
 
 
-class ScConditionsOnlweb(models.Model):
+class ScConditionsOnline(models.Model):
     cond_id = models.AutoField(primary_key=True)
     user = models.ForeignKey('ScUsers', models.DO_NOTHING)
     formula = models.CharField(max_length=250)

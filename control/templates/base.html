@@ -47,8 +47,14 @@
             <form class="form-inline my-2 my-lg-0">
                 {% block sidebar %}
                 {% if user.is_authenticated %}
-                    <li>User: {{ user.get_username }}</li>
-                    <a class="btn btn-outline-info my-2 my-sm-0" href="{% url 'logout'%}?next={{request.path}}" role="button">Log Out</a>
+                    <li class="nav-item">
+                    <p class="text-danger" style="margin-top: 8%">{{ user.get_username }}</p>
+                </li>
+                    
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp; </p>
+                    <a class="btn btn-danger my-2 my-sm-0" href="{% url 'logout'%}?next={{request.path}}" role="button">Log Out</a>
+
+
                 {% else %}
                     <a class="btn btn-outline-info my-2 my-sm-0" href="{% url 'login'%}?next={{request.path}}" role="button">Log In</a>
 
@@ -87,7 +93,7 @@
 <script language="JavaScript">
 $(document).ready(function() {
 
-  if(window.location.href.indexOf("/accounts/login/?next=/") != -1) {
+  if(window.location.href.indexOf("/slowcontrol/accounts/login/?next=/") != -1) {
     $('#login_modal').modal('show');
   }
 
@@ -98,4 +104,5 @@ $(document).ready(function() {
 </script>
 </body>
 </html>
+
 

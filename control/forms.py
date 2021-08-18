@@ -1,9 +1,10 @@
 from django import forms
-from .models import ScUsers, ScPaths, ScresultsTest, ScConditions
+from .models import ScUsers, ScPaths, ScResults, ScConditions
 from django.core.exceptions import ValidationError
 
 type_cond_choices = (
-    (1, "Result of formula"),
+    (1, "Digit result of formula"),
+    (7, "Bool result"),
     (2, "<"),
     (3, ">"),
     (4, ">="),

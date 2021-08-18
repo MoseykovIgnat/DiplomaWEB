@@ -25,7 +25,7 @@ SECRET_KEY = 's(ofty-7vb7d8q*_c=4#*0r87^wm)bd-f#5d2y)jb@=#=cm6up'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,9 +84,8 @@ DATABASES = {
     'NAME': 'sctestdb',
     'USER': 'scadmin',
     'PASSWORD': 'sc1s1mp0rtnt',
-    'HOST': '127.0.0.1',
-    'PORT': '3326'
-    }
+    'HOST':'127.0.0.1',	    
+}
 }
 
 
@@ -120,6 +119,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Novosibirsk'
@@ -135,7 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/slowcontrol/static/'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'

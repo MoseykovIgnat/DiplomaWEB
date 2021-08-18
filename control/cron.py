@@ -40,6 +40,11 @@ def update_condition_results():
                 result_for_db.save()
             else:
                 result = eval(digit_formula)
+		if condition.cond_type == '7':
+		    result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
+                                                       bool_result=bool(result), text_formula=condition.formula,
+                                                       time_calc=(datetime.now(tz=timezone.utc)))
+		    result_for_db.save()
                 if condition.cond_type == '1':
                     result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                        val_result=result,

@@ -2,13 +2,29 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/d3-context-menu.css' %}">
 {% block content %}
-<div class="row main-info">
-        {% load static %}
-    <div class="col-sm-6">
-        <div style="">
-            <div >
 
-                <h1>Information on scheme</h1>
+
+	<h1 align="center">Результаты условий</h1 >
+
+<div class="row justify-content-center main-info">
+        {% load static %}
+    <div class="col-sm-5 text-center">
+    	<div>        	
+        	<table class="table table-condensed table-hover" id="condTable">
+                <tr>
+                    <th>Инфо</th>
+                    <th>Название условия</th>
+                    <th>Результат</th>
+                    <th>Сирена</th>
+                </tr>
+                <tr class="Cond_res"></tr>
+            </table>
+        </div>        
+    </div>
+
+        <div class="info text-center col-sm-5">
+            <div>
+              <h1></h1>
               <svg width="598" height="299" style="background-image: url({% static 'img/img.png' %}); border: 4px double darkblue;">
               <defs>
                 <marker id="end-arrow" viewBox="0 -5 10 10" refX="32" markerWidth="3.5" markerHeight="3.5" orient="auto">
@@ -84,16 +100,18 @@
                 </g>
               </g>
             </svg>
-            </div>
         </div>
-        <div>
-            <h1>Info in Django Data Base</h1>
+        </div>
+</div>
+<div class="row justify-content-around text-center main-info">
+	  <div>
+            <h1>Параметры в Базе данных</h1>
             {% if info %}
-            <table class="table" id='varTable'>
+            <table class="table table-responsive table-condensed table-hover" id='varTable'>
                 <tr>
-                    <th>Path</th>
-                    <th>Result</th>
-                    <th>Submission date</th>
+                    <th>Путь</th>
+                    <th>Результат</th>
+                    <th>Дата обновления</th>
                 </tr>
                 <tr class="Sc_results_data"></tr>
             </table>
@@ -102,28 +120,9 @@
                 <p>У вас нет данных</p>
             {% endif %}
         </div>
-    </div>
+</div>  
 
-        <div class="info col-sm-5">
-            <h1>Information from your conditions</h1>
-            <h2>Text display</h2>
-            <div class="col-sm-6">
-            <table class="table" id="condTable">
-                <tr>
-                    <th >Info</th>
-                    <th>Name of condition</th>
-                    <th>Result</th>
-                    <th>Siren on?</th>
-                </tr>
-                <tr class="Cond_res"></tr>
-            </table>
-            </div>
-        </div>
-
-
-
-    </div>
-    <div>
+<!--     <div>
 
 
 {#    Форма для POST#}
@@ -140,7 +139,7 @@
 {#   <button type="submit" class="btn btn-primary">Submit</button>#}
 {#    </form>#}
 
-    </div>
+    </div> -->
 
 
 
@@ -401,3 +400,4 @@
 </script>
 
 {% endblock javascript %}
+

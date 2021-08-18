@@ -21,8 +21,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('control.urls')),
-    path('accounts/', include('django.contrib.auth.urls'))  # Аутентификация для джанго!
+    path('slowcontrol/admin/', admin.site.urls),
+    path('slowcontrol/', include('control.urls')),
+    path('slowcontrol/accounts/', include('django.contrib.auth.urls'))  # Аутентификация для джанго!
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

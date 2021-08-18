@@ -1,36 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-sm-3">
-    <h2 style="text-align: center">Ваши переменные</h2>
-        {% if your_variables %}
-        <table class="table new_variable_table" >
-        <tr>
-        <th>Variable</th>
-        <th>Interval time</th>
-        </tr>
-        {% for data in your_variables %}
-        <tr class="paths_data" id="your_variables">
-            <td>{{ data.path }}</td>
-            <td>{{ data.interval_time }}</td>
-        </tr>
-        {% endfor %}
-
-        {% else %}
-            <p>У вас нет данных</p>
-        {% endif %}
-        </table>
-    <div class="row">
-        <button class="col-sm-5" id="add_new_variable">Add a new variable</button>
-        <button disabled class="col-sm-5 del_exist_variable" >Delete selected variable</button>
-    </div>
-    </div>
-
-    <div class="col-sm-8">
-    <h2 style="text-align: center">Ваши условия</h2>
+    <div class="container-fluid">
+<div class="row justify-content-around">
+<div class="col-sm-12 gx-5">
+    <h1 style="text-align: left">Ваши условия</h1>
          {% if your_conditions %}
-        <table class="table new_condition_table" >
+        <table class="table table-responsive new_condition_table" >
         <tr>
         <th>Name of your condition</th>
         <th>formula</th>
@@ -46,7 +22,7 @@
             <td>{{ data.comment|default_if_none:"&times;" }}</td>
             <td>{{ data.formula|default_if_none:"&times;" }}</td>
             {% if data.cond_type == '1' %}
-            <td>Result of formula</td>
+            <td>Digit result of formula</td>
             {% endif %}
             {% if data.cond_type == '2' %}
             <td><</td>
@@ -63,6 +39,9 @@
             {% if data.cond_type == '6' %}
             <td>Is result in interval</td>
             {% endif %}
+            {% if data.cond_type == '7' %}
+            <td>Bool result</td>
+            {% endif %}
             <td>{{ data.display_method }}</td>
             <td>{{ data.max_val|default_if_none:"&times;" }}</td>
             <td>{{ data.min_val|default_if_none:"&times;" }}</td>
@@ -76,16 +55,41 @@
             <p>У вас нет данных</p>
         {% endif %}
         </table>
-    <div class="row">
-        <button class="col-sm-5" id="add_new_condition">Add a new condition</button>
-        <button disabled class="col-sm-5 del_exist_condition" >Delete selected condition</button>
+    <div class="row justify-content-center gx-5">
+        <button class="btn col-sm-5 btn-danger gx-5" id="add_new_condition">Add a new condition</button>
+        <button disabled class="btn col-sm-5 btn-danger del_exist_condition" >Delete selected condition</button>
     </div>
 
     </div>
 
 </div>
+<div class="row p-3">
+<div class="">
+    <h1 style="text-align: left">Ваши переменные</h1>
+        {% if your_variables %}
+        <table class="table table-responsive new_variable_table" >
+        <tr>
+        <th>Variable</th>
+        <th>Interval time</th>
+        </tr>
+        {% for data in your_variables %}
+        <tr class="paths_data" id="your_variables">
+            <td>{{ data.path }}</td>
+            <td>{{ data.interval_time }}</td>
+        </tr>
+        {% endfor %}
 
-
+        {% else %}
+            <p>У вас нет данных</p>
+        {% endif %}
+        </table>
+    <div class="row justify-content-center">
+        <button class="btn btn-danger" id="add_new_variable">Add a new variable</button>
+        <button disabled class="btn btn-danger del_exist_variable" >Delete selected variable</button>
+    </div>
+    </div>
+</div>
+</div>
 
     <!-- Modal for variable-->
 <div class="modal fade" id="add_new_variable_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

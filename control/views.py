@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import ScUsers, ScPaths, ScresultsTest, ScConditions, ScConditionsResult
+from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResult
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.http import JsonResponse
 from django.dispatch import receiver
@@ -19,6 +19,7 @@ import re
 import json
 from datetime import datetime, timedelta
 from django.utils import timezone
+from django.contrib.auth import models
 import time
 
 
@@ -31,7 +32,8 @@ def got_online(sender, user, request, **kwargs):
 
 @receiver(user_logged_out)
 def got_offline(sender, user, request, **kwargs):
-    ScUsers.objects.filter(name=user).update(status='Offline')
+    if request.user.groups.filter(name='Opers').exists():
+        ScUsers.objects.filter(name=user).update(status='Offline')
 
 
 def formula_without_priority_staples(x):
@@ -60,7 +62,7 @@ def index(request):
     if not request.user.is_authenticated:
         return render(request, 'index_not_login.html')
     else:
-        info = ScresultsTest.objects.all()
+        info = ScResults.objects.all()
         return render(
             request,
             'index.html',
@@ -102,7 +104,9 @@ def update_info_about_conditions(request):
         user = ScUsers.objects.get(name=current_user)
         condition_result = list()
         a = ScConditions.objects.filter(user_id=user.id)
-
+        group = models.Group.objects.get(name='Opers')
+        usersz = group.user_set.all()
+        print(usersz)
         for i in a:
             try:
                 b = ScConditionsResult.objects.get(cond_id=i.cond_id)
@@ -121,7 +125,7 @@ def update_info_about_conditions(request):
 
 def update_info_about_variables(request):
     if request.method == 'GET' and request.is_ajax():
-        data = serialize("json", ScresultsTest.objects.all())
+        data = serialize("json", ScResults.objects.all())
         return HttpResponse(data, content_type='application/json')
 
 
@@ -234,3 +238,4 @@ def create_post(request):
 def post_new(request):
     form = ScUsersForm()
     return JsonResponse(form)
+

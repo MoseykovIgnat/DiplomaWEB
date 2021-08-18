@@ -296,7 +296,6 @@
             success: function (response) {
 
                     $('.Cond_res').remove()
-                    $("#condTable tr").remove();
                 if (response.isEmptyObject()) {
                     $('#condTable').prepend('<caption style="display: table-caption; text-align: center;">Данные отсутствуют</caption>');
                 }

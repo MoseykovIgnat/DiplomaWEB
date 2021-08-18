@@ -296,7 +296,11 @@
             success: function (response) {
 
                     $('.Cond_res').remove()
-                if (response){
+                    $("#condTable tr").remove();
+                if (response.isEmptyObject()) {
+                    $('#condTable').prepend('<caption style="display: table-caption; text-align: center;">Данные отсутствуют</caption>');
+                }
+                else {
                 for (i = 0; i < response.length; i++) {
                     time_calc = new Date(response[0]['time_calc']);
                     time_calc.toISOString();
@@ -325,9 +329,6 @@
 
 
                 }}
-                else{
-                    $('#condTable').append('Данные отсутствуют')
-                }
             },
             error: function (response) {
                 console.log(response)

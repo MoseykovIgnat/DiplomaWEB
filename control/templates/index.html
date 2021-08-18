@@ -296,6 +296,7 @@
             success: function (response) {
 
                     $('.Cond_res').remove()
+                if (response){
                 for (i = 0; i < response.length; i++) {
                     time_calc = new Date(response[0]['time_calc']);
                     time_calc.toISOString();
@@ -323,6 +324,9 @@
                     $('#condTable').append('<tr class="Cond_res">'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
 
 
+                }}
+                else{
+                    $('#condTable').append('Данные отсутствуют')
                 }
             },
             error: function (response) {

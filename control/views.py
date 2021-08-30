@@ -131,11 +131,14 @@ def update_info_about_variables(request):
             print('User is expert')
         elif is_oper(request.user):
             user = request.user.username
-            group = models.Group.objects.get(name='Expert')
-            users = group.user_set.all()
-            print(users[::1])
-            print('user is oper')
             user_id = ScUsers.objects.get(name=user)
+            list_of_users = [].append(user_id)
+            group = models.Group.objects.get(name='Opers')
+            query_users = group.user_set.all()
+            for g in query_users:
+                list_of_users.append(g.User)
+            print(list_of_users)
+
             data = serialize("json", ScPaths.objects.filter(user_id=user_id.id))
         else:
             data = []

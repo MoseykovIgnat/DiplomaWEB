@@ -106,6 +106,7 @@
 <div class="row justify-content-around text-center main-info">
 	  <div>
             <h1>Параметры в Базе данных</h1>
+            {% if info %}
             <table class="table table-responsive table-condensed table-hover" id='varTable'>
                 <tr>
                     <th>Путь</th>
@@ -114,6 +115,10 @@
                 </tr>
                 <tr class="Sc_results_data"></tr>
             </table>
+
+            {% else %}
+                <p>У вас нет данных</p>
+            {% endif %}
         </div>
 </div>  
 
@@ -272,6 +277,7 @@
                     submission_date = new Date(response[i]['fields']['submission_date']);
                     submission_date.toISOString();
                     submission_date = moment(submission_date.toISOString()).subtract(7,"hours").format('DD-MM-YYYY, H:MM:ss');
+                    $('#varTable').append('<p>xz</p>')
                     $('#varTable').append('<tr class="Sc_results_data"><td>' + response[i]['pk'] + '</td><td>' + response[i]['fields']['value'] + '</td><td>' + submission_date + '</td>');
                 }
 

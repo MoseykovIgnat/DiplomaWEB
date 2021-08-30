@@ -134,14 +134,14 @@ def update_info_about_variables(request):
             user_id = ScUsers.objects.get(name=user)
             print(user_id.id)
             list_of_users = [user_id.id]
-            group = models.Group.objects.get(name='Opers')
+            group = models.Group.objects.get(name='Expert')
             query_users = group.user_set.all()
             for g in query_users:
                 user_id_from_group = ScUsers.objects.get(name=g)
                 list_of_users.append(user_id_from_group.id)
             print(list_of_users)
 
-            data = serialize("json", ScPaths.objects.filter(user_id=user_id.id))
+            data = serialize("json", ScPaths.objects.filter(user_id=list_of_users))
         else:
             data = []
         return HttpResponse(data, content_type='application/json')

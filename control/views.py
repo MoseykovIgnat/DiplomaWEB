@@ -141,7 +141,8 @@ def update_info_about_variables(request):
                 user_id_from_group = ScUsers.objects.get(name=g)
                 list_of_users.append(user_id_from_group.id)
             print(list_of_users)
-            data = serialize("json", ScPaths.objects.filter(user_id__in=list_of_users))
+            # data = serialize("json", ScPaths.objects.filter(user_id__in=list_of_users))
+            data = serialize("json", ScPaths.objects.filter(user_id__in=user_id))
         return HttpResponse(data, content_type='application/json')
 
 

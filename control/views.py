@@ -126,6 +126,7 @@ def update_info_about_conditions(request):
 
 def update_info_about_variables(request):
     if request.method == 'GET' and request.is_ajax():
+        data = None
         if is_expert(request.user):
             data = serialize("json", ScResults.objects.all())
             print('User is expert')
@@ -140,10 +141,7 @@ def update_info_about_variables(request):
                 user_id_from_group = ScUsers.objects.get(name=g)
                 list_of_users.append(user_id_from_group.id)
             print(list_of_users)
-
             data = serialize("json", ScPaths.objects.filter(user_id__in=list_of_users))
-        else:
-            data = []
         return HttpResponse(data, content_type='application/json')
 
 

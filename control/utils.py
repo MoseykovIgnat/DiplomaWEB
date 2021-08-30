@@ -3,4 +3,4 @@ def is_expert(user):
 
 
 def is_oper(user):
-    return user.groups.filter(name='Oper').exists()
+    return user.groups.filter(name='Opers').exists()

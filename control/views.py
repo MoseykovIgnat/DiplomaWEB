@@ -101,8 +101,14 @@ def update_info_about_conditions(request):
     # condition_result = ScConditionsResult.objects.get(cond_id=140)
     # print((condition.time_create_or_alert + timedelta(hours=7)))
     if request.method == 'GET' and request.is_ajax():
-        current_user = request.user.username
-        user = ScUsers.objects.get(name=current_user)
+        user = request.user.username
+        user_id = ScUsers.objects.get(name=user)
+        list_of_users = [user_id.id]
+        group = models.Group.objects.get(name='Expert')
+        query_users = group.user_set.all()
+        for g in query_users:
+            user_id_from_group = ScUsers.objects.get(name=g)
+            list_of_users.append(user_id_from_group.id)
         condition_result = list()
         a = ScConditions.objects.filter(user_id=user.id)
         # group = models.Group.objects.get(name='Opers')
@@ -133,7 +139,6 @@ def update_info_about_variables(request):
         elif is_oper(request.user):
             user = request.user.username
             user_id = ScUsers.objects.get(name=user)
-            print(user_id.id)
             list_of_users = [user_id.id]
             group = models.Group.objects.get(name='Expert')
             query_users = group.user_set.all()
@@ -141,13 +146,13 @@ def update_info_about_variables(request):
                 user_id_from_group = ScUsers.objects.get(name=g)
                 list_of_users.append(user_id_from_group.id)
             print(list_of_users)
-            data = serialize("json", ScResults.objects.filter(user_id__in=[1,3]))
+            data = serialize("json", ScResults.objects.filter(user_id__in=list_of_users))
         return HttpResponse(data, content_type='application/json')
 
-# def update_info_about_variables(request):
-#     if request.method == 'GET' and request.is_ajax():
-#         data = serialize("json", ScResults.objects.all())
-#         return HttpResponse(data, content_type='application/json')
+def update_info_about_variables(request):
+    if request.method == 'GET' and request.is_ajax():
+        data = serialize("json", ScResults.objects.all())
+        return HttpResponse(data, content_type='application/json')
 
 
 def del_exist_condition(request):

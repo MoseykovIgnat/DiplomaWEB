@@ -133,7 +133,7 @@ def update_info_about_variables(request):
             user = request.user.username
             group = models.Group.objects.get(name='Expert')
             users = group.user_set.all()
-            print(users)
+            print(list(users))
             print('user is oper')
             user_id = ScUsers.objects.get(name=user)
             data = serialize("json", ScPaths.objects.filter(user_id=user_id.id))

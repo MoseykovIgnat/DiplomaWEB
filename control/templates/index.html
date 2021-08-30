@@ -272,7 +272,8 @@
 
             success: function (response) {
                     var submission_date;
-                    $('.Sc_results_data').remove()
+                    alert(response[1]['fields']['path']);
+                    $('.Sc_results_data').remove();
                 for (i = 0; i < response.length; i++) {
                     submission_date = new Date(response[i]['fields']['submission_date']);
                     submission_date.toISOString();

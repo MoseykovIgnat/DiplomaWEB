@@ -128,6 +128,13 @@ def update_info_about_variables(request):
     if request.method == 'GET' and request.is_ajax():
         if is_expert(request.user):
             data = serialize("json", ScResults.objects.all())
+        if is_oper(request.user):
+            user = request.user.username
+            group = models.Group.objects.get(name='Expert')
+            users = group.user_set.all()
+            print(users)
+            user_id = ScUsers.objects.get(name=user)
+            data = serialize("json", ScPaths.objects.filter(user_id=user_id.id))
         else:
             data = []
         return HttpResponse(data, content_type='application/json')

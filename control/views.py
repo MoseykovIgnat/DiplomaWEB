@@ -105,9 +105,9 @@ def update_info_about_conditions(request):
         user = ScUsers.objects.get(name=current_user)
         condition_result = list()
         a = ScConditions.objects.filter(user_id=user.id)
-        group = models.Group.objects.get(name='Opers')
-        usersz = group.user_set.all()
-        print(usersz)
+        # group = models.Group.objects.get(name='Opers')
+        # usersz = group.user_set.all()
+        # print(usersz)
         for i in a:
             try:
                 b = ScConditionsResult.objects.get(cond_id=i.cond_id)

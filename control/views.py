@@ -132,7 +132,7 @@ def update_info_about_variables(request):
         elif is_oper(request.user):
             user = request.user.username
             user_id = ScUsers.objects.get(name=user)
-            list_of_users = [].append(user_id)
+            list_of_users = [user_id]
             group = models.Group.objects.get(name='Opers')
             query_users = group.user_set.all()
             for g in query_users:

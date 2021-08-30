@@ -1,5 +1,5 @@
 from .models import ScConditionsResult
-from .models import ScUsers, ScPaths, ScresultsTest, ScConditions, ScConditionsOnlweb
+from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResult
 from datetime import datetime, timedelta
 from django.utils import timezone
 import time
@@ -22,16 +22,16 @@ def update_condition_results():
         ids_for_signal_alarm = list()
         global bool_result
         '''Время волшебства'''
-        data = ScConditionsOnlweb.objects.all()
+        data = ScConditionsResult.objects.all()
         for condition in data:
             formula = condition.formula
             vars_formula = get_vars_formula(formula)
             empty_values = list()
             for var_formula in vars_formula:
                 formula = formula.replace(str(var_formula),
-                                          str(ScresultsTest.objects.filter(var_title=var_formula)[0].value))
-                if str(ScresultsTest.objects.filter(var_title=var_formula)[0].comment) == 'Empty':
-                    empty_values.append(str(ScresultsTest.objects.filter(var_title=var_formula)[0].var_title))
+                                          str(ScResults.objects.filter(var_title=var_formula)[0].value))
+                if str(ScResults.objects.filter(var_title=var_formula)[0].comment) == 'Empty':
+                    empty_values.append(str(ScResults.objects.filter(var_title=var_formula)[0].var_title))
             digit_formula = formula
             if empty_values:
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
@@ -40,11 +40,11 @@ def update_condition_results():
                 result_for_db.save()
             else:
                 result = eval(digit_formula)
-		if condition.cond_type == '7':
-		    result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
+                if condition.cond_type == '7':
+                    result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                        bool_result=bool(result), text_formula=condition.formula,
                                                        time_calc=(datetime.now(tz=timezone.utc)))
-		    result_for_db.save()
+                    result_for_db.save()
                 if condition.cond_type == '1':
                     result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                        val_result=result,
@@ -57,7 +57,7 @@ def update_condition_results():
                         vars_max_val = get_vars_formula(formula)
                         for var_max_val in vars_max_val:
                             formula = formula.replace(str(var_max_val),
-                                                      str(ScresultsTest.objects.filter(var_title=var_max_val)[
+                                                      str(ScResults.objects.filter(var_title=var_max_val)[
                                                               0].value))
                         digit_max_val = formula
                         max_val = eval(formula)
@@ -69,7 +69,7 @@ def update_condition_results():
                         vars_min_val = get_vars_formula(formula)
                         for var_min_val in vars_min_val:
                             formula = formula.replace(str(var_min_val),
-                                                      str(ScresultsTest.objects.filter(var_title=var_min_val)[
+                                                      str(ScResults.objects.filter(var_title=var_min_val)[
                                                               0].value))
                         digit_min_val = formula
                         min_val = eval(formula)
@@ -96,7 +96,7 @@ def update_condition_results():
                         vars_limit_val = get_vars_formula(formula)
                         for var_limit_val in vars_limit_val:
                             formula = formula.replace(str(var_limit_val),
-                                                      str(ScresultsTest.objects.filter(var_title=var_limit_val)[
+                                                      str(ScResults.objects.filter(var_title=var_limit_val)[
                                                               0].value))
                         digit_limit_val = formula
                         limit_val = eval(formula)
@@ -161,20 +161,20 @@ def signal_alarm(siren_ids):
             if condition.alert_interval < (condition_result.time_calc - condition.time_create_or_alert).total_seconds():
                 subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
                 username = ScUsers.objects.get(id=condition.cond_id).name
-                #Создадим JSON с информацией
+                # Создадим JSON с информацией
                 info = {"The condition was calculated in": (condition_result.time_calc + timedelta(hours=7)),
                         "Result formula": condition_result.result_formula,
                         "Value Formula": condition_result.val_formula, "Text Formula": condition_result.text_formula}
                 value_json = json.loads(info)
                 size = len(info)
-                #Посчитаем длину json
-                #Записали в messages
+                # Посчитаем длину json
+                # Записали в messages
                 cursor.execute(query_for_input_messages, (username, 'sam_sc', 'w', 'user-alarm', subject, 'y', 'y'))
                 connection.commit()
-                #Получили id нашего message
+                # Получили id нашего message
                 cursor.execute(query_for_get_id, (username, subject))
                 message = cursor.fetchone()
-                #Записали attachment
+                # Записали attachment
                 cursor.execute(query_for_input_attachment,
                                (message['id'], 'alarm.json', str(size), 'application/json; charset=utf8', value_json,
                                 'y'))
@@ -208,8 +208,6 @@ def signal_alarm(siren_ids):
             condition.time_create_or_alert = message['time']
             condition.isalert = 1
             condition.save()
-
-
 
 
 '''Запускается одна задача, которая выполняется постоянно, каждые 5 секунд и проверяет все условия и если нужно - записывает в log журнал'''

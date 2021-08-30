@@ -106,7 +106,6 @@
 <div class="row justify-content-around text-center main-info">
 	  <div>
             <h1>Параметры в Базе данных</h1>
-            {% if info %}
             <table class="table table-responsive table-condensed table-hover" id='varTable'>
                 <tr>
                     <th>Путь</th>
@@ -115,10 +114,6 @@
                 </tr>
                 <tr class="Sc_results_data"></tr>
             </table>
-
-            {% else %}
-                <p>У вас нет данных</p>
-            {% endif %}
         </div>
 </div>  
 
@@ -272,7 +267,6 @@
 
             success: function (response) {
                     var submission_date;
-                    alert(response[1]['fields']['path']);
                     $('.Sc_results_data').remove();
                 for (i = 0; i < response.length; i++) {
                     submission_date = new Date(response[i]['fields']['submission_date']);

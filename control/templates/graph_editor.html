@@ -4,7 +4,24 @@
 {% block content %}
 
 	<h1 align="center">Редактор добавления новых графов</h1 >
+	<div>
+		<form>
+   			<p>
+   				<button onclick="addAttribute()">Добавить атрибут</button>
+   				<input id="addAttribute" type="button" onclick="addAttribute()" value="Добавить атрибут">
+   				<input id="get_HTML_code" type="button" onclick="getHTMLcode()" value="Получить HTML код">
+   			</p>
 
+ 		</form>
+	</div>
+  <div id="toolbox">
+    <input type="file" id="hidden-file-upload">
+    <input id="upload-input" type="image" title="upload graph" src="upload-icon.png" alt="upload graph">
+    <input type="image" id="delete-graph" title="delete graph" src="trash-icon.png" alt="delete graph">
+  </div>
+  <div class=graph id=graph>
+
+  </div>
 
 
 
@@ -12,7 +29,22 @@
 {% endblock %}
 
 {% block javascript %}
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+    
+    <script type="text/javascript" src="script.js"></script>
 
+    <script>
+        function addAttribute() {
+           document.querySelectorAll('svg g.conceptG circle').forEach(element => { element.setAttribute('data-condname','NULL')});
+           }
+
+        function getHTMLcode(){
+            var copyText = document.querySelector('svg').outerHTML;
+            copyText.select();
+            document.execCommand('copy');
+            alert("Coppied HTML code");
+        }
     </script>
+
+
 {% endblock javascript %}

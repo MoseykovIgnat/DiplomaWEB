@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/d3-context-menu.css' %}">
+{% load static %}
 <link rel="stylesheet" href="{% static 'css/style_for_graph_editor.css' %}">
 {% block content %}
 
@@ -17,8 +18,10 @@
 	</div>
   <div id="toolbox">
     <input type="file" id="hidden-file-upload">
-    <input id="upload-input" type="image" title="upload graph" src="upload-icon.png" alt="upload graph">
-    <input type="image" id="delete-graph" title="delete graph" src="trash-icon.png" alt="delete graph">
+      {% load static %}
+    <input id="upload-input" type="image" title="upload graph" src="{% static 'img/upload-icon.png' %}" alt="upload graph">
+      {% load static %}
+    <input type="image" id="delete-graph" title="delete graph" src="{% static 'img/trash-icon.png' %}" alt="delete graph">
   </div>
   <div class=graph id=graph>
 

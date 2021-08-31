@@ -111,3 +111,23 @@ class ScConditionsOnline(models.Model):
     class Meta:
         managed = False
         db_table = 'sc_conditions_onlweb'
+
+
+class ScGraphInfo(models.Model):
+    dot_id = models.AutoField(primary_key=True)
+    dot_name = models.CharField(max_length=100)
+    dot_condition = models.CharField(max_length=100, blank=True, null=True)
+    graph = models.ForeignKey('ScGraphName', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_graph_info'
+
+
+class ScGraphName(models.Model):
+    graph_id = models.AutoField(primary_key=True)
+    graph_name = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_graph_name'

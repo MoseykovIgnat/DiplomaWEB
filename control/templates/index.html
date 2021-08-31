@@ -218,14 +218,6 @@
 	</script>
 
     <script>
-    window.onload = function () {
-      update_info_about_variables();
-      update_info_about_conditions();
-      change_color();
-    };
-    </script>
-
-    <script>
 
     function change_color(){
             $.ajax({
@@ -336,7 +328,12 @@
     }
 
 
-
+    window.onload = function () {
+      update_info_about_variables();
+      update_info_about_conditions();
+      change_color();
+    };
+    
     $(document).ready(function (){
         setInterval(change_color,5000);
         setInterval(update_info_about_variables,5000);

@@ -219,6 +219,11 @@ def custom_settings(request):
     )
 
 
+def graph_editor(request):
+    return render(request,
+                  'graph_editor.html')
+
+
 def condition_create(request):
     user = request.user
     username = request.user.username

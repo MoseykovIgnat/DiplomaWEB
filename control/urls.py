@@ -6,6 +6,7 @@ PREFIX = ''
 urlpatterns = [
     path(PREFIX + '', views.index, name='home'),
     path(PREFIX + 'custom_settings/', views.custom_settings, name='custom_settings'),
+    path(PREFIX + 'graph_editor/', views.graph_editor, name='graph_editor'),
     path(PREFIX + 'create_post/', views.create_post, name='create_post'),
     path(PREFIX + 'post/new', views.post_new, name='post_new'),
     path(PREFIX + 'add_new_variable/', views.add_new_variable, name='add_new_variable'),

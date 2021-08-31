@@ -5,7 +5,7 @@ body{
 
 
 svg{
-    background: url("/control/static/img/img.png") no-repeat;
+    background: url(../img/img.png) no-repeat;
 }
 
 #toolbox{

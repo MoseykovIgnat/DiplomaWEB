@@ -150,11 +150,6 @@
     {% load static %}
     <script src="{% static 'js/d3-context-menu.js' %}"></script>
     <script>
-        window.onload = function () {
-      update_info_about_variables();
-      update_info_about_conditions();
-      change_color();
-    };
 
 		// My menu
         var conditions = [];
@@ -332,10 +327,12 @@
         });
     }
 
-
-
+    
 
     $(document).ready(function (){
+        update_info_about_variables();
+        update_info_about_conditions();
+        change_color();
         setInterval(change_color,5000);
         setInterval(update_info_about_variables,5000);
         setInterval(update_info_about_conditions,5000);

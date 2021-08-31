@@ -104,14 +104,21 @@ function is_SAM_working(){
             type: 'GET',
             url: "{% url 'is_SAM_working' %}",
             datatype: 'json',
-                })
-            .done(function (response) {
-                $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger')
 
-            })
-            .fail(function (response) {
+            success: function (response) {
+                alert("server is working");
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success')
-            })
+
+            },
+            error: function (response) {
+                alert("server isn't working")
+                $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger')
+            }
+        });
+    }
+
+    window.onload = function () {
+      is_SAM_working();
     };
 
     $(document).ready(function (){

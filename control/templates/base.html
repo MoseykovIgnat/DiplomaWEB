@@ -106,12 +106,12 @@ function is_SAM_working(){
             datatype: 'json',
 
             success: function (response) {
-                alert(response);
+                console.log('server working fine')
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success')
 
             },
             error: function (response) {
-                alert("server isn't working")
+                console.log('server not working')
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger')
             }
         });

@@ -157,7 +157,7 @@ def update_info_about_variables(request):
 
 def is_SAM_working(request):
     if request.method == 'GET' and request.is_ajax():
-        data = {"Result": True}
+        data = {"Result": 'true'}
         return HttpResponse(data, content_type='application/json')
 
 

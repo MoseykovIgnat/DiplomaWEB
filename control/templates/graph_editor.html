@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/d3-context-menu.css' %}">
+<link rel="stylesheet" href="{% static 'css/style_for_graph_editor.css' %}">
 {% block content %}
 
 	<h1 align="center">Редактор добавления новых графов</h1 >
@@ -30,8 +31,8 @@
 
 {% block javascript %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
-    
-    <script type="text/javascript" src="script.js"></script>
+    <script src="{% static 'js/script_for_graph_editor.js' %}"></script>
+
 
     <script>
         function addAttribute() {

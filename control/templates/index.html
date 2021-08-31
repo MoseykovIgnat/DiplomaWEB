@@ -323,12 +323,15 @@
                         }
                     }
                     $('#condTable').append('<tr class="Cond_res">'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
-
+                    console.log('server working fine');
+                    $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success');
 
                 }}
             },
             error: function (response) {
-                console.log(response)
+                console.log('server not working');
+                $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger');
+
             }
         });
     }

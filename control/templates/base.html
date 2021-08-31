@@ -47,8 +47,8 @@
             <form class="form-inline my-2 my-lg-0">
                 {% block sidebar %}
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                    <a class="btn btn-danger" id="username_button" style="margin-top: 5%">{{ user.get_username }}</a>
+                    <li class="nav-item" style="list-style-type: none">
+                    <a class="btn btn-danger" id="username_button" >{{ user.get_username }}</a>
                 </li>
                     
                     <p>&nbsp;&nbsp;&nbsp;&nbsp; </p>

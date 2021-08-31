@@ -105,13 +105,13 @@ function is_SAM_working(){
             url: "{% url 'is_SAM_working' %}",
             datatype: 'json',
 
-            success: function (response) {
+            .done(function (response) {
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success')
 
-            },
-            error: function (response) {
+            })
+            .fail(function (response) {
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger')
-            }
+            })
         });
     }
 

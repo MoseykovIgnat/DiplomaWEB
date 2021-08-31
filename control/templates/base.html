@@ -106,17 +106,24 @@ function is_SAM_working(){
             datatype: 'json',
 
             success: function (response) {
-            $('#username_button')
+            $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success')
 
                 }
 
             },
-            error: function (response) {
-                console.log(response)
+            error:
+                $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger')
             }
         });
     }
 
+    window.onload = function () {
+      is_SAM_working();
+    };
+
+    $(document).ready(function (){
+        setInterval(is_SAM_working,5000);
+    })
 </script>
 </body>
 </html>

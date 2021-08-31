@@ -328,12 +328,12 @@
     }
 
 
-    window.onload = function () {
+    $(document).ready = function () {
       update_info_about_variables();
       update_info_about_conditions();
       change_color();
     };
-    
+
     $(document).ready(function (){
         setInterval(change_color,5000);
         setInterval(update_info_about_variables,5000);

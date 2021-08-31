@@ -106,9 +106,8 @@ function is_SAM_working(){
             datatype: 'json',
 
             success: function (response) {
-                if (response) {
-                    $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success')
-                }
+                $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success')
+
             },
             error: function (response) {
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger')

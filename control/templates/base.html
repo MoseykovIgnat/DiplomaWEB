@@ -104,7 +104,7 @@ function is_SAM_working(){
             type: 'GET',
             url: "{% url 'is_SAM_working' %}",
             datatype: 'json',
-
+                })
             .done(function (response) {
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success')
 
@@ -112,7 +112,6 @@ function is_SAM_working(){
             .fail(function (response) {
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger')
             })
-        });
     }
 
     window.onload = function () {

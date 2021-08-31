@@ -48,7 +48,7 @@
                 {% block sidebar %}
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                    <a class="text-danger" style="margin-top: 8%">{{ user.get_username }}</a>
+                    <a class="btn btn-danger" id="username_button" style="margin-top: 8%">{{ user.get_username }}</a>
                 </li>
                     
                     <p>&nbsp;&nbsp;&nbsp;&nbsp; </p>
@@ -99,7 +99,23 @@ $(document).ready(function() {
 
 });
 
+function is_SAM_working(){
+                $.ajax({
+            type: 'GET',
+            url: "{% url 'is_SAM_working' %}",
+            datatype: 'json',
 
+            success: function (response) {
+            $('#username_button')
+
+                }
+
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+    }
 
 </script>
 </body>

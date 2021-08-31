@@ -155,6 +155,12 @@ def update_info_about_variables(request):
         return HttpResponse(data, content_type='application/json')
 
 
+def is_SAM_working(request):
+    if request.method == 'GET' and request.is_ajax():
+        data = {"Result": True}
+        return HttpResponse(data, content_type='application/json')
+
+
 def del_exist_condition(request):
     cond_name = request.GET.get('cond_name')
     user = request.user.username

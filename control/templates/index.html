@@ -342,12 +342,12 @@
             url: "{% url 'is_SAM_working' %}",
             datatype: 'json',
 
-            success: function (response) {
+            success: function() {
                 console.log('server working fine');
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success');
 
             },
-            error: function (response) {
+            error: function() {
                 console.log('server not working');
                 $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger');
             }

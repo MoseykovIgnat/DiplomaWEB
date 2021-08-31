@@ -221,7 +221,6 @@
     window.onload = function () {
       update_info_about_variables();
       update_info_about_conditions();
-      is_SAM_working();
       change_color();
     };
     </script>
@@ -336,27 +335,10 @@
         });
     }
 
-    function is_SAM_working(){
-                $.ajax({
-            type: 'GET',
-            url: "{% url 'is_SAM_working' %}",
-            datatype: 'json',
 
-            success: function() {
-                console.log('server working fine');
-                $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success');
-
-            },
-            error: function() {
-                console.log('server not working');
-                $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger');
-            }
-        });
-    }
 
     $(document).ready(function (){
         setInterval(change_color,5000);
-        setInterval(is_SAM_working,5000);
         setInterval(update_info_about_variables,5000);
         setInterval(update_info_about_conditions,5000);
     })

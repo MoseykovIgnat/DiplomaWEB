@@ -48,7 +48,7 @@
                 {% block sidebar %}
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                    <a class="btn btn-danger" id="username_button" style="margin-top: 8%">{{ user.get_username }}</a>
+                    <a class="btn btn-danger" id="username_button" style="margin-top: 5%">{{ user.get_username }}</a>
                 </li>
                     
                     <p>&nbsp;&nbsp;&nbsp;&nbsp; </p>
@@ -99,7 +99,31 @@ $(document).ready(function() {
 
 });
 
+    function is_SAM_working(){
+                $.ajax({
+            type: 'GET',
+            url: "{% url 'is_SAM_working' %}",
+            datatype: 'json',
 
+            success: function() {
+                console.log('server working fine');
+                $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-success');
+
+            },
+            error: function() {
+                console.log('server not working');
+                $('#username_button').removeClass('btn-danger').removeClass('btn-success').addClass('btn-danger');
+            }
+        });
+    }
+
+    window.onload = function () {
+      is_SAM_working();
+    };
+
+    $(document).ready(function (){
+        setInterval(is_SAM_working,5000);
+    })
 </script>
 </body>
 </html>

@@ -4,9 +4,9 @@ body{
 }
 
 
-svg{
-    background: url(../img/img.png) no-repeat;
-}
+/*svg{*/
+/*    background: url() no-repeat;*/
+/*}*/
 
 #toolbox{
     position: absolute;

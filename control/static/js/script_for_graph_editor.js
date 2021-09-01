@@ -635,7 +635,8 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
   /** MAIN SVG **/
   var svg = d3.select("body").append("svg")
     .attr("width", 598)
-    .attr("height", 299);
+    .attr("height", 299)
+    .attr("fill", url());
   var graph = new GraphCreator(svg, nodes, edges);
   graph.setIdCt(2);
   graph.updateGraph();

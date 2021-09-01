@@ -40,12 +40,20 @@
         function addAttribute() {
            document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-condname","NULL")});
            }
+    </script>
 
-        function getHTMLcode(){
+    <script type="text/javascript">
+      function textToClipboard (text) {
+          var dummy = document.createElement("textarea");
+          document.body.appendChild(dummy);
+          dummy.value = text;
+          dummy.select();
+          document.execCommand("copy");
+          document.body.removeChild(dummy);
+        }
+      function getHTMLcode(){
             var copyText = document.querySelector('svg').outerHTML;
-            copyText.select();
-            document.execCommand('copy');
-            alert("Coppied HTML code");
+            textToClipboard(copyText);
         }
     </script>
 

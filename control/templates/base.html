@@ -43,11 +43,14 @@
                         Custom variables and formulas
                     </a>
                 </li>
+                {% load control_extras %}
+                {% if request.user|has_group:"Expert" %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'graph_editor' %}">
                         Graph editor
                     </a>
                 </li>
+                {% endif %}
 
             </ul>
             <!-- Этот блок расположен справа -->

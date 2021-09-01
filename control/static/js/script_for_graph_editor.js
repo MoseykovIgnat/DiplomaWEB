@@ -1,3 +1,4 @@
+// Copied from https://bl.ocks.org/cjrd/6863459
 
 document.onload = (function(d3, saveAs, Blob, undefined) {
   "use strict";
@@ -56,7 +57,7 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
       .attr('d', 'M0,0L0,0')
       .style('marker-end', 'url(#mark-end-arrow)');
 
-    // svg nodes and edges 
+    // svg nodes and edges
     thisGraph.paths = svgG.append("g").selectAll("g");
     thisGraph.circles = svgG.append("g").selectAll("g");
 
@@ -635,8 +636,7 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
   /** MAIN SVG **/
   var svg = d3.select("body").append("svg")
     .attr("width", 598)
-    .attr("height", 299)
-    .attr("fill", url());
+    .attr("height", 299);
   var graph = new GraphCreator(svg, nodes, edges);
   graph.setIdCt(2);
   graph.updateGraph();

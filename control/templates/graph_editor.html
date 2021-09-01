@@ -9,6 +9,8 @@
    				<button onclick="addAttribute()">Добавить атрибут</button>
    				<input id="addAttribute" type="button" onclick="addAttribute()" value="Добавить атрибут">
    				<input id="get_HTML_code" type="button" onclick="getHTMLcode()" value="Получить HTML код">
+                 <input type="file" id="file-selector">
+                    <p id="status"></p>
    			</p>
 
  		</form>
@@ -36,7 +38,7 @@
 
     <script>
         function addAttribute() {
-           document.querySelectorAll('svg g.conceptG circle').forEach(element => { element.setAttribute('data-condname','NULL')});
+           document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-condname","NULL")});
            }
 
         function getHTMLcode(){
@@ -47,5 +49,34 @@
         }
     </script>
 
+    <script>
+      const status = document.getElementById('status');
+
+      const mysvg = document.getElementById('mysvg');
+      if (window.FileList && window.File && window.FileReader) {
+        document.getElementById('file-selector').addEventListener('change', event => {
+          status.textContent = '';
+          const file = event.target.files[0];
+          if (!file.type) {
+            status.textContent = 'Error: The File.type property does not appear to be supported on this browser.';
+            return;
+          }
+          if (!file.type.match('image.*')) {
+            status.textContent = 'Error: The selected file does not appear to be an image.'
+            return;
+          }
+          const reader = new FileReader();
+          reader.addEventListener('load', event => {
+            mysvg.style.background = "url('"+event.target.result+"') no-repeat";
+            mysvg.style.backgroundSize = '100%';
+          });
+          reader.readAsDataURL(file);
+          // console.log(file.width);
+          // console.log(this.width);
+          // document.getElementById('mysvg').style.backgroundImage = "url('"+file+"')"
+
+        });
+      }
+    </script>
 
 {% endblock javascript %}

@@ -48,6 +48,7 @@
         var output = document.getElementById("demo");
         output.innerHTML = slider.value; // Display the default slider value
         slider.oninput = function(){
+            document.querySelectorAll('svg g.conceptG circle').forEach(el => el.remove());
             output.innerHTML = this.value;
             document.getElementById("mysvg").style.height = this.value+'%';
             document.getElementById("mysvg").style.width = this.value+'%';

@@ -618,7 +618,7 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
 
   // initial node data
   var nodes = [];
-  var edges = []S;
+  var edges = [];
 
   /** MAIN SVG **/
   var svg = d3.select("body").append("svg")

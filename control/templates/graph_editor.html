@@ -1,25 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 	<h1 align="center">Редактор добавления новых графов</h1 >
-	<div>
-		<form>
-   			<p>
-                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-                <p>Size of img in %: <span id="demo"></span></p>
-   				<button onclick="addAttribute()">Добавить атрибут</button>
-   				<input id="addAttribute" type="button" onclick="addAttribute()" value="Добавить атрибут">
-   				<input id="get_HTML_code" type="button" onclick="getHTMLcode()" value="Получить HTML код">
-                 <input type="file" id="file-selector">
-                    <p id="status"></p>
-   			</p>
+    <div class="row justify-content-center main-info">
+        <div class="col-sm-8 text-center svg_place">
+            <p>Choose a background image</p>
+            <input type="file" id="file-selector">
+            <p id="status"></p>
+            <p> Choose the scale of the image </p>
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            <p>Size of img in %: <span id="demo"></span></p>
+            <p>Get the HTML code of svg to use it</p>
+            <input id="get_HTML_code" type="button" onclick="getHTMLcode()" value="Получить HTML код">
+        </div>
 
- 		</form>
-	</div>
-    <div class="svg_place">
+        <div class="info text-center col-sm-4">
 
+        </div>
     </div>
+
+{#	<div>#}
+{#		<form>#}
+{#   			<p>#}
+{#                #}
+{#   				<input id="addAttribute" type="button" onclick="addAttribute()" value="Добавить атрибут">#}
+{#   				#}
+{#                 <input type="file" id="file-selector">#}
+{##}
+{#   			</p>#}
+{##}
+{# 		</form>#}
+{#	</div>#}
+
   <div id="toolbox">
     <input type="file" id="hidden-file-upload">
       {% load static %}

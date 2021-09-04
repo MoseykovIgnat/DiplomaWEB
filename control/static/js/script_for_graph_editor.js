@@ -622,9 +622,9 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
 
   /** MAIN SVG **/
   var svg = d3.select("body").append("svg")
-    // .attr("width", 598)
-    .attr('id','mysvg');
-    // .attr("height", 299);
+    .attr("width", 500)
+    .attr('id','mysvg')
+    .attr("height", 500);
 
   var graph = new GraphCreator(svg, nodes, edges);
   graph.setIdCt(2);

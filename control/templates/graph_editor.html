@@ -6,8 +6,8 @@
 	<div>
 		<form>
    			<p>
-                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-                    <p>Size of img in %: <span id="demo"></span></p>
+                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                <p>Size of img in %: <span id="demo"></span></p>
    				<button onclick="addAttribute()">Добавить атрибут</button>
    				<input id="addAttribute" type="button" onclick="addAttribute()" value="Добавить атрибут">
    				<input id="get_HTML_code" type="button" onclick="getHTMLcode()" value="Получить HTML код">
@@ -44,6 +44,9 @@
            }
     </script>
     <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value; // Display the default slider value
         slider.oninput = function(){
             output.innerHTML = this.value;
             document.getElementById("mysvg").style.height = this.value+'%';

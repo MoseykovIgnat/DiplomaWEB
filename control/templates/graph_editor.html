@@ -104,7 +104,7 @@
           reader.addEventListener('load', event => {
             var image = new Image();
             image.src = event.target.result;
-            alert(image.width);
+            alert(image.width + ' ANDREY UEBOK' + image.height);
             d3.select('svg')
                 .attr('width', image.width)
                 .attr('height', image.height);

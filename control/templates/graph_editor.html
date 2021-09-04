@@ -102,8 +102,12 @@
           }
           const reader = new FileReader();
           reader.addEventListener('load', event => {
+              var image = new Image();
+              image.src = event.target.result;
+              alert(image.width);
             mysvg.style.background = "url('"+event.target.result+"') no-repeat";
             mysvg.style.backgroundSize = '100%';
+
           });
           reader.readAsDataURL(file);
           // console.log(file.width);

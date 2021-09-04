@@ -16,6 +16,8 @@
  		</form>
 	</div>
   <div id="toolbox">
+    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <p>Size of img in %: <span id="demo"></span></p>
     <input type="file" id="hidden-file-upload">
       {% load static %}
     <input id="upload-input" type="image" height="10px" width="10px" title="upload graph" src="{% static 'img/upload-icon.png' %}" alt="upload graph">
@@ -41,7 +43,13 @@
            document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-condname","NULL")});
            }
     </script>
-
+    <script>
+        slider.oninput = function(){
+            output.innerHTML = this.value;
+            document.getElementById("mysvg").style.height = this.value+'%';
+            document.getElementById("mysvg").style.width = this.value+'%';
+        }
+    </script>
     <script type="text/javascript">
       function textToClipboard (text) {
           var dummy = document.createElement("textarea");

@@ -601,27 +601,27 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
   };
 
   /**** MAIN ****/
-
-  // warn the user when leaving
-  window.onbeforeunload = function() {
-    return "Make sure to save your graph locally before leaving :-)";
-  };
-
-  var docEl = document.documentElement,
-    bodyEl = document.getElementsByTagName('body')[0];
-
-  var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
-    height = window.innerHeight || docEl.clientHeight || bodyEl.clientHeight;
-
-  var xLoc = width / 2 - 25,
-    yLoc = 100;
+  //
+  // // warn the user when leaving
+  // window.onbeforeunload = function() {
+  //   return "Make sure to save your graph locally before leaving :-)";
+  // };
+  //
+  // var docEl = document.documentElement,
+  //   bodyEl = document.getElementsByTagName('body')[0];
+  //
+  // var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
+  //   height = window.innerHeight || docEl.clientHeight || bodyEl.clientHeight;
+  //
+  // var xLoc = width / 2 - 25,
+  //   yLoc = 100;
 
   // initial node data
   var nodes = [];
   var edges = [];
 
   /** MAIN SVG **/
-  var svg = d3.select("svg_place").append("svg")
+  var svg = d3.select(".svg_place").append("svg")
     .attr("width", 500)
     .attr('id','mysvg')
     .attr("height", 500);

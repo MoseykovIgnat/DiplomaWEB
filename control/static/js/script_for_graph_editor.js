@@ -621,7 +621,7 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
   var edges = [];
 
   /** MAIN SVG **/
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select("svg_place").append("svg")
     .attr("width", 500)
     .attr('id','mysvg')
     .attr("height", 500);

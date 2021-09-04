@@ -106,7 +106,7 @@
             image.src = event.target.result;
             alert(image.width);
             d3.select('svg')
-                .attr('width', image.height)
+                .attr('width', image.width)
                 .attr('height', image.height);
             mysvg.style.background = "url('"+event.target.result+"') no-repeat";
             mysvg.style.backgroundSize = '100%';

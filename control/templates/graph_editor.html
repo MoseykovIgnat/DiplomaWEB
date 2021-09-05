@@ -60,8 +60,8 @@
         var output = document.getElementById("demo");
         var el   = document.getElementById("mysvg"); // or other selector like querySelector()
         var rect = el.getBoundingClientRect(); // get the bounding rectangle
-        const svg_start_width = rect.width;
-        const svg_start_height = rect.height;
+        var svg_start_width = rect.width;
+        var svg_start_height = rect.height;
         output.innerHTML = slider.value; // Display the default slider value
         slider.oninput = function(){
             document.querySelectorAll('svg g.conceptG circle').forEach(el => el.remove());
@@ -77,25 +77,7 @@
             {#document.getElementById("mysvg").style.width = document.getElementById("mysvg").style.width + this.value*document.getElementById("mysvg").style.width/100;#}
             {#document.getElementById("mysvg").style.backgroundSize = this.value+'%';#}
         }
-    </script>
-    <script type="text/javascript">
-      function textToClipboard (text) {
-          var dummy = document.createElement("textarea");
-          document.body.appendChild(dummy);
-          dummy.value = text;
-          dummy.select();
-          document.execCommand("copy");
-          document.body.removeChild(dummy);
-        }
-      function getHTMLcode(){
-            document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-cond_name","NULL")});
-            document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-dot_name","NULL")});
-            var copyText = document.querySelector('svg').outerHTML;
-            textToClipboard(copyText);
-        }
-    </script>
 
-    <script>
       const status = document.getElementById('status');
 
       const mysvg = document.getElementById('mysvg');
@@ -120,6 +102,8 @@
             image.src = event.target.result;
             image.onload = function () {
                 alert(image.width + ':width and height:' + image.height);
+                svg_start_width = image.width;
+                svg_start_height = image.height;
                 d3.select('svg')
                     .attr('width', image.width)
                     .attr('height', image.height);
@@ -134,5 +118,23 @@
         });
       }
     </script>
+    <script type="text/javascript">
+      function textToClipboard (text) {
+          var dummy = document.createElement("textarea");
+          document.body.appendChild(dummy);
+          dummy.value = text;
+          dummy.select();
+          document.execCommand("copy");
+          document.body.removeChild(dummy);
+        }
+      function getHTMLcode(){
+            document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-cond_name","NULL")});
+            document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-dot_name","NULL")});
+            var copyText = document.querySelector('svg').outerHTML;
+            textToClipboard(copyText);
+        }
+    </script>
+
+
 
 {% endblock javascript %}

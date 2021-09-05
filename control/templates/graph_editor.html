@@ -80,6 +80,8 @@
           document.body.removeChild(dummy);
         }
       function getHTMLcode(){
+            document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-cond_name","NULL")});
+            document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-dot_name","NULL")});
             var copyText = document.querySelector('svg').outerHTML;
             textToClipboard(copyText);
         }

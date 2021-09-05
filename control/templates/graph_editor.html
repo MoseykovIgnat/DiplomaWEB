@@ -64,7 +64,7 @@
         e.preventDefault();
     $.ajax({
         type:'POST',
-        url : "{% url 'save_graph_name' %}",
+        url : "{% url 'save_new_graph_name' %}",
         data:{
             new_graph_name: $('#input_for_name_of_graph').val(),
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),

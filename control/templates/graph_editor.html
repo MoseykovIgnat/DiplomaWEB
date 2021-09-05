@@ -61,12 +61,14 @@
     <script>
         var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
+        const mysvg = document.getElementById('mysvg');
         output.innerHTML = slider.value; // Display the default slider value
         slider.oninput = function(){
             document.querySelectorAll('svg g.conceptG circle').forEach(el => el.remove());
             output.innerHTML = this.value;
-            document.getElementById("mysvg").style.height = this.value+'%';
-            document.getElementById("mysvg").style.width = this.value+'%';
+            mysvg.style.height = this.value+'%';
+            mysvg.style.width = this.value+'%';
+            mysvg.style.backgroundSize = this.value+'%';
         }
     </script>
     <script type="text/javascript">

@@ -137,7 +137,7 @@
              <form method="POST" id="change_name_of_dot">
             {% csrf_token %}
             <div class="form-group">
-                <label style="color: black; position: center">Path</label>
+                <label style="color: black; text-align: center">Path</label>
                 <input id="input_for_name_of_dot" type="text" class="form-control collectes-date-chargement-min text-center" id="path" value="input name of dot">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -233,10 +233,8 @@
                         console.log('Rename node');
                         $('#RenameNodeModal').modal('show')
                         {#$("#RenameNodeName").val(d3.select(this).attr("data-dot_name"));#}
-                        {#rename_node_modal_active = true;#}
-                        {#node_to_rename = d3.select(this);#}
-                        {#$("#RenameNodeName").focus();#}
-                        {#$('#RenameNodeModal').foundation('reveal', 'open');#}
+                        node_to_rename = d3.select(this);
+                        $("#RenameNodeName").focus();
                 }
         },
         {

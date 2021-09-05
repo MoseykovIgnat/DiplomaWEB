@@ -124,7 +124,28 @@
             {% endif %}
         </div>
 </div>  
-
+<div id="RenameNodeModal" class="reveal-modal" data-reveal="" aria-labelledby="modalTitle" aria-hidden="true" role="dialog" style="display: none; opacity: 1; visibility: hidden; top: -329.011px;">
+          <h2 id="modalTitle">Rename Node</h2>
+          <form id="RenameNodeForm">
+            <div class="row">
+              <div class="large-12 columns">
+                <label>Node name
+                  <input type="text" class="inputName" id="RenameNodeName" placeholder="node name">
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-8 columns">
+                &nbsp;
+              </div>
+              <div class="large-4 columns">
+                <a href="#" class="button info" onclick="close_rename_node_modal()">Cancel</a>
+                <a href="#" class="button success" onclick="rename_node()">Rename</a>
+              </div>
+            </div>
+          </form>
+          <a class="close-reveal-modal" aria-label="Close">×</a>
+</div>
 <!--     <div>
 {#    Форма для POST#}
 {#    <form method="POST" id="post-form">#}
@@ -153,9 +174,14 @@
     {% load static %}
     <script src="{% static 'js/d3-context-menu.js' %}"></script>
     <script>
+        function close_modal() {
+        $(document).foundation('reveal', 'close');
+        }
 
 		// My menu
         var conditions = [];
+        var rename_node_modal_active = false;
+        var node_to_rename = null;
         $.ajax({
                     type: 'GET',
                     url: "{% url 'get_conditions' %}",
@@ -171,12 +197,28 @@
 		var menu = [
 		{
             title: function () {
+                    return 'Name of dot: ' + d3.select(this).attr("data-dot_name");
+                }
+			},
+        {
+            title: function () {
                     return 'Name of condition: ' + d3.select(this).attr("data-cond_name");
                 }
 			},
-		{
+        {
+                title: 'Change the dot name',
+                action: function() {
+                        console.log('Rename node');
+                        $("#RenameNodeName").val(d3.select(this).attr("data-dot_name"));
+                        rename_node_modal_active = true;
+                        node_to_rename = d3.select(this);
+                        $("#RenameNodeName").focus();
+                        $('#RenameNodeModal').foundation('reveal', 'open');
+                }
+        },
+        {
 
-            title: 'Change Condition',
+            title: 'Change the condition name',
             children: function() {
                 return conditions.map(function(condition) {
                     return {
@@ -193,7 +235,6 @@
             }
 
         },
-
 
 		]
 		var selection = d3.selectAll('circle')
@@ -218,6 +259,18 @@
 					}
 				}
 			})); // attach menu to element
+
+        function rename_node() {
+        if (node_to_rename && rename_node_modal_active) {
+                name = $('#RenameNodeName').val();
+                console.log('New Node name: ' + name);
+                node_to_rename.name = name;
+                rename_node_modal_active = false;
+
+        }
+        close_modal();
+        alert('New name '+ name);
+}
 	</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
     <script>

@@ -32,15 +32,15 @@
 {# 		</form>#}
 {#	</div>#}
 
-{#  <div id="toolbox">#}
-{#    <input type="file" id="hidden-file-upload">#}
-{#      {% load static %}#}
-{#    <input id="upload-input" type="image" height="10px" width="10px" title="upload graph" src="{% static 'img/upload-icon.png' %}" alt="upload graph">#}
-{#      {% load static %}#}
-{#    <input type="image" height="10px" width="10px" id="delete-graph" title="delete graph" src="{% static 'img/trash-icon.png' %}" alt="delete graph">#}
-{#  </div>#}
+  <div id="toolbox">
+    <input type="file" id="hidden-file-upload">
+      {% load static %}
+    <input id="upload-input" type="image" height="10px" width="10px" title="upload graph" src="{% static 'img/upload-icon.png' %}" alt="upload graph">
+      {% load static %}
+    <input type="image" height="10px" width="10px" id="delete-graph" title="delete graph" src="{% static 'img/trash-icon.png' %}" alt="delete graph">
+  </div>
     <div class=graph id=graph>
-    
+
     </div>
 
 

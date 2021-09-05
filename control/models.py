@@ -123,6 +123,9 @@ class ScGraphInfo(models.Model):
         managed = False
         db_table = 'sc_graph_info'
 
+    def __str__(self):
+        return "%s" % self.path
+
 
 class ScGraphName(models.Model):
     graph_id = models.AutoField(primary_key=True)
@@ -131,3 +134,6 @@ class ScGraphName(models.Model):
     class Meta:
         managed = False
         db_table = 'sc_graph_name'
+
+    def __str__(self):
+        return "%s" % self.path

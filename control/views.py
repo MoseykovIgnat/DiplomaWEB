@@ -270,7 +270,7 @@ def condition_create(request):
                     scpaths_model.save()
             instance = form.save(commit=False)
             instance.user_id = user_id.id
-            instance.isalert = 0;
+            instance.isalert = 0
             instance.time_create_or_alert = datetime.now(tz=timezone.utc)
             instance.save()
             return redirect('custom_settings')

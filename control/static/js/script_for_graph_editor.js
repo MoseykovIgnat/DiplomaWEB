@@ -622,7 +622,7 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
 
   /** MAIN SVG **/
   var svg = d3.select(".svg_place").append("svg")
-    .attr('class','mysvg');
+    .attr('id','mysvg');
 
   var graph = new GraphCreator(svg, nodes, edges);
   graph.setIdCt(2);

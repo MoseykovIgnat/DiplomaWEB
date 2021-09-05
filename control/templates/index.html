@@ -134,7 +134,7 @@
         </button>
       </div>
       <div class="modal-body" >
-             <form method="POST" id="change_name_of_dot">
+             <form method="POST" id="post_new_dot_name">
             {% csrf_token %}
             <div class="form-group">
                 <label style="color: black; text-align: center">Path</label>
@@ -296,13 +296,13 @@
 	</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
     <script>
-    $(document).on('submit', '#change_name_of_dot',function(e){
+    $(document).on('submit', '#post_new_dot_name',function(e){
         e.preventDefault();
     $.ajax({
         type:'POST',
         url : "{% url 'rename_dot_name' %}",
         data:{
-            new_name: $('#input_for_name_of_dot'),
+            new_name: $('#input_for_name_of_dot').val(),
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'
         },

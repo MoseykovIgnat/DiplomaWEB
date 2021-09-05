@@ -12,7 +12,7 @@
             <input type="file" id="file-selector">
             <p id="status"></p>
             <p><mark>2. Choose the scale of the image.</mark></p>
-            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
             <p>Size of img in %: <span id="demo"></span></p>
             <p><mark>3. Get the HTML code of svg to use it.</mark></p>
             <input id="get_HTML_code" type="button" onclick="getHTMLcode()" value="Получить HTML код">
@@ -65,9 +65,13 @@
         slider.oninput = function(){
             document.querySelectorAll('svg g.conceptG circle').forEach(el => el.remove());
             output.innerHTML = this.value;
-            document.getElementById("mysvg").style.height = this.value+'%';
-            document.getElementById("mysvg").style.width = this.value+'%';
-            document.getElementById("mysvg").style.backgroundSize = this.value+'%';
+
+            d3.select('svg')
+                    .attr('width', document.getElementById("mysvg").style.width + this.value*document.getElementById("mysvg").style.width/100)
+                    .attr('height', document.getElementById("mysvg").style.height + this.value*document.getElementById("mysvg").style.height/100;);
+            {#document.getElementById("mysvg").style.height = document.getElementById("mysvg").style.height + this.value*document.getElementById("mysvg").style.height/100;#}
+            {#document.getElementById("mysvg").style.width = document.getElementById("mysvg").style.width + this.value*document.getElementById("mysvg").style.width/100;#}
+            {#document.getElementById("mysvg").style.backgroundSize = this.value+'%';#}
         }
     </script>
     <script type="text/javascript">

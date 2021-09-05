@@ -61,7 +61,7 @@
     <script>
         var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
-        const mysvg = document.getElementById('mysvg');
+        var mysvg = document.getElementById('mysvg');
         output.innerHTML = slider.value; // Display the default slider value
         slider.oninput = function(){
             document.querySelectorAll('svg g.conceptG circle').forEach(el => el.remove());
@@ -106,7 +106,7 @@
           reader.addEventListener('load', event => {
             var image = new Image();
             image.src = event.target.result;
-            alert(image.width + ' ANDREY UEBOK' + image.height);
+            alert(image.width + ':width and height: ' + image.height);
             d3.select('svg')
                 .attr('width', image.width)
                 .attr('height', image.height);

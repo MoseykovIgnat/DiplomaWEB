@@ -52,10 +52,10 @@ document.onload = (function(d3, saveAs, Blob, undefined) {
     var svgG = thisGraph.svgG;
 
     // displayed when dragging between nodes
-    thisGraph.dragLine = svgG.append('svg:path')
-      .attr('class', 'link dragline hidden')
-      .attr('d', 'M0,0L0,0')
-      .style('marker-end', 'url(#mark-end-arrow)');
+    // thisGraph.dragLine = svgG.append('svg:path')
+    //   .attr('class', 'link dragline hidden')
+    //   .attr('d', 'M0,0L0,0')
+    //   .style('marker-end', 'url(#mark-end-arrow)');
 
     // svg nodes and edges
     thisGraph.paths = svgG.append("g").selectAll("g");

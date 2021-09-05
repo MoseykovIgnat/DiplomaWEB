@@ -65,9 +65,12 @@
         slider.oninput = function(){
             document.querySelectorAll('svg g.conceptG circle').forEach(el => el.remove());
             output.innerHTML = this.value;
+            var svg_width = document.getElementById("mysvg").style.width + this.value*document.getElementById("mysvg").style.width/100;
+            var svg_height = document.getElementById("mysvg").style.height + this.value*document.getElementById("mysvg").style.height/100;
+            alert(svg_height + svg_height);
             d3.select('svg')
-                    .attr('width', document.getElementById("mysvg").style.width + this.value*document.getElementById("mysvg").style.width/100)
-                    .attr('height', document.getElementById("mysvg").style.height + this.value*document.getElementById("mysvg").style.height/100);
+                    .attr('width', svg_width)
+                    .attr('height', svg_height);
             {#document.getElementById("mysvg").style.height = document.getElementById("mysvg").style.height + this.value*document.getElementById("mysvg").style.height/100;#}
             {#document.getElementById("mysvg").style.width = document.getElementById("mysvg").style.width + this.value*document.getElementById("mysvg").style.width/100;#}
             {#document.getElementById("mysvg").style.backgroundSize = this.value+'%';#}

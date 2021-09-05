@@ -2,20 +2,20 @@
 
 {% block content %}
 	<h1 align="center">Редактор добавления новых графов</h1 >
-    <div class="row justify-content-md-center main-info mt-5">
-        <div class="col-sm-5 text-center svg_place shadow p-4 mb-4 bg-white">
+    <div class="row justify-content-md-center main-info ">
+        <div class="col-sm-5 text-center svg_place  mt-5">
 
         </div>
 
         <div class="info justify-content-center text-center col-sm-4 shadow p-4 mb-4 bg-white mt-5">
             <p><mark>1. Choose a background image.</mark></p>
-            <input type="file" class="btn btn-secondary" id="file-selector">
+            <input type="file" class="btn btn-outline-dark" id="file-selector">
             <p id="status"></p>
             <p><mark>2. Choose the scale of the image.</mark></p>
             <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
             <p>Size of img in %: <span id="demo"></span></p>
             <p><mark>3. Get the HTML code of svg to use it.</mark></p>
-            <input id="get_HTML_code" class="btn btn-secondary" onclick="getHTMLcode()" value="Получить HTML код">
+            <input id="get_HTML_code" class="btn btn-outline-dark" onclick="getHTMLcode()" value="Получить HTML код">
         </div>
     </div>
 

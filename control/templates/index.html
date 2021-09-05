@@ -282,7 +282,7 @@
 				}
 			})); // attach menu to element
 
-        function rename_node() {
+{% comment %}        function rename_node() {
         if (node_to_rename && rename_node_modal_active) {
                 name = $('#RenameNodeName').val();
                 console.log('New Node name: ' + name);
@@ -292,7 +292,7 @@
         }
         close_modal();
         alert('New name '+ name);
-}
+}{% endcomment %}
 	</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
     <script>
@@ -303,6 +303,7 @@
         url : "{% url 'rename_dot_name' %}",
         data:{
             new_name: $('#input_for_name_of_dot').val(),
+            node_to_rename: node_to_rename,
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'
         },

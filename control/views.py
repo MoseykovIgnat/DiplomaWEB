@@ -164,6 +164,8 @@ def rename_dot_name(request):
     # ЗАКИДЫВАЕМ НОВОЕ ИМЯ ВМЕСТО СТАРОГО
     print('ok i will do it')
     a = {'result': 'true'}
+    print(request.POST.get('new_name'))
+    print(request.POST.get('node_to_rename'))
     return HttpResponse(json.dumps(a), content_type='application/json')
 
 

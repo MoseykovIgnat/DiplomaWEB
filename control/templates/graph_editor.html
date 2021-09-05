@@ -7,9 +7,9 @@
 
         </div>
 
-        <div class="info text-center col-sm-4 shadow p-4 mb-4 bg-white">
+        <div class="info text-center col-sm-4 shadow p-4 mb-4 bg-white mt-5">
             <p><mark>1. Choose a background image.</mark></p>
-            <input type="file" class="custom-file-input" id="file-selector">
+            <input type="file" class="custom-file-input btn btn-secondary" id="file-selector">
             <p id="status"></p>
             <p><mark>2. Choose the scale of the image.</mark></p>
             <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
@@ -32,16 +32,18 @@
 {# 		</form>#}
 {#	</div>#}
 
-  <div id="toolbox">
-    <input type="file" id="hidden-file-upload">
-      {% load static %}
-    <input id="upload-input" type="image" height="10px" width="10px" title="upload graph" src="{% static 'img/upload-icon.png' %}" alt="upload graph">
-      {% load static %}
-    <input type="image" height="10px" width="10px" id="delete-graph" title="delete graph" src="{% static 'img/trash-icon.png' %}" alt="delete graph">
-  </div>
-  <div class=graph id=graph>
+{#  <div id="toolbox">#}
+{#    <input type="file" id="hidden-file-upload">#}
+{#      {% load static %}#}
+{#    <input id="upload-input" type="image" height="10px" width="10px" title="upload graph" src="{% static 'img/upload-icon.png' %}" alt="upload graph">#}
+{#      {% load static %}#}
+{#    <input type="image" height="10px" width="10px" id="delete-graph" title="delete graph" src="{% static 'img/trash-icon.png' %}" alt="delete graph">#}
+{#  </div>#}
+    <div class=graph id=graph>
+    
+    </div>
 
-  </div>
+
 
 
 

@@ -24,7 +24,6 @@ from .utils import *
 import time
 
 
-
 # Create your views here.
 @receiver(user_logged_in)
 def got_online(sender, user, request, **kwargs):
@@ -163,7 +162,9 @@ def is_SAM_working(request):
 
 def rename_dot_name(request):
     print('ok i will do it')
-    pass
+    a = {'result': 'true'}
+    return HttpResponse(json.dumps(a), content_type='application/json')
+
 
 def del_exist_condition(request):
     cond_name = request.GET.get('cond_name')
@@ -279,4 +280,3 @@ def create_post(request):
 def post_new(request):
     form = ScUsersForm()
     return JsonResponse(form)
-

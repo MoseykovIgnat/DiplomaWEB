@@ -102,7 +102,7 @@
             return;
           }
           const reader = new FileReader();
-          reader.addEventListener('load', event => {
+          reader.addEventListener('loadend', event => {
             var image = new Image();
             image.src = event.target.result;
             alert(image.width + ':width and height:' + image.height);

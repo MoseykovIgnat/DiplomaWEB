@@ -13,7 +13,17 @@
             <p><mark>2. Choose the scale of the image.</mark></p>
             <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
             <p>Size of img in %: <span id="demo"></span></p>
-            <p><mark>3. Get the HTML code of svg to use it.</mark></p>
+            <p><mark>3. Put indicators on the image.</mark></p>
+            <form method="POST" id="save_new_graph_name">
+            {% csrf_token %}
+            <div class="form-group">
+                <label style="color: black; text-align: center"><mark>4. Write graph name.</mark></label>
+                <input id="input_for_name_of_dot" type="text" class="form-control collectes-date-chargement-min text-center" id="path" placeholder="Insert name of graph">
+            </div>
+            <button type="submit" class="btn btn-outline-dark">Submit</button>
+            </form>
+
+            <p><mark>5. Get the HTML code of svg to use it.</mark></p>
             <input id="get_HTML_code" class="btn btn-outline-dark" onclick="getHTMLcode()" value="Получить HTML код">
         </div>
     </div>

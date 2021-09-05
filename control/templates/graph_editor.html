@@ -70,7 +70,7 @@
             var svg_width = rect.width + this.value*rect.width/100;
             var svg_height = rect.height + this.value*rect.height/100;
             alert(svg_height + svg_height);
-            d3.select('svg')
+            d3.select('mysvg')
                     .attr('width', svg_width)
                     .attr('height', svg_height);
             {#document.getElementById("mysvg").style.height = document.getElementById("mysvg").style.height + this.value*document.getElementById("mysvg").style.height/100;#}

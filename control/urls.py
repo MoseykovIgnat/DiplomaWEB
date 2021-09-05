@@ -18,5 +18,6 @@ urlpatterns = [
     path(PREFIX + 'condition_create', views.condition_create, name='condition_create'),
     path(PREFIX + 'del_exist_condition/', views.del_exist_condition, name='del_exist_condition'),
     path(PREFIX + 'is_SAM_working/', views.is_SAM_working, name='is_SAM_working'),
+    path(PREFIX + 'rename_dot_name/', views.rename_dot_name, name='rename_dot_name'),
 ]
 

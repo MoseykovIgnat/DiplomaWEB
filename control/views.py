@@ -161,6 +161,10 @@ def is_SAM_working(request):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 
+def rename_dot_name(request):
+    print('ok i will do it')
+    pass
+
 def del_exist_condition(request):
     cond_name = request.GET.get('cond_name')
     user = request.user.username

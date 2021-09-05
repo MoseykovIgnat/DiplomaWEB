@@ -71,9 +71,9 @@
             output.innerHTML = this.value;
             var svg_width = (svg_start_width+(svg_start_width/100*this.value))|0
             var svg_height = (svg_start_height+(svg_start_height/100*this.value))|0
-            alert(svg_height + ' ' + svg_width);
-            alert(svg_height + svg_height);
-            d3.select('mysvg')
+            {#alert(svg_height + ' ' + svg_width);#}
+            {#alert(svg_height + svg_height);#}
+            d3.select('svg')
                     .attr('width', svg_width)
                     .attr('height', svg_height);
             {#document.getElementById("mysvg").style.height = document.getElementById("mysvg").style.height + this.value*document.getElementById("mysvg").style.height/100;#}

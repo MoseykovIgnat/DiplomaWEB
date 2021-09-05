@@ -209,11 +209,12 @@
                 title: 'Change the dot name',
                 action: function() {
                         console.log('Rename node');
-                        $("#RenameNodeName").val(d3.select(this).attr("data-dot_name"));
-                        rename_node_modal_active = true;
-                        node_to_rename = d3.select(this);
-                        $("#RenameNodeName").focus();
-                        $('#RenameNodeModal').foundation('reveal', 'open');
+                        $('#RenameNodeModal').modal('show')
+                        {#$("#RenameNodeName").val(d3.select(this).attr("data-dot_name"));#}
+                        {#rename_node_modal_active = true;#}
+                        {#node_to_rename = d3.select(this);#}
+                        {#$("#RenameNodeName").focus();#}
+                        {#$('#RenameNodeModal').foundation('reveal', 'open');#}
                 }
         },
         {

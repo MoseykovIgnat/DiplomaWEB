@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResult
+from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResult, ScGraphName, ScGraphInfo
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.http import JsonResponse
 from django.dispatch import receiver
@@ -169,11 +169,7 @@ def rename_dot_name(request):
     return HttpResponse(json.dumps(a), content_type='application/json')
 
 
-def save_new_graph_name(request):
-    print('ok i save new graph name')
-    a = {'result': 'true'}
-    print(request.POST.get('new_graph_name'))
-    return HttpResponse(json.dumps(a), content_type='application/json')
+
 
 
 def del_exist_condition(request):
@@ -196,6 +192,16 @@ def del_exist_condition(request):
         ScConditions.objects.filter(user_id=user_id_for_del, comment=cond_name).delete()
         data = serialize("json", ScConditions.objects.filter(user_id=user_id_for_del.id))
     return HttpResponse(data, content_type='application/json')
+
+
+def save_new_graph_name(request):
+    print('ok i save new graph name')
+    sc_graph_name_model = models.ScGraphName()
+    sc_graph_name_model.graph_name = request.POST.get('new_graph_name')
+    sc_graph_name_model.save()
+    a = {'result': 'true'}
+    print(request.POST.get('new_graph_name'))
+    return HttpResponse(json.dumps(a), content_type='application/json')
 
 
 def add_new_variable(request):

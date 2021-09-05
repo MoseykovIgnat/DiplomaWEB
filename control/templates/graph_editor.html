@@ -69,6 +69,7 @@
             var rect = el.getBoundingClientRect(); // get the bounding rectangle
             var svg_width = rect.width + this.value*rect.width/100;
             var svg_height = rect.height + this.value*rect.height/100;
+            alert(svg_height + ' ' + svg_width);
             alert(svg_height + svg_height);
             d3.select('mysvg')
                     .attr('width', svg_width)

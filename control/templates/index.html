@@ -125,27 +125,48 @@
         </div>
 </div>  
 <div id="RenameNodeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <h2 id="modalTitle">Rename Node</h2>
-          <form id="RenameNodeForm">
-            <div class="row">
-              <div class="large-12 columns">
-                <label>Node name
-                  <input type="text" class="inputName" id="RenameNodeName" placeholder="node name">
-                </label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="large-8 columns">
-                &nbsp;
-              </div>
-              <div class="large-4 columns">
-                <a href="#" class="button info" onclick="close_rename_node_modal()">Cancel</a>
-                <a href="#" class="button success" onclick="rename_node()">Rename</a>
-              </div>
-            </div>
-          </form>
-          <a class="close-reveal-modal" aria-label="Close">×</a>
-</div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавление новой переменной</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+            <form action="{% url 'condition_create' %}"
+                method="post">
+                {% csrf_token %}
+                <div class="new_condition_form">
+
+                </div>
+                <button class="button btn btn-primary" type="submit">Create!</button>
+            </form>
+      </div>
+    </div>
+  </div>
+{#    <div id="RenameNodeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#          <h2 id="modalTitle">Rename Node</h2>#}
+{#          <form id="RenameNodeForm">#}
+{#            <div class="row">#}
+{#              <div class="large-12 columns">#}
+{#                <label>Node name#}
+{#                  <input type="text" class="inputName" id="RenameNodeName" placeholder="node name">#}
+{#                </label>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="row">#}
+{#              <div class="large-8 columns">#}
+{#                &nbsp;#}
+{#              </div>#}
+{#              <div class="large-4 columns">#}
+{#                <a href="#" class="button info" onclick="close_rename_node_modal()">Cancel</a>#}
+{#                <a href="#" class="button success" onclick="rename_node()">Rename</a>#}
+{#              </div>#}
+{#            </div>#}
+{#          </form>#}
+{#          <a class="close-reveal-modal" aria-label="Close">×</a>#}
+{#</div>#}
 <!--     <div>
 {#    Форма для POST#}
 {#    <form method="POST" id="post-form">#}

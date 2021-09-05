@@ -161,6 +161,7 @@ def is_SAM_working(request):
 
 
 def rename_dot_name(request):
+    # ЗАКИДЫВАЕМ НОВОЕ ИМЯ ВМЕСТО СТАРОГО
     print('ok i will do it')
     a = {'result': 'true'}
     return HttpResponse(json.dumps(a), content_type='application/json')

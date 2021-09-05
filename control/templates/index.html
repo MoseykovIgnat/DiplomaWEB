@@ -219,7 +219,7 @@
 				}
 			})); // attach menu to element
 	</script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
     <script>
 
     function change_color(){
@@ -240,6 +240,7 @@
                             if (response[i]['cond_name']===d3.select(this).attr("data-cond_name")){
                                 if(response[i]['bool_result']===1){
                                     d3.select(this).attr('fill','green');
+                                    alert('IT MUST BE GREEN');
                                 }
                                 if(response[i]['bool_result']===0) {
                                     d3.select(this).attr('fill','red');

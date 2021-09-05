@@ -134,23 +134,11 @@
         </button>
       </div>
       <div class="modal-body" >
-             <form method="POST" id="post_new_var_form">
+             <form method="POST" id="change_name_of_dot">
             {% csrf_token %}
             <div class="form-group">
-                 <label style="color: black">Source</label>
-                <p><select  class="form-select collectes-date-chargement-min text-center" aria-label="Default select example" id="source">
-                    <option selected>Choose source of variable</option>
-                    <option value="tem">TemBase</option>
-                    <option>Another</option>
-                </select></p>
-            </div>
-            <div class="form-group">
-                <label style="color: black">Path</label>
-                <input type="text" class="form-control collectes-date-chargement-min text-center" id="path" placeholder="Insert path">
-            </div>
-            <div class="form-group">
-                <label style="color: black">Interval Time</label>
-                <input type="number" class="form-control collectes-date-chargement-min text-center" id="interval_time" placeholder="Insert interval time in seconds (INTEGER)">
+                <label style="color: black; position: center">Path</label>
+                <input id="input_for_name_of_dot" type="text" class="form-control collectes-date-chargement-min text-center" id="path" value="input name of dot">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             </form>

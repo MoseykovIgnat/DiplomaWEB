@@ -102,16 +102,18 @@
             return;
           }
           const reader = new FileReader();
-          reader.addEventListener('loadend', event => {
-            var image = new Image();
-            image.src = event.target.result;
-            alert(image.width + ':width and height:' + image.height);
-            d3.select('svg')
-                .attr('width', image.width)
-                .attr('height', image.height);
+          reader.addEventListener('load', event => {
+
             mysvg.style.background = "url('"+event.target.result+"') no-repeat";
             mysvg.style.backgroundSize = '100%';
-
+            var image = new Image();
+            image.src = event.target.result;
+            image.onload = function () {
+                alert(image.width + ':width and height:' + image.height);
+                d3.select('svg')
+                    .attr('width', image.width)
+                    .attr('height', image.height);
+            }
 
           });
           reader.readAsDataURL(file);

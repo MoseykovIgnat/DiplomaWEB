@@ -61,14 +61,16 @@
     <script>
         var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
+        var el   = document.getElementById("mysvg"); // or other selector like querySelector()
+        var rect = el.getBoundingClientRect(); // get the bounding rectangle
+        const svg_start_width = rect.width;
+        const svg_start_height = rect.height;
         output.innerHTML = slider.value; // Display the default slider value
         slider.oninput = function(){
             document.querySelectorAll('svg g.conceptG circle').forEach(el => el.remove());
             output.innerHTML = this.value;
-            var el   = document.getElementById("mysvg"); // or other selector like querySelector()
-            var rect = el.getBoundingClientRect(); // get the bounding rectangle
-            var svg_width = rect.width + this.value*rect.width/100;
-            var svg_height = rect.height + this.value*rect.height/100;
+            var svg_width = (svg_start_width+(svg_start_width/100*this.value))|0
+            var svg_height = (svg_start_height+(svg_start_height/100*this.value))|0
             alert(svg_height + ' ' + svg_width);
             alert(svg_height + svg_height);
             d3.select('mysvg')

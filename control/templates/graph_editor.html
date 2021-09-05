@@ -18,7 +18,7 @@
             {% csrf_token %}
             <div class="form-group">
                 <label style="color: black; text-align: center"><mark>4. Write graph name.</mark></label>
-                <input id="input_for_name_of_dot" type="text" class="form-control collectes-date-chargement-min text-center" id="path" placeholder="Insert name of graph">
+                <input id="input_for_name_of_graph" type="text" class="form-control collectes-date-chargement-min text-center" id="path" placeholder="Insert name of graph">
             </div>
             <button type="submit" class="btn btn-outline-dark">Submit</button>
             </form>
@@ -55,10 +55,32 @@
 
 {% block javascript %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
     {% load static %}
     <script src="{% static 'js/script_for_graph_editor.js' %}"></script>
 
+       <script>
+    $(document).on('submit', '#save_new_graph_name',function(e){
+        e.preventDefault();
+    $.ajax({
+        type:'POST',
+        url : "{% url 'save_graph_name' %}",
+        data:{
+            new_graph_name: $('#input_for_name_of_graph').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success: function (response) {
+                    alert('done');
+                    {#$('#rename_dot_name').modal('hide');#}
 
+            },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
+});
+</script>
     <script>
         function addAttribute() {
            document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-condname","NULL")});
@@ -67,7 +89,7 @@
     <script>
         var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
-        var el   = document.getElementById("mysvg"); // or other selector like querySelector()
+        var el   = document.getElementsByClassName("mysvg"); // or other selector like querySelector()
         var rect = el.getBoundingClientRect(); // get the bounding rectangle
         var svg_start_width = rect.width;
         var svg_start_height = rect.height;
@@ -89,7 +111,7 @@
 
       const status = document.getElementById('status');
 
-      const mysvg = document.getElementById('mysvg');
+      const mysvg = document.getElementsByClassName('mysvg');
       if (window.FileList && window.File && window.FileReader) {
         document.getElementById('file-selector').addEventListener('change', event => {
           status.textContent = '';

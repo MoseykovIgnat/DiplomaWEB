@@ -169,6 +169,13 @@ def rename_dot_name(request):
     return HttpResponse(json.dumps(a), content_type='application/json')
 
 
+def save_new_graph_name(request):
+    print('ok i save new graph name')
+    a = {'result': 'true'}
+    print(request.POST.get('new_graph_name'))
+    return HttpResponse(json.dumps(a), content_type='application/json')
+
+
 def del_exist_condition(request):
     cond_name = request.GET.get('cond_name')
     user = request.user.username

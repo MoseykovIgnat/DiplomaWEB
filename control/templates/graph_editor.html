@@ -65,8 +65,10 @@
         slider.oninput = function(){
             document.querySelectorAll('svg g.conceptG circle').forEach(el => el.remove());
             output.innerHTML = this.value;
-            var svg_width = document.getElementById("mysvg").style.width + this.value*document.getElementById("mysvg").style.width/100;
-            var svg_height = document.getElementById("mysvg").style.height + this.value*document.getElementById("mysvg").style.height/100;
+            var el   = document.getElementById("yourElement"); // or other selector like querySelector()
+            var rect = el.getBoundingClientRect(); // get the bounding rectangle
+            var svg_width = rect.width + this.value*rect.width/100;
+            var svg_height = rect.height + this.value*rect.height/100;
             alert(svg_height + svg_height);
             d3.select('svg')
                     .attr('width', svg_width)

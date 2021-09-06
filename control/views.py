@@ -204,12 +204,11 @@ def save_new_graph_name(request):
 
 def add_new_variable(request):
     if request.method == "POST":
-        print('ok i save new graph name')
-        scgraphname_model = models.ScPaths()
+        scgraphname_model = models.ScGraphName()
         # scgraphname_model.graph_name = request.POST.get('new_graph_name')
         # scgraphname_model.save()
         a = {'result': 'true'}
-        print(scgraphname_model)
+        print(request.POST.get('new_graph_name') + scgraphname_model)
         return HttpResponse(json.dumps(a), content_type='application/json')
 
 

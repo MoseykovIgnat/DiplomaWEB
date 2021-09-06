@@ -24,5 +24,6 @@ urlpatterns = [
     path('slowcontrol/admin/', admin.site.urls),
     path('slowcontrol/', include('control.urls')),
     path('slowcontrol/accounts/', include('django.contrib.auth.urls'))  # Аутентификация для джанго!
+
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

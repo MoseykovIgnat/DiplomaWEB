@@ -204,12 +204,17 @@ def save_new_graph_name(request):
 
 def add_new_variable(request):
     if request.method == "POST":
-        scgraphname_model = models.ScGraphName()
-        # scgraphname_model.graph_name = request.POST.get('new_graph_name')
-        # scgraphname_model.save()
-        a = {'result': 'true'}
-        print(request.POST.get('new_graph_name') + scgraphname_model)
-        return HttpResponse(json.dumps(a), content_type='application/json')
+        scpaths_model = models.ScPaths()
+        user = request.user.username
+        user_id = ScUsers.objects.get(name=user)
+        scpaths_model.user_id = user_id.id
+        scpaths_model.path = request.POST.get('var_path')
+        scpaths_model.interval_time = 5
+        scpaths_model.source = request.POST.get('source')
+        scpaths_model.status = request.POST.get('status')
+        scpaths_model.save()
+        data = serialize("json", ScPaths.objects.filter(user_id=user_id.id))
+        return HttpResponse(data, content_type='application/json')
 
 
 def del_exist_variable(request):

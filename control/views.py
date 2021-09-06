@@ -169,9 +169,6 @@ def rename_dot_name(request):
     return HttpResponse(json.dumps(a), content_type='application/json')
 
 
-
-
-
 def del_exist_condition(request):
     cond_name = request.GET.get('cond_name')
     user = request.user.username
@@ -197,7 +194,7 @@ def del_exist_condition(request):
 def save_new_graph_name(request):
     if request.method == "POST":
         print('ok i save new graph name')
-        scgraphname_model = models.ScGraphName()
+        scgraphname_model = models.ScGraphInfo()
         scgraphname_model.graph_name = request.POST.get('new_graph_name')
         scgraphname_model.save()
         a = {'result': 'true'}

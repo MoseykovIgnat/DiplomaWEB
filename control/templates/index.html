@@ -6,7 +6,7 @@
 
 
 
-<div class="row justify-content-center main-info mt-5">
+<div class="row justify-content-center main-info mt-5" style="padding-top: 3%">
 
         {% load static %}
     <div class="col-sm-5 text-center">
@@ -21,7 +21,23 @@
                 </tr>
                 <tr class="Cond_res"></tr>
             </table>
-        </div>        
+        </div>
+        <div>
+            <h1>Parameters in database</h1>
+            {% if info %}
+            <table class="table table-responsive table-condensed table-hover shadow p-4 mb-4 bg-white" id='varTable'>
+                <tr>
+                    <th>Путь</th>
+                    <th>Результат</th>
+                    <th>Дата обновления</th>
+                </tr>
+                <tr class="Sc_results_data"></tr>
+            </table>
+
+            {% else %}
+                <p>У вас нет данных</p>
+            {% endif %}
+        </div>
     </div>
 
         <div class="info text-center col-sm-5">
@@ -109,24 +125,9 @@
         </div>
         </div>
 </div>
-<div class="row justify-content-around text-center main-info">
-	  <div>
-            <h1>Parameters in database</h1>
-            {% if info %}
-            <table class="table table-responsive table-condensed table-hover shadow p-4 mb-4 bg-white" id='varTable'>
-                <tr>
-                    <th>Путь</th>
-                    <th>Результат</th>
-                    <th>Дата обновления</th>
-                </tr>
-                <tr class="Sc_results_data"></tr>
-            </table>
-
-            {% else %}
-                <p>У вас нет данных</p>
-            {% endif %}
-        </div>
-</div>  
+{#<div class="row justify-content-around text-center main-info">#}
+{#	  #}
+{#</div>  #}
 <div id="rename_dot_name" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

@@ -194,9 +194,9 @@ def del_exist_condition(request):
 def save_new_graph_name(request):
     if request.method == "POST":
         print('ok i save new graph name')
-        scgraphname_model = models.ScGraphInfo()
-        scgraphname_model.graph_name = request.POST.get('new_graph_name')
-        scgraphname_model.save()
+        scgraphname_model = models.ScPaths()
+        # scgraphname_model.graph_name = request.POST.get('new_graph_name')
+        # scgraphname_model.save()
         a = {'result': 'true'}
         print(request.POST.get('new_graph_name'))
         return HttpResponse(json.dumps(a), content_type='application/json')

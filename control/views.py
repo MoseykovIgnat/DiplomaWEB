@@ -165,7 +165,8 @@ def rename_dot_name(request):
     print('ok i will do it')
     a = {'result': 'true'}
     print(request.POST.get('new_name'))
-    print(request.POST.get('node_to_rename'))
+    print(request.POST.get('old_dot_name'))
+    print(request.POST.get('dot_graph_name'))
     return HttpResponse(json.dumps(a), content_type='application/json')
 
 

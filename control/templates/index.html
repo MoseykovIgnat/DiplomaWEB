@@ -203,7 +203,7 @@
         var rename_node_modal_active = false;
         var old_dot_name = null;
         var dot_graph_name = null;
-        var dot_id = null;
+        var node_to_rename = null;
         $.ajax({
                     type: 'GET',
                     url: "{% url 'get_conditions' %}",
@@ -232,10 +232,10 @@
                 action: function() {
                         console.log('Rename node');
                         $('#rename_dot_name').modal('show');
-                        old_dot_name = d3.select(this).attr("data-dot_name");
-                        {#dot_graph_name = d3.select(this).attr("data-graph_name");#}
                         $("#input_for_name_of_dot").val(old_dot_name);
-                        node_to_rename = 'd3.select(this);'
+                        old_dot_name = d3.select(this).attr("data-dot_name");
+                        dot_graph_name = d3.select(this).attr("data-graph_name");
+                        node_to_rename = d3.select(this);
                         $("#RenameNodeName").focus();
                 }
         },
@@ -299,18 +299,21 @@
     <script>
     $(document).on('submit', '#post_new_dot_name',function(e){
         e.preventDefault();
+        var new_name = $('#input_for_name_of_dot').val()
     $.ajax({
         type:'POST',
         url : "{% url 'rename_dot_name' %}",
         data:{
-            new_name: $('#input_for_name_of_dot').val(),
-            node_to_rename: node_to_rename,
+            new_name: new_name,
+            old_dot_name: old_dot_name,
+            dot_graph_name: dot_graph_name,
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'
         },
         success: function (response) {
                     alert('done');
                     $('#rename_dot_name').modal('hide');
+                    node_to_rename.attr('data-dot_name', new_name)
 
             },
         error : function(xhr,errmsg,err) {

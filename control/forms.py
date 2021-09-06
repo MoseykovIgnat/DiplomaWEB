@@ -1,5 +1,5 @@
 from django import forms
-from .models import ScUsers, ScPaths, ScResults, ScConditions
+from .models import ScUsers, ScPaths, ScResults, ScConditions, ScGraphName, ScGraphInfo
 from django.core.exceptions import ValidationError
 
 type_cond_choices = (
@@ -17,6 +17,22 @@ display_method_choices = (
     # ('Siren', "Siren"),
     ('Text+Siren', "Text+Siren"),
 )
+
+
+class ScGraphName(forms.ModelForm):
+    graph_name = forms.CharField(label='Name of your graph')
+
+    class Meta:
+        model = ScGraphName
+        fields = ['graph_name']
+
+
+class ScGraphInfo(forms.ModelForm):
+    dot_name = forms.CharField(label='Name of your graph')
+
+    class Meta:
+        model = ScGraphInfo
+        fields = ['dot_name']
 
 
 class ScConditionsForm(forms.ModelForm):
@@ -48,6 +64,9 @@ class ScUsersForm(forms.ModelForm):
     class Meta:
         model = ScUsers
         fields = ('name', 'status')
+
+
+
 
 # class ScPathsForm(forms.ModelForm):
 #     path = forms.CharField(label='path', max_length=40)

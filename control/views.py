@@ -160,15 +160,6 @@ def is_SAM_working(request):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 
-def rename_dot_name(request):
-    # ЗАКИДЫВАЕМ НОВОЕ ИМЯ ВМЕСТО СТАРОГО
-    print('ok i will do it')
-    a = {'result': 'true'}
-    print(request.POST.get('new_name'))
-    print(request.POST.get('node_to_rename'))
-    return HttpResponse(json.dumps(a), content_type='application/json')
-
-
 def del_exist_condition(request):
     cond_name = request.GET.get('cond_name')
     user = request.user.username
@@ -189,17 +180,6 @@ def del_exist_condition(request):
         ScConditions.objects.filter(user_id=user_id_for_del, comment=cond_name).delete()
         data = serialize("json", ScConditions.objects.filter(user_id=user_id_for_del.id))
     return HttpResponse(data, content_type='application/json')
-
-
-def save_new_graph_name(request):
-    if request.method == "POST":
-        print('ok i save new graph name')
-        scgraphname_model = models.ScPaths()
-        # scgraphname_model.graph_name = request.POST.get('new_graph_name')
-        # scgraphname_model.save()
-        a = {'result': 'true'}
-        print(request.POST.get('new_graph_name') + scgraphname_model)
-        return HttpResponse(json.dumps(a), content_type='application/json')
 
 
 def add_new_variable(request):
@@ -241,6 +221,46 @@ def custom_settings(request):
 def graph_editor(request):
     return render(request,
                   'graph_editor.html')
+
+
+def save_new_graph_name(request):
+    username = request.user.username
+    user_id = ScUsers.objects.get(name=username)
+    if request.method == "POST":
+        print('ok i save new graph name')
+        scgraphname_model = models.ScPaths()
+        # scgraphname_model.graph_name = request.POST.get('new_graph_name')
+        # scgraphname_model.save()
+        a = {'result': 'true'}
+        print(request.POST.get('new_graph_name') + scgraphname_model)
+        return HttpResponse(json.dumps(a), content_type='application/json')
+    else:
+        form = ScConditionsForm(user_id)
+    return render(request,
+                  'custom_setting_condition_form.html',
+                  context={'form': form}
+                  )
+
+
+def rename_dot_name(request):
+    # ЗАКИДЫВАЕМ НОВОЕ ИМЯ ВМЕСТО СТАРОГО
+    username = request.user.username
+    user_id = ScUsers.objects.get(name=username)
+    if request.method == "POST":
+        print('ok i save new graph name')
+        scgraphname_model = models.ScPaths()
+        # scgraphname_model.graph_name = request.POST.get('new_graph_name')
+        # scgraphname_model.save()
+        a = {'result': 'true'}
+        print(request.POST.get('new_name'))
+        print(request.POST.get('node_to_rename'))
+        return HttpResponse(json.dumps(a), content_type='application/json')
+    else:
+        form = ScConditionsForm(user_id)
+    return render(request,
+                  'change_dot_name.html',
+                  context={'form': form}
+                  )
 
 
 def condition_create(request):

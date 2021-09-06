@@ -1,0 +1,15 @@
+<form action="{% url 'rename_dot_name' %}" method="post">
+{% load crispy_forms_tags %}
+
+{% csrf_token %}
+ <div class="new_condition_form ">
+{{ form|crispy }}
+     <div class="col-6">
+      </div>
+</div>
+</form>
+
+<div class="form-group">
+                <label style="color: black; text-align: center">Path</label>
+                <input id="input_for_name_of_dot" type="text" class="form-control collectes-date-chargement-min text-center" id="path" value="input name of dot">
+            </div>

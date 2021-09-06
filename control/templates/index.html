@@ -1,0 +1,511 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/d3-context-menu.css' %}">
+{% block content %}
+
+
+
+
+<div class="row justify-content-center main-info mt-5" style="padding-top: 3%">
+
+        {% load static %}
+    <div class="col-sm-5 text-center">
+        <h1 align="center">Results of conditions</h1 >
+    	<div>        	
+        	<table class="table table-condensed table-hover shadow p-4 mb-4 bg-white" id="condTable">
+                <tr>
+                    <th>Инфо</th>
+                    <th>Название условия</th>
+                    <th>Результат</th>
+                    <th>Сирена</th>
+                </tr>
+                <tr class="Cond_res"></tr>
+            </table>
+        </div>
+        <div>
+            <h1>Parameters in database</h1>
+            {% if info %}
+            <table class="table table-responsive table-condensed table-hover shadow p-4 mb-4 bg-white" id='varTable'>
+                <tr>
+                    <th>Путь</th>
+                    <th>Результат</th>
+                    <th>Дата обновления</th>
+                </tr>
+                <tr class="Sc_results_data"></tr>
+            </table>
+
+            {% else %}
+                <p>У вас нет данных</p>
+            {% endif %}
+        </div>
+    </div>
+
+        <div class="info text-center col-sm-5">
+            <h1 align="center">Indicators results</h1 >
+            <div>
+
+            </div>
+            <div>
+                <svg id="mysvg" width="652" height="340" style="background: url(&quot;data:image/png;base64,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&quot;) 0% 0% / 100% no-repeat;" data-graph_name="Smile"><defs><marker id="end-arrow" viewBox="0 -5 10 10" refX="32" markerWidth="3.5" markerHeight="3.5" orient="auto"><path d="M0,-5L10,0L0,5"></path></marker><marker id="mark-end-arrow" viewBox="0 -5 10 10" refX="7" markerWidth="3.5" markerHeight="3.5" orient="auto"><path d="M0,-5L10,0L0,5"></path></marker></defs><g class="graph"><g></g><g><g class="conceptG" transform="translate(384,49)"><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(381,89)"><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(390,122)"><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(409,118)"><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(414,94)"><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(415,79)"><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(403,54)"><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(396,45)"><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(377,97)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(422,99)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(361,124)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(384,138)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(400,139)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(425,139)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(440,132)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(372,64)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(338,96)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(345,142)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(373,161)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(422,163)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(457,154)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(467,115)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(466,92)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(440,67)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g><g class="conceptG" transform="translate(404,57)"><circle r="5" data-cond_name="NULL" data-dot_name="NULL"></circle><text text-anchor="middle" dy="-0"><tspan></tspan></text></g></g></g></svg>
+            </div>
+            <div>
+              <h1></h1>
+              <svg width="598" height="299" style="background-image: url({% static 'img/img.png' %}); border: 4px double darkblue;">
+              <defs>
+                <marker id="end-arrow" viewBox="0 -5 10 10" refX="32" markerWidth="3.5" markerHeight="3.5" orient="auto">
+                  <path d="M0,-5L10,0L0,5"></path>
+                </marker>
+                <marker id="mark-end-arrow" viewBox="0 -5 10 10" refX="7" markerWidth="3.5" markerHeight="3.5" orient="auto">
+                  <path d="M0,-5L10,0L0,5"></path>
+                </marker>
+              </defs>
+              <g class="graph">
+                <g></g>
+                <g>
+                  <g class="conceptG" transform="translate(374,53)">
+                    <circle r="5" data-cond_name="NULL" fill="blue"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(374,78)">
+                    <circle r="5" data-cond_name="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(374,104)">
+                    <circle r="5" data-cond_name="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(374,133)">
+                    <circle r="5" data-cond_name="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(374,161)">
+                    <circle r="5" data-cond_name="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(573,108)">
+                    <circle r="5" data-cond_name="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(573,94)">
+                    <circle r="5" data-cond_name="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(573,80)">
+                    <circle r="5" data-cond_name="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(573,66)">
+                    <circle r="5" data-cond_name="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                  <g class="conceptG" transform="translate(368,185)">
+                    <circle r="5" data-cond_name="NULL"></circle>
+                    <text text-anchor="middle" dy="-0">
+                      <tspan></tspan>
+                    </text>
+                  </g>
+                </g>
+              </g>
+            </svg>
+        </div>
+        </div>
+</div>
+{#<div class="row justify-content-around text-center main-info">#}
+{#	  #}
+{#</div>  #}
+<div id="rename_dot_name" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавление новой переменной</h5>
+        <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+             <form method="POST" id="post_new_dot_name">
+            {% csrf_token %}
+            <div class="form-group">
+                <label style="color: black; text-align: center">Path</label>
+                <input id="input_for_name_of_dot" type="text" class="form-control collectes-date-chargement-min text-center" id="path" value="input name of dot">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+{#    <div id="RenameNodeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#          <h2 id="modalTitle">Rename Node</h2>#}
+{#          <form id="RenameNodeForm">#}
+{#            <div class="row">#}
+{#              <div class="large-12 columns">#}
+{#                <label>Node name#}
+{#                  <input type="text" class="inputName" id="RenameNodeName" placeholder="node name">#}
+{#                </label>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="row">#}
+{#              <div class="large-8 columns">#}
+{#                &nbsp;#}
+{#              </div>#}
+{#              <div class="large-4 columns">#}
+{#                <a href="#" class="button info" onclick="close_rename_node_modal()">Cancel</a>#}
+{#                <a href="#" class="button success" onclick="rename_node()">Rename</a>#}
+{#              </div>#}
+{#            </div>#}
+{#          </form>#}
+{#          <a class="close-reveal-modal" aria-label="Close">×</a>#}
+{#</div>#}
+<!--     <div>
+{#    Форма для POST#}
+{#    <form method="POST" id="post-form">#}
+{#  {% csrf_token %}#}
+{#  <div class="form-group">#}
+{#    <label>path</label>#}
+{#    <input type="text" class="form-control" id="path" placeholder="Path">#}
+{#  </div>#}
+{#   <div class="form-group">#}
+{#     <label>interval_time</label>#}
+{#     <textarea class="form-control" id="interval_time" placeholder="interval_time"></textarea>#}
+{#   </div>#}
+{#   <button type="submit" class="btn btn-primary">Submit</button>#}
+{#    </form>#}
+    </div> -->
+
+
+
+
+
+
+{% endblock %}
+
+{% block javascript %}
+{#    Contex menu for circles#}
+    {% load static %}
+    <script src="{% static 'js/d3-context-menu.js' %}"></script>
+    <script>
+		// My menu
+        var conditions = [];
+        var rename_node_modal_active = false;
+        var old_dot_name = null;
+        var dot_graph_name = null;
+        var dot_id = null;
+        $.ajax({
+                    type: 'GET',
+                    url: "{% url 'get_conditions' %}",
+                    datatype: 'json',
+
+                    success: function (response) {
+                        conditions = response;
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+		var menu = [
+		{
+            title: function () {
+                    return 'Name of dot: ' + d3.select(this).attr("data-dot_name");
+                }
+			},
+        {
+            title: function () {
+                    return 'Name of condition: ' + d3.select(this).attr("data-cond_name");
+                }
+			},
+        {
+                title: 'Change the dot name',
+                action: function() {
+                        console.log('Rename node');
+                        $('#rename_dot_name').modal('show');
+                        old_dot_name = d3.select(this).attr("data-dot_name");
+                        {#dot_graph_name = d3.select(this).attr("data-graph_name");#}
+                        $("#input_for_name_of_dot").val(old_dot_name);
+                        node_to_rename = 'd3.select(this);'
+                        $("#RenameNodeName").focus();
+                }
+        },
+        {
+
+            title: 'Change the condition name',
+            children: function() {
+                return conditions.map(function(condition) {
+                    return {
+                        title: condition,
+                        action: function (data, event) {
+                            console.log('condition changed from ' + data + ' to ' + condition);
+                            d3.select(this)
+                                .datum(condition)
+                                .attr('data-cond_name', condition);
+                        },
+
+                    }
+                })
+            }
+
+        },
+
+		]
+		var selection = d3.selectAll('circle')
+
+		selection.on('contextmenu', d3.contextMenu(menu, {
+				onOpen: function (data, event) {
+					var index = selection.nodes().indexOf(this);
+					console.log('Menu Opened!', 'element:', this, 'data:', data, 'event:', event, 'index:', index);
+				},
+				onClose: function (data, event) {
+					var index = selection.nodes().indexOf(this);
+					console.log('Menu Closed!', 'element:', this, 'data:', data, 'event:', event, 'index:', index);
+				},
+				position: function (data, event) {
+					var bounds = this.getBoundingClientRect();
+					if (data === 'green') {
+						// first circle will have the menu aligned top-right
+						return {
+							left: bounds.left + bounds.width + 10,
+							top: bounds.top
+						}
+					}
+				}
+			})); // attach menu to element
+
+{% comment %}        function rename_node() {
+        if (node_to_rename && rename_node_modal_active) {
+                name = $('#RenameNodeName').val();
+                console.log('New Node name: ' + name);
+                node_to_rename.name = name;
+                rename_node_modal_active = false;
+
+        }
+        close_modal();
+        alert('New name '+ name);
+}{% endcomment %}
+	</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+    <script>
+    $(document).on('submit', '#post_new_dot_name',function(e){
+        e.preventDefault();
+    $.ajax({
+        type:'POST',
+        url : "{% url 'rename_dot_name' %}",
+        data:{
+            new_name: $('#input_for_name_of_dot').val(),
+            node_to_rename: node_to_rename,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success: function (response) {
+                    alert('done');
+                    $('#rename_dot_name').modal('hide');
+
+            },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
+});
+</script>
+    <script>
+
+    function change_color(){
+            $.ajax({
+            type: 'GET',
+            url: "{% url 'update_leds' %}",
+            datatype: 'json',
+
+            success: function (response) {
+
+                {#console.log(response);#}
+                d3.selectAll('circle').each(function(d){
+                    if (d3.select(this).attr("data-cond_name")==='NULL'){
+                    d3.select(this).attr('fill','black');
+                    }
+                    else{
+                        for (i = 0; i < response.length; i++) {
+                            if (response[i]['cond_name']===d3.select(this).attr("data-cond_name")){
+                                if(response[i]['bool_result']===1){
+                                    d3.select(this).attr('fill','green');
+                                }
+                                if(response[i]['bool_result']===0) {
+                                    d3.select(this).attr('fill','red');
+                                }
+                            }
+                        }
+
+                    }
+                })
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+
+
+    }
+    function update_info_about_variables(){
+                $.ajax({
+            type: 'GET',
+            url: "{% url 'update_info_about_variables' %}",
+            datatype: 'json',
+
+            success: function (response) {
+
+                    var submission_date;
+                    $('.Sc_results_data').remove()
+                for (i = 0; i < response.length; i++) {
+                    submission_date = new Date(response[i]['fields']['submission_date']);
+                    submission_date.toISOString();
+                    submission_date = moment(submission_date.toISOString()).subtract(7,"hours").format('DD-MM-YYYY, H:MM:ss');
+                    $('#varTable').append('<tr class="Sc_results_data"><td>' + response[i]['pk'] + '</td><td>' + response[i]['fields']['value'] + '</td><td>' + submission_date + '</td>');
+                }
+
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+    }
+    function update_info_about_conditions(){
+                $.ajax({
+            type: 'GET',
+            url: "{% url 'update_info_about_conditions' %}",
+            datatype: 'json',
+
+            success: function (response) {
+
+                    $('.Cond_res').remove()
+                    $('#condTable caption').remove()
+                if (response.length===0) {
+                    $('#condTable').prepend('<caption style="display: table-caption; text-align: center;">Данные отсутствуют</caption>');
+                }
+                else {
+                for (i = 0; i < response.length; i++) {
+                    time_calc = new Date(response[0]['time_calc']);
+                    time_calc.toISOString();
+                    time_calc = moment(time_calc.toISOString()).format('DD-MM-YYYY, h:mm:ss');
+                    var condTitle = 'Info about condition:&#013' + (response[i]['time_calc'] ? 'The condition was calculated in ' + time_calc +'&#013' : '')  + (response[i]['result_formula'] ? 'Result formula: ' + response[i]['result_formula']+'&#013' : '') + (response[i]['val_formula'] ? 'Value Formula: ' + response[i]['val_formula']+'&#013' : '')+ (response[i]['text_formula'] ? 'Text Formula: ' + response[i]['text_formula']+'&#013' : '')+ (response[i]['empty_values'] ? 'This sample(s) is(are) empty: ' + response[i]['empty_values']+'&#013' : '');
+                    var condInfo = '<td title="'+ condTitle +'">&times;</td>';
+                    var sirenOption = (response[i]['display_method'] === 'Text+Siren' ? 'Yes!':'No!');
+                    var result;
+                    if (response[i]['empty_values']){
+                        result='Empty value!';
+                    } else {
+                        if (response[i]['bool_result']===0 || response[i]['bool_result']===1) {
+                            if (response[i]['bool_result']===0){
+                                result = 'False';
+                            }
+
+                            if (response[i]['bool_result']===1){
+                                result = 'True';
+                            }
+                        }
+                        else {
+                            result = response[i]['val_result'];
+                        }
+                    }
+                    $('#condTable').append('<tr class="Cond_res">'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
+
+
+                }}
+            },
+            error: function (response) {
+                console.log(response);
+
+            }
+        });
+    }
+
+
+
+    $(document).ready(function (){
+        update_info_about_variables();
+        update_info_about_conditions();
+        change_color();
+        setInterval(change_color,5000);
+        setInterval(update_info_about_variables,5000);
+        setInterval(update_info_about_conditions,5000);
+    })
+{##}
+{#        $('button').on('click',function (e) {#}
+{#        e.preventDefault();#}
+{#        // GET AJAX request#}
+{#        $.ajax({#}
+{#            type: 'GET',#}
+{#            url: "{% url 'display_data' %}",#}
+{#            datatype: 'json',#}
+{##}
+{#            success: function (response) {#}
+{#                    for(i=0;i<response.length;i++) {#}
+{#                    $('#success').append('<tr><td>'+response[i]['pk']+'</td><td>'+response[i]['fields']['value']+'</td><td>'+response[i]['fields']['flag']+'</td><td>'+response[i]['fields']['submission_date']+'</td><td>');#}
+{#                    }#}
+{##}
+{#            },#}
+{#            error: function (response) {#}
+{#                console.log(response)#}
+{#            }#}
+{#        })#}
+{#    })#}
+    </script>
+
+{#    <script>#}
+    {#Форма с POST#}
+{#    $(document).on('submit', '#post-form',function(e){#}
+{#        e.preventDefault();#}
+{#    $.ajax({#}
+{#        type:'POST',#}
+{#        url : "{% url 'create_post' %}",#}
+{#        data:{#}
+{#            path:$('#path').val(),#}
+{#            interval_time:$('#interval_time').val(),#}
+{#            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),#}
+{#            action: 'post'#}
+{#        },#}
+{#        success:function(json){#}
+{#            document.getElementById("post-form").reset();#}
+{#            $("body").prepend(#}
+{#                    `#}
+{#                    <p>${json.path}</p>#}
+{#                    `#}
+{#                )#}
+{#            $(".info").prepend('<div class="col-md-6">'+#}
+{#                '<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">' +#}
+{#                    '<div class="col p-4 d-flex flex-column position-static">' +#}
+{#                        '<h3 class="mb-0">' + json.path + '</h3>' +#}
+{#                        '<p class="mb-auto">' + json.interval_time + '</p>' +#}
+{#                    '</div>' +#}
+{#                '</div>' +#}
+{#            '</div>'#}
+{#            )#}
+{#        },#}
+{#        error : function(xhr,errmsg,err) {#}
+{#        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console#}
+{#    }#}
+{#    });#}
+{#});#}
+{#</script>#}
+
+<script>
+
+</script>
+
+{% endblock javascript %}

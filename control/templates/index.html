@@ -44,7 +44,7 @@
             <h1 align="center">Indicators results</h1 >
             <div>
               <h1></h1>
-              <svg data-graph_name="Processes and DB" width="598" height="299" style="background-image: url({% static 'img/img.png' %}); border: 4px double darkblue;">
+              <svg class="test" data-graph_name="Processes and DB" width="598" height="299" style="background-image: url({% static 'img/img.png' %}); border: 4px double darkblue;">
               <defs>
                 <marker id="end-arrow" viewBox="0 -5 10 10" refX="32" markerWidth="3.5" markerHeight="3.5" orient="auto">
                   <path d="M0,-5L10,0L0,5"></path>
@@ -237,7 +237,9 @@
                         dot_graph_name = d3.select(this).attr("data-graph_name");
                         alert(d3.select(this.parentNode).attr("class"));
                         alert(d3.select(this.parentNode.parentNode).attr("class"));
-                        alert(d3.select(this.parentNode.parentNode.parentNode).attr("class"));
+                        alert(d3.select(this.parentNode.parentNode.parentNode.parentNode).attr("class"));
+                        alert(d3.select(this.parentNode.parentNode.parentNode.parentNode.parentNode).attr("class"));
+                        alert(d3.select(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode).attr("class"));
                         $("#RenameNodeName").focus();
                 }
         },

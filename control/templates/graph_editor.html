@@ -74,6 +74,7 @@
                     alert('done');
                     d3.select('svg')
                     .attr('data-graph_name', name_of_graph);
+                    document.getElementById('input_for_name_of_graph').disabled = true;
                     {#$('#rename_dot_name').modal('hide');#}
 
             },
@@ -165,6 +166,7 @@
             document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-dot_name","NULL")});
             var copyText = document.querySelector('svg').outerHTML;
             textToClipboard(copyText);
+            document.getElementById('input_for_name_of_graph').disabled = false;
         }
     </script>
 

@@ -136,10 +136,10 @@
       <div class="modal-body" >
              <form method="POST" id="post_new_dot_name">
             {% csrf_token %}
-                 <div class="new_dot_name">
-
-                </div>
-
+            <div class="form-group">
+                <label style="color: black; text-align: center">Path</label>
+                <input id="input_for_name_of_dot" type="text" class="form-control collectes-date-chargement-min text-center" id="path" value="input name of dot">
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             </form>
       </div>
@@ -228,27 +228,14 @@
 			},
         {
                 title: 'Change the dot name',
-                action: function(e)
-                {
-                        {#console.log('Rename node');#}
-                        {#$('#rename_dot_name').modal('show');#}
-                        {#old_dot_name = d3.select(this).attr("data-dot_name");#}
+                action: function() {
+                        console.log('Rename node');
+                        $('#rename_dot_name').modal('show');
+                        old_dot_name = d3.select(this).attr("data-dot_name");
                         {#dot_graph_name = d3.select(this).attr("data-graph_name");#}
-                        {#$("#input_for_name_of_dot").val(old_dot_name);#}
-                        {#node_to_rename = 'd3.select(this);'#}
-                        {#$("#RenameNodeName").focus();#}
-                    e.preventDefault();
-                    $.ajax({
-                        type:'GET',
-                        url : "{% url 'condition_create' %}",
-                        success: function (response) {
-                                $('.new_condition_form').html(response);
-                                $('#rename_dot_name').modal('show')
-                            },
-                        error : function(xhr,errmsg,err) {
-                        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-                    }
-                    });
+                        $("#input_for_name_of_dot").val(old_dot_name);
+                        node_to_rename = 'd3.select(this);'
+                        $("#RenameNodeName").focus();
                 }
         },
         {

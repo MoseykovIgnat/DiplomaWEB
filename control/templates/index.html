@@ -235,7 +235,9 @@
                         $("#input_for_name_of_dot").val(old_dot_name);
                         old_dot_name = d3.select(this).attr("data-dot_name");
                         dot_graph_name = d3.select(this).attr("data-graph_name");
+                        alert(d3.select(this.parentNode).attr("data-graph_name"));
                         alert(d3.select(this.parentNode.parentNode).attr("data-graph_name"));
+                        alert(d3.select(this.parentNode.parentNode.parentNode).attr("data-graph_name"));
                         $("#RenameNodeName").focus();
                 }
         },

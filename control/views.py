@@ -160,16 +160,6 @@ def is_SAM_working(request):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 
-def rename_dot_name(request):
-    # ЗАКИДЫВАЕМ НОВОЕ ИМЯ ВМЕСТО СТАРОГО
-    print('ok i will do it')
-    a = {'result': 'true'}
-    print(request.POST.get('new_name'))
-    print(request.POST.get('old_dot_name'))
-    print(request.POST.get('dot_graph_name'))
-    return HttpResponse(json.dumps(a), content_type='application/json')
-
-
 def del_exist_condition(request):
     cond_name = request.GET.get('cond_name')
     user = request.user.username
@@ -200,6 +190,17 @@ def save_new_graph_name(request):
         scgraphname_model.save()
         a = {'result': 'true'}
         print(request.POST.get('new_graph_name'))
+        return HttpResponse(json.dumps(a), content_type='application/json')
+
+
+def rename_dot_name(request):
+    # ЗАКИДЫВАЕМ НОВОЕ ИМЯ ВМЕСТО СТАРОГО
+    if request.method == "POST":
+        print('ok i will do it')
+        a = {'result': 'true'}
+        print(request.POST.get('new_name'))
+        print(request.POST.get('old_dot_name'))
+        print(request.POST.get('dot_graph_name'))
         return HttpResponse(json.dumps(a), content_type='application/json')
 
 

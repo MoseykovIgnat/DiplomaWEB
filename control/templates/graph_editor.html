@@ -165,7 +165,7 @@
             var count = 0;
             document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-cond_name","NULL")});
             document.querySelectorAll('svg g.conceptG circle').forEach(x => { x.setAttribute("data-dot_name","NULL")});
-            document.querySelectorAll('svg g.conceptG circle').forEach(x => { count = x+1; x.setAttribute("data-dot_id",count)});
+            document.querySelectorAll('svg g.conceptG circle').forEach(x => { count = x+1; x.setAttribute("data-dot_id",count); alert(count)});
             var copyText = document.querySelector('svg').outerHTML;
             textToClipboard(copyText);
             document.getElementById('input_for_name_of_graph').disabled = false;

@@ -203,6 +203,7 @@
         var rename_node_modal_active = false;
         var old_dot_name = null;
         var dot_graph_name = null;
+        var dot_in_graph = null;
         var node_to_rename = null;
         $.ajax({
                     type: 'GET',
@@ -232,6 +233,7 @@
                 action: function() {
                         console.log('Rename node');
                         old_dot_name = d3.select(this).attr("data-dot_name");
+                        dot_in_graph = d3.select(this).attr("data-dot_in_graph");
                         dot_graph_name = d3.select(this.parentNode.parentNode.parentNode.parentNode).attr("data-graph_name");
                         node_to_rename = d3.select(this);
                         $("#input_for_name_of_dot").val(old_dot_name);
@@ -299,7 +301,7 @@
     <script>
     $(document).on('submit', '#post_new_dot_name',function(e){
         e.preventDefault();
-        var new_name = $('#input_for_name_of_dot').val()
+        var new_name = $('#input_for_name_of_dot').val();
     $.ajax({
         type:'POST',
         url : "{% url 'rename_dot_name' %}",
@@ -307,6 +309,7 @@
             new_name: new_name,
             old_dot_name: old_dot_name,
             dot_graph_name: dot_graph_name,
+            dot_in_graph : dot_in_graph,
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'
         },

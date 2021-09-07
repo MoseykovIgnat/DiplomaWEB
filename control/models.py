@@ -117,6 +117,7 @@ class ScGraphInfo(models.Model):
     dot_id = models.AutoField(primary_key=True)
     dot_name = models.CharField(max_length=100)
     dot_condition = models.CharField(max_length=100, blank=True, null=True)
+    dot_id_in_graph = models.IntegerField()
     graph = models.ForeignKey('ScGraphName', models.DO_NOTHING)
 
     class Meta:

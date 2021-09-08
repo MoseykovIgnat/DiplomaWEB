@@ -120,6 +120,8 @@ class ScGraphInfo(models.Model):
     dot_id_in_graph = models.IntegerField()
     graph = models.ForeignKey('ScGraphName', models.DO_NOTHING)
 
+
+
     class Meta:
         managed = False
         db_table = 'sc_graph_info'
@@ -128,6 +130,9 @@ class ScGraphInfo(models.Model):
 class ScGraphName(models.Model):
     graph_id = models.AutoField(primary_key=True)
     graph_name = models.CharField(max_length=100)
+
+    def natural_key(self):
+        return (self.graph_name)
 
     class Meta:
         managed = False

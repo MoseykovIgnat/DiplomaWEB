@@ -55,7 +55,7 @@ class CustomSerializer(Serializer):
                         if value != obj:
                             self._current[field] = value
                     else:
-                        self._current[field] = getattr(obj, field)
+                        self._current[field] = getattr(obj,field)
 
                 except AttributeError:
                     pass
@@ -184,16 +184,11 @@ def update_info_in_graphs(request):
     if request.method == 'GET' and request.is_ajax():
         print(ScGraphInfo.objects.values('dot_name', 'dot_condition',
                                          'dot_id_in_graph', 'graph__graph_name'))
-        serializers = CustomSerializer()
-
-        data = serializers.serialize(ScGraphInfo.objects.values('dot_name',
-                                                                'dot_condition',
-                                                                'dot_id_in_graph',
-                                                                'graph__graph_name'),
-                                     fields=('dot_name',
-                                             'dot_condition',
-                                             'dot_id_in_graph',
-                                             'graph__graph_name'))
+        data = serialize("json", ScGraphInfo.objects.values('dot_name',
+                                                            'dot_condition',
+                                                            'dot_id_in_graph',
+                                                            'graph__graph_name'),
+                         use_natural_foreign_keys=True, fields=['graph_name'])
         # data = serialize("json", ScGraphInfo.objects.first().graph)
         print(data)
         return HttpResponse(data, content_type='application/json')

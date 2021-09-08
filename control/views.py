@@ -16,6 +16,7 @@ from . import forms
 from django.forms.models import model_to_dict
 from django.shortcuts import get_object_or_404, redirect, render
 from background_task import background
+from django.core.serializers.json import DjangoJSONEncoder
 import re
 import json
 from datetime import datetime, timedelta
@@ -194,8 +195,7 @@ def update_info_in_graphs(request):
         #                                                                                   'dot_id_in_graph',
         #                                                                                   'graph__graph_name',))
         # data = serialize("json", ScGraphInfo.objects.first().graph)
-        data = {"Result": 'true'}
-        print(queryset)
+        data = json.dumps(list(queryset), cls=DjangoJSONEncoder)
         return HttpResponse(data, content_type='application/json')
 
 

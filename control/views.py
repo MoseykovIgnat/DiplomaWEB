@@ -189,7 +189,11 @@ def update_info_in_graphs(request):
         data = serializers.serialize(ScGraphInfo.objects.values('dot_name',
                                                                 'dot_condition',
                                                                 'dot_id_in_graph',
-                                                                'graph__graph_name'))
+                                                                'graph__graph_name'),
+                                     fields=('dot_name',
+                                             'dot_condition',
+                                             'dot_id_in_graph',
+                                             'graph__graph_name'))
         # data = serialize("json", ScGraphInfo.objects.first().graph)
         print(data)
         return HttpResponse(data, content_type='application/json')

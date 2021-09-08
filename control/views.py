@@ -198,9 +198,8 @@ def rename_dot_name(request):
     if request.method == "POST":
         print(request.POST.get('old_dot_name'))
         print(request.POST.get('dot_id_in_graph'))
-        graph = ScGraphName.objects.get(graph_name=request.POST.get('dot_graph_name'))
         obj, created = ScGraphInfo.objects.update_or_create(
-            dot_id_in_graph=request.POST.get('dot_id_in_graph'), graph=graph.graph_id,
+            dot_id_in_graph=request.POST.get('dot_id_in_graph'), graph=ScGraphName.objects.get(graph_name=request.POST.get('dot_graph_name')),
             defaults={'dot_name': request.POST.get('new_name')}
         )
         a = {'result': 'true'}

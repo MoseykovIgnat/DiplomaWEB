@@ -261,7 +261,7 @@
                                     {#old_dot_name: old_dot_name,#}
                                     {#dot_graph_name: dot_graph_name,#}
                                     {#dot_id_in_graph : dot_id_in_graph,#}
-                                    {#csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),#}
+                                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                                     action: 'post'
                                 },
                                 success: function (response) {

@@ -203,7 +203,7 @@ def rename_dot_name(request):
         print()
         print(request.POST.get('dot_id_in_graph'))
         a = ScGraphName.objects.get(graph_name=request.POST.get('dot_graph_name'))
-        print(a.graph_id)
+        print(a)
         return HttpResponse(json.dumps(a), content_type='application/json')
 
 

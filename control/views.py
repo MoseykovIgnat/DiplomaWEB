@@ -157,7 +157,7 @@ def update_info_about_variables(request):
 def update_info_in_graphs(request):
     if request.method == 'GET' and request.is_ajax():
         data = serialize("json", ScGraphInfo.objects.values('dot_name', 'dot_condition',
-                                                            'dot_id_in_graph', 'graph_name__graph_id'))
+                                                            'dot_id_in_graph', 'fk_col__graph_id'))
         print(data[0])
         return HttpResponse(data, content_type='application/json')
 

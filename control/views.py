@@ -197,13 +197,13 @@ def rename_dot_name(request):
     # ЗАКИДЫВАЕМ НОВОЕ ИМЯ ВМЕСТО СТАРОГО
     if request.method == "POST":
         print('ok i will do it')
-        a = {'result': 'true'}
         print(request.POST.get('new_name'))
         print(request.POST.get('old_dot_name'))
         print()
         print(request.POST.get('dot_id_in_graph'))
         a = ScGraphName.objects.get(graph_name=request.POST.get('dot_graph_name'))
-        print(a)
+        print(a.graph_id)
+        a = {'result': 'true'}
         return HttpResponse(json.dumps(a), content_type='application/json')
 
 

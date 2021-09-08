@@ -132,7 +132,7 @@ class ScGraphName(models.Model):
     graph_name = models.CharField(max_length=100)
 
     def natural_key(self):
-        return (self.graph_name)
+        return self.graph_name
 
     class Meta:
         managed = False

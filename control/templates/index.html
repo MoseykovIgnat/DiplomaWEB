@@ -206,6 +206,7 @@
         var dot_id_in_graph = null;
         var node_to_rename = null;
         var new_dot_condition = null;
+        var old_dot_condition = null;
         $.ajax({
                     type: 'GET',
                     url: "{% url 'get_conditions' %}",
@@ -255,7 +256,8 @@
                             dot_graph_name = d3.select(this.parentNode.parentNode.parentNode.parentNode).attr("data-graph_name");
                             new_dot_condition = condition
                             node_to_rename = d3.select(this);
-                            alert('condition changing from ' + d3.select(this).attr("data-cond_name") + ' to ' + condition);
+                            old_dot_condition = d3.select(this).attr("data-cond_name");
+                            alert('condition changing from ' + old_dot_condition + ' to ' + condition);
                             $.ajax({
                                 type:'POST',
                                 url : "{% url 'change_dot_condition' %}",

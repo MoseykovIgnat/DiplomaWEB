@@ -37,6 +37,9 @@ def got_offline(sender, user, request, **kwargs):
         ScUsers.objects.filter(name=user).update(status='Offline')
 
 
+JSON_ALLOWED_OBJECTS = (dict,list,tuple,str,int,bool)
+
+
 class CustomSerializer(Serializer):
 
     def end_object(self, obj):
@@ -52,10 +55,8 @@ class CustomSerializer(Serializer):
                         value = obj
                         for f in fields:
                             value = getattr(value, f)
-                        if value != obj:
+                        if value != obj and isinstance(value, JSON_ALLOWED_OBJECTS) or value == None:
                             self._current[field] = value
-                    else:
-                        self._current[field] = getattr(obj, field)
 
                 except AttributeError:
                     pass
@@ -182,16 +183,18 @@ def update_info_about_variables(request):
 
 def update_info_in_graphs(request):
     if request.method == 'GET' and request.is_ajax():
-        print(ScGraphInfo.objects.values('dot_name', 'dot_condition',
-                                         'dot_id_in_graph', 'graph__graph_name'))
-        data = serialize("json", ScGraphInfo.objects.values('dot_name',
-                                                            'dot_condition',
-                                                            'dot_id_in_graph',
-                                                            'graph__graph_name'), fields=('dot_name',
-                                                                                          'dot_condition',
-                                                                                          'dot_id_in_graph',
-                                                                                          'graph__graph_name',))
+        serializers = CustomSerializer()
+        queryset = ScGraphInfo.objects.values('dot_name', 'dot_condition', 'dot_id_in_graph', 'graph__graph_name')
+        # print()
+        # data = serialize("json", ScGraphInfo.objects.values('dot_name',
+        #                                                     'dot_condition',
+        #                                                     'dot_id_in_graph',
+        #                                                     'graph__graph_name'), fields=('dot_name',
+        #                                                                                   'dot_condition',
+        #                                                                                   'dot_id_in_graph',
+        #                                                                                   'graph__graph_name',))
         # data = serialize("json", ScGraphInfo.objects.first().graph)
+        data = serializers.serialize(queryset, fields=('graph__graph_name', 'dot_name'))
         print(data)
         return HttpResponse(data, content_type='application/json')
 

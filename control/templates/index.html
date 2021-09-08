@@ -257,7 +257,6 @@
                             new_dot_condition = condition
                             node_to_rename = d3.select(this);
                             old_dot_condition = d3.select(this).attr("data-cond_name");
-                            alert('condition changing from ' + old_dot_condition + ' to ' + condition);
                             $.ajax({
                                 type:'POST',
                                 url : "{% url 'change_dot_condition' %}",
@@ -269,7 +268,7 @@
                                     action: 'post'
                                 },
                                 success: function (response) {
-                                            alert('cond changed');
+                                            alert('condition changing from ' + old_dot_condition + ' to ' + new_dot_condition);
                                             node_to_rename.attr('data-cond_name', new_dot_condition)
 
                                     },

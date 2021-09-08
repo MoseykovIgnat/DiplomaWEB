@@ -206,6 +206,12 @@ def rename_dot_name(request):
         return HttpResponse(json.dumps(a), content_type='application/json')
 
 
+def change_dot_condition(request):
+    if request.method == "POST":
+        a = {'result': 'true'}
+        return HttpResponse(json.dumps(a), content_type='application/json')
+
+
 def add_new_variable(request):
     if request.method == "POST":
         scpaths_model = models.ScPaths()

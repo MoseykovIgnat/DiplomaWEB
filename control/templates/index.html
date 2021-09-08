@@ -252,28 +252,28 @@
                         action: function (data, event) {
                             console.log('condition changed from ' + data + ' to ' + condition);
 {#                            {% csrf_token %}#}
-                            d3.select(this)
-                                .datum(condition)
-                                .attr('data-cond_name', condition);
-                                $.ajax({
-                                    type:'POST',
-                                    url : "{% url 'change_dot_condition' %}",
-                                    data:{
-                                        {#new_name: new_name,#}
-                                        {#old_dot_name: old_dot_name,#}
-                                        {#dot_graph_name: dot_graph_name,#}
-                                        {#dot_id_in_graph : dot_id_in_graph,#}
-                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-                                        action: 'post'
-                                    },
-                                    success: function (response) {
-                                                alert('done');
+{#                            d3.select(this)#}
+{#                                .datum(condition)#}
+{#                                .attr('data-cond_name', condition);#}
+                            $.ajax({
+                                type:'POST',
+                                url : "{% url 'change_dot_condition' %}",
+                                data:{
+                                    {#new_name: new_name,#}
+                                    {#old_dot_name: old_dot_name,#}
+                                    {#dot_graph_name: dot_graph_name,#}
+                                    {#dot_id_in_graph : dot_id_in_graph,#}
+                                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                    action: 'post'
+                                },
+                                success: function (response) {
+                                            alert('done');
 
-                                        },
-                                    error : function(xhr,errmsg,err) {
-                                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-                                }
-                                });
+                                    },
+                                error : function(xhr,errmsg,err) {
+                                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                            }
+                            });
                         },
 
                     }

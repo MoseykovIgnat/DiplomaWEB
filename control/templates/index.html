@@ -197,7 +197,6 @@
 {#    Contex menu for circles#}
     {% load static %}
     <script src="{% static 'js/d3-context-menu.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
     <script>
 		// My menu
         var conditions = [];
@@ -251,29 +250,10 @@
                         title: condition,
                         action: function (data, event) {
                             console.log('condition changed from ' + data + ' to ' + condition);
-{#                            {% csrf_token %}#}
-{#                            d3.select(this)#}
-{#                                .datum(condition)#}
-{#                                .attr('data-cond_name', condition);#}
-{#                            $.ajax({#}
-{#                                type:'POST',#}
-{#                                url : "{% url 'change_dot_condition' %}",#}
-{#                                data:{#}
-                                    {#new_name: new_name,#}
-                                    {#old_dot_name: old_dot_name,#}
-                                    {#dot_graph_name: dot_graph_name,#}
-                                    {#dot_id_in_graph : dot_id_in_graph,#}
-{#                                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),#}
-{#                                    action: 'post'#}
-{#                                },#}
-{#                                success: function (response) {#}
-{#                                            alert('done');#}
-{##}
-{#                                    },#}
-{#                                error : function(xhr,errmsg,err) {#}
-{#                                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console#}
-{#                            }#}
-{#                            });#}
+                            d3.select(this)
+                                .datum(condition)
+                                .attr('data-cond_name', condition);
+                            
                         },
 
                     }
@@ -318,6 +298,7 @@
         alert('New name '+ name);
 }{% endcomment %}
 	</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
     <script>
     $(document).on('submit', '#post_new_dot_name',function(e){
         e.preventDefault();

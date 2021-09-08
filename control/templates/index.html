@@ -254,6 +254,7 @@
                             dot_id_in_graph = d3.select(this).attr("data-dot_id_in_graph");
                             dot_graph_name = d3.select(this.parentNode.parentNode.parentNode.parentNode).attr("data-graph_name");
                             new_dot_condition = condition
+                            node_to_rename = d3.select(this);
                             alert('condition changing from ' + data + ' to ' + condition);
                             $.ajax({
                                 type:'POST',

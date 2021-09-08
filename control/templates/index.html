@@ -386,6 +386,22 @@
 
 
     }
+    function update_info_in_graphs(){
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'update_info_in_graphs' %}",
+            datatype: 'json',
+
+            success: function (response) {
+
+               alert("time to do smthing")
+
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+    }
     function update_info_about_variables(){
                 $.ajax({
             type: 'GET',

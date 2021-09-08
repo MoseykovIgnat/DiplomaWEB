@@ -154,6 +154,13 @@ def update_info_about_variables(request):
         return HttpResponse(data, content_type='application/json')
 
 
+def update_info_in_graphs(request):
+    if request.method == 'GET' and request.is_ajax():
+        data = serialize("json", ScGraphInfo.objects.all())
+        print(data)
+        return HttpResponse(data, content_type='application/json')
+
+
 def is_SAM_working(request):
     if request.method == 'GET' and request.is_ajax():
         data = {"Result": 'true'}

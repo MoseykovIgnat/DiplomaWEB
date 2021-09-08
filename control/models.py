@@ -129,6 +129,11 @@ class ScGraphName(models.Model):
     graph_id = models.AutoField(primary_key=True)
     graph_name = models.CharField(max_length=100)
 
+    def natural_keys(self):
+        return self.graph_name
+
     class Meta:
         managed = False
         db_table = 'sc_graph_name'
+
+

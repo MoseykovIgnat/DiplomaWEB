@@ -157,7 +157,7 @@ def update_info_about_variables(request):
 def update_info_in_graphs(request):
     if request.method == 'GET' and request.is_ajax():
         print(ScGraphInfo.objects.values('dot_name', 'dot_condition',
-                                                            'dot_id_in_graph', 'graph__graph_name'))
+                                         'dot_id_in_graph', 'graph__graph_name'))
         data = serialize("json", ScGraphInfo.objects.values('dot_name',
                                                             'dot_condition',
                                                             'dot_id_in_graph',
@@ -211,7 +211,8 @@ def rename_dot_name(request):
     # ЗАКИДЫВАЕМ НОВОЕ ИМЯ ВМЕСТО СТАРОГО
     if request.method == "POST":
         obj, created = ScGraphInfo.objects.update_or_create(
-            dot_id_in_graph=request.POST.get('dot_id_in_graph'), graph=ScGraphName.objects.get(graph_name=request.POST.get('dot_graph_name')),
+            dot_id_in_graph=request.POST.get('dot_id_in_graph'),
+            graph=ScGraphName.objects.get(graph_name=request.POST.get('dot_graph_name')),
             defaults={'dot_name': request.POST.get('new_name')}
         )
         a = {'result of change dot name': 'true'}

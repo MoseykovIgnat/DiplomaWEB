@@ -394,6 +394,8 @@
             success: function (response) {
             d3.selectAll('circle').each(function(d){
                     for (i = 0; i < response.length; i++) {
+                        alert(d3.select(this).attr("data-dot_id_in_graph"));
+                        alert(d3.select(this.parentNode.parentNode.parentNode.parentNode).attr("data-graph_name"));
                         if (response[i]['dot_id_in_graph']===d3.select(this).attr("data-dot_id_in_graph") && response[i]['graph__graph_name']===d3.select(this.parentNode.parentNode.parentNode.parentNode).attr("data-graph_name")){
                             d3.select(this).attr('data-cond_name',response[i]['dot_condition']);
                             d3.select(this).attr('data-dot_name',response[i]['dot_name']);

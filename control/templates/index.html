@@ -251,7 +251,7 @@
                         title: condition,
                         action: function (data, event) {
                             console.log('condition changed from ' + data + ' to ' + condition);
-                            {% csrf_token %}
+{#                            {% csrf_token %}#}
                             d3.select(this)
                                 .datum(condition)
                                 .attr('data-cond_name', condition);

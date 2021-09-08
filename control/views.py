@@ -158,10 +158,13 @@ def update_info_in_graphs(request):
     if request.method == 'GET' and request.is_ajax():
         print(ScGraphInfo.objects.values('dot_name', 'dot_condition',
                                                             'dot_id_in_graph', 'graph__graph_name'))
-        # data = serialize("json", ScGraphInfo.objects.values('dot_name', 'dot_condition',
-        #                                                     'dot_id_in_graph', 'graph__graph_name'))
+        data = serialize("json", ScGraphInfo.objects.values('dot_name',
+                                                            'dot_condition',
+                                                            'dot_id_in_graph',
+                                                            'graph__graph_name'),
+                         use_natural_foreign_keys=True, use_natural_primary_key=True)
         # data = serialize("json", ScGraphInfo.objects.first().graph)
-        data = {'result': 'true'}
+        print(data)
         return HttpResponse(data, content_type='application/json')
 
 

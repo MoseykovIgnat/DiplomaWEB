@@ -392,7 +392,6 @@
             url: "{% url 'update_info_in_graphs' %}",
             datatype: 'json',
             success: function (response) {
-                alert(typeof response[0]['dot_id_in_graph']);
                 alert(typeof d3.select(this).attr("data-dot_id_in_graph"))
 
             d3.selectAll('circle').each(function(d){

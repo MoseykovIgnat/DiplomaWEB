@@ -205,6 +205,7 @@
         var dot_graph_name = null;
         var dot_id_in_graph = null;
         var node_to_rename = null;
+        var new_dot_condition = null;
         $.ajax({
                     type: 'GET',
                     url: "{% url 'get_conditions' %}",
@@ -249,23 +250,26 @@
                     return {
                         title: condition,
                         action: function (data, event) {
-                            console.log('condition changed from ' + data + ' to ' + condition);
-                            d3.select(this)
-                                .datum(condition)
-                                .attr('data-cond_name', condition);
+                            console.log('Change condition of dot');
+                            dot_id_in_graph = d3.select(this).attr("data-dot_id_in_graph");
+                            dot_graph_name = d3.select(this.parentNode.parentNode.parentNode.parentNode).attr("data-graph_name");
+                            new_dot_condition = condition
+                            alert('condition changing from ' + data + ' to ' + condition);
                             $.ajax({
                                 type:'POST',
                                 url : "{% url 'change_dot_condition' %}",
                                 data:{
-                                    {#new_name: new_name,#}
-                                    {#old_dot_name: old_dot_name,#}
-                                    {#dot_graph_name: dot_graph_name,#}
-                                    {#dot_id_in_graph : dot_id_in_graph,#}
+                                    new_dot_condition: new_dot_condition,
+                                    dot_graph_name: dot_graph_name,
+                                    dot_id_in_graph : dot_id_in_graph,
                                     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                                     action: 'post'
                                 },
                                 success: function (response) {
                                             alert('cond changed');
+                                            d3.select(this)
+                                                .datum(condition)
+                                                .attr('data-cond_name', condition);
 
                                     },
                                 error : function(xhr,errmsg,err) {

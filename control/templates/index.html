@@ -267,9 +267,7 @@
                                 },
                                 success: function (response) {
                                             alert('cond changed');
-                                            d3.select(this)
-                                                .datum(condition)
-                                                .attr('data-cond_name', condition);
+                                            node_to_rename.attr('data-dot_name', new_dot_condition)
 
                                     },
                                 error : function(xhr,errmsg,err) {

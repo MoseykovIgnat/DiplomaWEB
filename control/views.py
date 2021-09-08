@@ -207,7 +207,7 @@ def rename_dot_name(request):
 
 
 def change_dot_condition(request):
-    if request.method == "POST":
+    if request.method == "GET":
         a = {'result': 'true'}
         return HttpResponse(json.dumps(a), content_type='application/json')
 

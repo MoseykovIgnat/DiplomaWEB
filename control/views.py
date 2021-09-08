@@ -194,8 +194,8 @@ def update_info_in_graphs(request):
         #                                                                                   'dot_id_in_graph',
         #                                                                                   'graph__graph_name',))
         # data = serialize("json", ScGraphInfo.objects.first().graph)
-        data = serializers.serialize(queryset, fields=('dot_name',))
-        print(data)
+        data = {"Result": 'true'}
+        print(queryset)
         return HttpResponse(data, content_type='application/json')
 
 

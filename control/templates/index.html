@@ -288,6 +288,19 @@
 
 		]
         {% endif %}
+        {% if request.user|has_group:"Expert" %}
+          var menu = [
+		{
+            title: function () {
+                    return 'Name of dot: ' + d3.select(this).attr("data-dot_name");
+                }
+        },
+        {
+            title: function () {
+                    return 'Name of condition: ' + d3.select(this).attr("data-cond_name");
+                }
+        },]
+        {% endif %}
 		var selection = d3.selectAll('circle')
 
 		selection.on('contextmenu', d3.contextMenu(menu, {

@@ -282,13 +282,11 @@ def condition_create(request):
             formula = formula.replace('0)', '0sec)')
             vars_formula = get_vars_formula(formula)
             for new_var in vars_formula:
-                if not ScPaths.objects.filter(path=new_var):
-                    scpaths_model = models.ScPaths()
-                    scpaths_model.user_id = user_id.id
-                    scpaths_model.path = new_var
-                    scpaths_model.interval_time = 5
-                    scpaths_model.status = 'Online'
-                    scpaths_model.save()
+                obj, created = ScPaths.objects.update_or_create(
+                    user_id=user_id.id,
+                    path=new_var, interval_time=5, status='Online',
+                    defaults={}
+                )
             instance = form.save(commit=False)
             instance.user_id = user_id.id
             instance.isalert = 0

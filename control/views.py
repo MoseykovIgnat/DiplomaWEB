@@ -70,6 +70,7 @@ def update_condition_results():
         vars_formula = get_vars_formula(formula)
         empty_values = list()
         for var_formula in vars_formula:
+            print(str(ScResults.objects.filter(var_title=var_formula)[0].value))
             formula = formula.replace(str(var_formula),
                                       str(ScResults.objects.filter(var_title=var_formula)[0].value))
             if str(ScResults.objects.filter(var_title=var_formula)[0].comment) == 'Empty':

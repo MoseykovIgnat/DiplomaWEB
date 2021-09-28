@@ -90,7 +90,6 @@ def update_leds(request):
         conditions = ScConditionsResult.objects.all()
         for condition in conditions:
             if condition.bool_result == 0 or condition.bool_result == 1:
-                print(condition.cond_id)
                 cond_name = ScConditions.objects.get(cond_id=condition.cond_id)
                 result_condition = {'cond_name': cond_name.comment, 'bool_result': condition.bool_result}
                 result_conditions.append(result_condition)

@@ -141,7 +141,9 @@ def update_condition_results():
                     result_for_db.save()
         return ids_for_signal_alarm
     except:
-        print('got error')
+        my_file = open("ErrorsFile.txt", "w")
+        my_file.write("Got Error")
+        my_file.close()
 
 
 # def signal_alarm(siren_ids):

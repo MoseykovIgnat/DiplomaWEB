@@ -5,7 +5,7 @@ from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResul
 class ScConditionsResultAdmin(admin.ModelAdmin):
     list_display = ('cond_id', 'val_result', 'bool_result', 'val_formula', 'text_formula', 'result_formula',
                     'time_calc', 'empty_values')
-    list_filter = ('dot_name', 'dot_condition')
+    list_filter = ('cond_id', 'val_result')
 
 
 class ScConditionsAdmin(admin.ModelAdmin):
@@ -31,7 +31,7 @@ class ScPathsAdmin(admin.ModelAdmin):
 
 class ScResultsAdmin(admin.ModelAdmin):
     list_display = ('var_title', 'value', 'flag', 'submission_date', 'comment')
-    list_filter = ('value', 'submission_date')
+    list_filter = ('var_title', 'value')
 
 
 class ScUsersAdmin(admin.ModelAdmin):

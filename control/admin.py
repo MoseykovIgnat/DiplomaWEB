@@ -19,11 +19,6 @@ class ScGraphInfoAdmin(admin.ModelAdmin):
     list_filter = ('dot_name', 'dot_condition')
 
 
-class ScGraphNameAdmin(admin.ModelAdmin):
-    list_display = ('graph_name')
-
-
-
 class ScPathsAdmin(admin.ModelAdmin):
     list_display = ('path', 'interval_time', 'status', 'user')
     list_filter = ('path', 'interval_time')
@@ -45,6 +40,6 @@ admin.site.register(ScResults, ScResultsAdmin)
 admin.site.register(ScConditionsResult, ScConditionsResultAdmin)
 admin.site.register(ScConditions, ScConditionsAdmin)
 admin.site.register(ScGraphInfo, ScGraphInfoAdmin)
-admin.site.register(ScGraphName, ScGraphNameAdmin)
+admin.site.register(ScGraphName)
 
 # Register your models here.

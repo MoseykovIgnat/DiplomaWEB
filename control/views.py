@@ -271,12 +271,10 @@ def condition_create(request):
     username = request.user.username
     user_id = ScUsers.objects.get(name=username)
     if request.method == 'POST':
-        print(request)
         if '0)' in request.POST['formula']:
             request.POST = request.POST.copy()
             request.POST['formula'] = request.POST['formula'].replace('0)', '0sec)')
         form = ScConditionsForm(user_id, request.POST)
-        print(form)
         if form.is_valid():
             formula = request.POST.get('formula')
             formula = formula.replace('0)', '0sec)')

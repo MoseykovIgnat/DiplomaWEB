@@ -20,8 +20,8 @@ class ScGraphInfoAdmin(admin.ModelAdmin):
 
 
 class ScGraphNameAdmin(admin.ModelAdmin):
-    list_display = 'graph_name'
-    list_filter = 'graph_name'
+    list_display = ('graph_name')
+
 
 
 class ScPathsAdmin(admin.ModelAdmin):

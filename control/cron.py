@@ -29,7 +29,8 @@ def update_condition_results():
         for var_formula in vars_formula:
             formula = formula.replace(str(var_formula),
                                       str(ScResults.objects.filter(var_title=var_formula)[0].value))
-            if str(ScResults.objects.filter(var_title=var_formula)[0].comment) == 'Empty':
+            helper = str(ScResults.objects.filter(var_title=var_formula)[0].comment)
+            if helper == 'Empty' or helper == 'DB error' or helper == "Can't get process":
                 empty_values.append(str(ScResults.objects.filter(var_title=var_formula)[0].var_title))
         digit_formula = formula
         if empty_values:

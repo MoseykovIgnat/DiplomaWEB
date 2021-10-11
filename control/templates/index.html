@@ -445,7 +445,7 @@
                     submission_date = new Date(response[i]['fields']['submission_date']);
                     submission_date.toISOString();
                     submission_date = moment(submission_date.toISOString()).subtract(7,"hours").format('DD-MM-YYYY, H:MM:ss');
-                    if (response[i]['fields']['comment']){
+                    if (!response[i]['fields']['comment']){
                         comment = 'Ok';
                     }
                     else{

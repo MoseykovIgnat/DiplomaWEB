@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -23,6 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('slowcontrol/admin/', admin.site.urls),
     path('slowcontrol/', include('control.urls')),
+    path('logout/', auth_views.LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path('slowcontrol/accounts/', include('django.contrib.auth.urls'))  # Аутентификация для джанго!
 
 ]

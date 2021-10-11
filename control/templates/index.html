@@ -438,14 +438,20 @@
             datatype: 'json',
 
             success: function (response) {
-
+                    var comment;
                     var submission_date;
                     $('.Sc_results_data').remove()
                 for (i = 0; i < response.length; i++) {
                     submission_date = new Date(response[i]['fields']['submission_date']);
                     submission_date.toISOString();
                     submission_date = moment(submission_date.toISOString()).subtract(7,"hours").format('DD-MM-YYYY, H:MM:ss');
-                    $('#varTable').append('<tr class="Sc_results_data"><td>' + response[i]['pk'] + '</td><td>' + response[i]['fields']['value'] + '</td><td>' + response[i]['fields']['comment'] + '</td><td>' + submission_date + '</td>');
+                    if (response[i]['fields']['comment']){
+                        comment = 'Ok';
+                    }
+                    else{
+                        comment = response[i]['fields']['comment'];
+                    }
+                    $('#varTable').append('<tr class="Sc_results_data"><td>' + response[i]['pk'] + '</td><td>' + response[i]['fields']['value'] + '</td><td>' + comment + '</td><td>' + submission_date + '</td>');
                 }
 
             },

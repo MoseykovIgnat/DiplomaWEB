@@ -8,10 +8,11 @@ UserModel = get_user_model()
 
 class PersonalizedLoginBackend(ModelBackend):
     def authenticate(self, request=None, username=None, password=None, **kwars):
-        if UserModel._default_manager.get_by_natural_key(username):
+        try:
+            UserModel._default_manager.get_by_natural_key(username)
             print('User already exist')
             return None
-        else:
+        except:
             print("Let's create a user")
             # try:
             #     user = User.objects.create_user(username='Testacc', password='vovovoa123', email='Example@example.com')

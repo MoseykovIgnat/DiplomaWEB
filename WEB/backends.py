@@ -32,7 +32,7 @@ class PersonalizedLoginBackend(ModelBackend):
             connection = create_connect_to_db(config)
             cursor = connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute("select c_passwd from t_shadow limit 1")
-            cryptedpasswd = cursor.fetchall()
+            cryptedpasswd = cursor.fetchall()['c_passwd']
             print(cryptedpasswd)
             # user = User.objects.create_user(username=username, password=password)
             # user.save()

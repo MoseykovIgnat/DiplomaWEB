@@ -14,9 +14,7 @@ class PersonalizedLoginBackend(ModelBackend):
             return None
         except:
             print("Let's create a user")
-            user = User.objects.create_user(username='Testacc', password='vovovoa123', email='Example@example.com')
-            user.is_superuser = True
-            user.is_staff = True
+            user = User.objects.create_user(username='test', password='test', email='Example@example.com')
             user.save()
             print('User saved')
             return None

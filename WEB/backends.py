@@ -31,9 +31,10 @@ class PersonalizedLoginBackend(ModelBackend):
             config = SQLParser.xxxdbrc.config('adm')
             connection = create_connect_to_db(config)
             cursor = connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute("select c_passwd from t_shadow limit 1")
-            cryptedpasswd = cursor.fetchone()['c_passwd']
-            print(cryptedpasswd)
+            query_for_crypted_password = "select c_passwd from t_shadow where c_account=%s"
+            cursor.execute(query_for_crypted_password, username)
+            crypted_password = cursor.fetchone()['c_passwd']
+            print(crypted_password)
             # user = User.objects.create_user(username=username, password=password)
             # user.save()
             # print('User was created')

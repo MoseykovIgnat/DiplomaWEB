@@ -1,0 +1,5 @@
+admdb-hostname = "sndfs1.inp.nsk.su"
+admdb-port     =  3306
+admdb-username = "daqread"
+admdb-password = "daqread"
+admdb-dbname   = "admdbase"

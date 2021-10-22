@@ -30,20 +30,18 @@ class PersonalizedLoginBackend(ModelBackend):
             print('User already exist')
             return None
         except:
-            try:
-                print("Let's create a user")
-                config = SQLParser.xxxdbrc.config('adm')
-                connection = create_connect_to_db(config)
-                cursor = connection.cursor(MySQLdb.cursors.DictCursor)
-                query_for_crypted_password = "select c_passwd from t_shadow where c_account=%s"
-                cursor.execute(query_for_crypted_password, username)
-                crypted_password = cursor.fetchone()['c_passwd']
-                cursor.close()
-                connection.close()
-                print(crypted_password)
-                if compare_hash(crypt.crypt(password, crypted_password), crypted_password):
-                    user = User.objects.create_user(username=username, password=password)
-                    user.save()
-                    print('User was created')
-            finally:
-                return None
+            print("Let's create a user")
+            config = SQLParser.xxxdbrc.config('adm')
+            connection = create_connect_to_db(config)
+            cursor = connection.cursor(MySQLdb.cursors.DictCursor)
+            query_for_crypted_password = "select c_passwd from t_shadow where c_account=%s"
+            cursor.execute(query_for_crypted_password, username)
+            crypted_password = cursor.fetchone()['c_passwd']
+            cursor.close()
+            connection.close()
+            print(crypted_password)
+            if compare_hash(crypt.crypt(password, crypted_password), crypted_password):
+                user = User.objects.create_user(username=username, password=password)
+                user.save()
+                print('User was created')
+            return None

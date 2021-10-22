@@ -25,8 +25,6 @@ class PersonalizedLoginBackend(ModelBackend):
         try:
             UserModel._default_manager.get_by_natural_key(username)
             print('User already exist')
-            return None
-        except:
             print("Let's create a user")
             config = SQLParser.xxxdbrc.config('adm')
             connection = create_connect_to_db(config)
@@ -35,6 +33,18 @@ class PersonalizedLoginBackend(ModelBackend):
             cursor.execute(query_for_crypted_password, username)
             crypted_password = cursor.fetchone()['c_passwd']
             print(crypted_password)
+            print(compare_hash(crypt.crypt(password, crypted_password), crypted_password))
+            return None
+        except:
+            # print("Let's create a user")
+            # config = SQLParser.xxxdbrc.config('adm')
+            # connection = create_connect_to_db(config)
+            # cursor = connection.cursor(MySQLdb.cursors.DictCursor)
+            # query_for_crypted_password = "select c_passwd from t_shadow where c_account=%s"
+            # cursor.execute(query_for_crypted_password, username)
+            # crypted_password = cursor.fetchone()['c_passwd']
+            # print(crypted_password)
+            # print(compare_hash(crypt.crypt(password, crypted_password), crypted_password))
             # user = User.objects.create_user(username=username, password=password)
             # user.save()
             # print('User was created')

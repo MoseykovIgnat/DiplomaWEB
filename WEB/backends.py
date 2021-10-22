@@ -12,7 +12,7 @@ class PersonalizedLoginBackend(ModelBackend):
             print('User already exist')
             return None
         else:
-            user = User.objects.create_user('foo', password='lyalyalya123', email='Example@example.com')
+            user = User.objects.create_user(username=username, password=password, email='Example@example.com')
             user.save()
             print('User saved')
             return None

@@ -7,6 +7,7 @@ import SQLParser.xxxdbrc
 import pymysql as MySQLdb
 import crypt
 from hmac import compare_digest as compare_hash
+import traceback
 
 
 def create_connect_to_db(config):
@@ -29,6 +30,7 @@ def get_crypted_pass_by_username(username):
     try:
         crypted_password = cursor.fetchone()['c_passwd']
     except:
+        traceback.print_exc()
         crypted_password = False
     finally:
         cursor.close()
@@ -50,13 +52,13 @@ class PersonalizedLoginBackend(ModelBackend):
                 # if compare_hash(crypt.crypt(password, crypted_password), crypted_password)
                 # user = UserModel._default_manager.get_by_natural_key(username)
                 # user.check_password(password)
-
-
         except:
-            print("Let's create a user")
+            traceback.print_exc()
             print(crypted_password)
-            if compare_hash(crypt.crypt(password, crypted_password), crypted_password):
-                user = User.objects.create_user(username=username, password=password)
-                user.save()
-                print('User was created')
+            if crypted_password:
+                print("Let's create a user")
+                if compare_hash(crypt.crypt(password, crypted_password), crypted_password):
+                    user = User.objects.create_user(username=username, password=password)
+                    user.save()
+                    print('User was created')
             return None

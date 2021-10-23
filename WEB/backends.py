@@ -26,10 +26,14 @@ def get_crypted_pass_by_username(username):
     cursor = connection.cursor(MySQLdb.cursors.DictCursor)
     query_for_crypted_password = "select c_passwd from t_shadow where c_account=%s"
     cursor.execute(query_for_crypted_password, username)
-    crypted_password = cursor.fetchone()['c_passwd']
-    cursor.close()
-    connection.close()
-    return crypted_password
+    try:
+        crypted_password = cursor.fetchone()['c_passwd']
+    except:
+        crypted_password = False
+    finally:
+        cursor.close()
+        connection.close()
+        return crypted_password
 
 
 UserModel = get_user_model()

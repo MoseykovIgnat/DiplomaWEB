@@ -48,10 +48,15 @@ class PersonalizedLoginBackend(ModelBackend):
         try:
             # If user already in Django DB let's check pass in SND t_shadow
             user = UserModel._default_manager.get_by_natural_key(username)
+            if compare_hash(crypt.crypt(password, crypted_password), crypted_password):
+                if user.check_password(password):
+                    # Password the same so we won't do anything in our backend
+                    pass
+                else:
+                    # Change password in django DB
+                    user.set_password(password)
+                    pass
             return None
-                # if compare_hash(crypt.crypt(password, crypted_password), crypted_password)
-                # user = UserModel._default_manager.get_by_natural_key(username)
-                # user.check_password(password)
         except:
             traceback.print_exc()
             print(crypted_password)

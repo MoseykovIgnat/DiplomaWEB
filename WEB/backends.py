@@ -20,25 +20,36 @@ def create_connect_to_db(config):
     return connection
 
 
+def get_crypted_pass_by_username(username):
+    config = SQLParser.xxxdbrc.config('adm')
+    connection = create_connect_to_db(config)
+    cursor = connection.cursor(MySQLdb.cursors.DictCursor)
+    query_for_crypted_password = "select c_passwd from t_shadow where c_account=%s"
+    cursor.execute(query_for_crypted_password, username)
+    crypted_password = cursor.fetchone()['c_passwd']
+    cursor.close()
+    connection.close()
+    return crypted_password
+
+
 UserModel = get_user_model()
 
 
 class PersonalizedLoginBackend(ModelBackend):
     def authenticate(self, request=None, username=None, password=None, **kwars):
+        crypted_password = get_crypted_pass_by_username(username)
+        print(crypted_password)
         try:
-            UserModel._default_manager.get_by_natural_key(username)
-            print('User already exist')
+            # If user already in Django DB let's check pass in SND t_shadow
+            user = UserModel._default_manager.get_by_natural_key(username)
             return None
+                # if compare_hash(crypt.crypt(password, crypted_password), crypted_password)
+                # user = UserModel._default_manager.get_by_natural_key(username)
+                # user.check_password(password)
+
+
         except:
             print("Let's create a user")
-            config = SQLParser.xxxdbrc.config('adm')
-            connection = create_connect_to_db(config)
-            cursor = connection.cursor(MySQLdb.cursors.DictCursor)
-            query_for_crypted_password = "select c_passwd from t_shadow where c_account=%s"
-            cursor.execute(query_for_crypted_password, username)
-            crypted_password = cursor.fetchone()['c_passwd']
-            cursor.close()
-            connection.close()
             print(crypted_password)
             if compare_hash(crypt.crypt(password, crypted_password), crypted_password):
                 user = User.objects.create_user(username=username, password=password)

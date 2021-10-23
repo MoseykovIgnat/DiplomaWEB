@@ -57,6 +57,7 @@ class PersonalizedLoginBackend(ModelBackend):
                     # Change password in django DB
                     print('I will change password')
                     user.set_password(password)
+                    user.save()
                     pass
             return None
         except:

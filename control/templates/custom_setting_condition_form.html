@@ -55,6 +55,8 @@
         minLength: 0,
         source: function( request, response ) {
           // delegate back to autocomplete, but extract the last term
+            alert($.ui.autocomplete.filter(
+            availableTags, extractLast( request.term ) ) );
           response( $.ui.autocomplete.filter(
             availableTags, extractLast( request.term ) ) );
         },
@@ -64,7 +66,6 @@
         },
         select: function( event, ui ) {
           var terms = split( this.value );
-          alert(terms);
           // remove the current input
           terms.pop();
           // add the selected item

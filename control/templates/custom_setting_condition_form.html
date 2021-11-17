@@ -9,7 +9,39 @@
 </div>
 </form>
 
-{#{% block javascript %}#}
+{% block javascript %}
+<script>
+  $(document).ready( function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#id_comment" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
+
 {#    <script>#}
 {#     $(document).ready(function (){#}
 {#      $('input#div_id_min_val').css("disabled","true");#}
@@ -53,4 +85,4 @@
 {##}
 {#    });#}
 {#    </script>#}
-{#{% endblock javascript %}#}
+{% endblock javascript %}

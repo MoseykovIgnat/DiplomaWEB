@@ -3,7 +3,9 @@
     padding: 0;
     list-style: none;
 }
-
+.ui-autocomplete {
+   z-index: 9999999 !important;
+}
 
 .main-info{
     margin-left: auto;

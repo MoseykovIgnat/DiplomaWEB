@@ -196,7 +196,7 @@ def search_info_for_autocomplete(request):
         print(request.GET.get('lastItem'))
         data = []
         print(request.GET.get('nameStartsWith'))
-        limit = request.GET.get('maxRows')
+        limit = int(request.GET.get('maxRows'))
         #Фильтр либо в комментарии, либо в имени
         qs = ScVariableAutoCompletion.objects.filter(name__in=request.GET.get('nameStartsWith')).order_by('name')[:limit]
         for name in qs:

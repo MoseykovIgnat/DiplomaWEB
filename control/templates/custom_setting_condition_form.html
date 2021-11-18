@@ -54,7 +54,7 @@
         }
       })
       .autocomplete({
-        minLength: 0,
+        minLength: 1,
         {#source: function( request, response ) {#}
         {#  // delegate back to autocomplete, but extract the last term#}
         {#  response( $.ui.autocomplete.filter(#}
@@ -65,7 +65,7 @@
             url : "{% url 'search_info_for_autocomplete' %}",
             data:{
                 maxRows: 12, // показать первые 12 результатов
-                nameStartsWith: split(request.term) // поисковая фраза
+                nameStartsWith: extractLast(request.term) // поисковая фраза
             },
             success: function(data){
                 response(data);

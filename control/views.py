@@ -201,11 +201,11 @@ def search_info_for_autocomplete(request):
         qs_var = ScVariableAutoCompletion.objects.filter(name__icontains=request.GET.get('nameStartsWith')).order_by(
             'name')[:limit]
         for name in qs_var:
-            name.postfix_id
             qs_postfix = ScPostfixAutoCompletion.objects.filter(postfix_id=name.postfix_id).order_by('name')
             for postfix in qs_postfix:
                 data.append(name.name+postfix.name)
         return JsonResponse(data, safe=False)
+
 
 def save_new_graph_name(request):
     if request.method == "POST":

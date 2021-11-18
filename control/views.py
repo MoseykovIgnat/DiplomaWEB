@@ -195,6 +195,7 @@ def search_info_for_autocomplete(request):
     if request.method == 'GET' and request.is_ajax():
         print(request.GET.get('maxRows'))
         data = ['a', 'b', 'c', 'd', 'e', 'f']
+        print(request.GET.get('nameStartsWith'))
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 

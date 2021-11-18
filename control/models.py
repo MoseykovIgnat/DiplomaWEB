@@ -139,3 +139,21 @@ class ScGraphName(models.Model):
         db_table = 'sc_graph_name'
 
 
+class ScVariableAutoCompletion(models.Model):
+    name = models.CharField(primary_key=True, max_length=100)
+    comment = models.CharField(max_length=200, blank=True, null=True)
+    postfix_id = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_variable_auto_completion'
+
+
+class ScPostfixAutoCompletion(models.Model):
+    name = models.CharField(max_length=100)
+    postfix_id = models.IntegerField()
+    comment = models.CharField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_postfix_auto_completion'

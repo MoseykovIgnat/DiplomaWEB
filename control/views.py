@@ -196,7 +196,7 @@ def search_info_for_autocomplete(request):
         print(request.GET.get('maxRows'))
         data = ['a', 'b', 'c', 'd', 'e', 'f']
         print(request.GET.get('nameStartsWith'))
-        return HttpResponse(json.dumps(data), content_type='application/json')
+        return JsonResponse(data, safe=False)
 
 
 def save_new_graph_name(request):

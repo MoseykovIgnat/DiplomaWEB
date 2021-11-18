@@ -65,7 +65,7 @@
             url : "{% url 'search_info_for_autocomplete' %}",
             data:{
                 maxRows: 12, // показать первые 12 результатов
-                nameStartsWith: request.term // поисковая фраза
+                nameStartsWith: split(request.term) // поисковая фраза
             },
             success: function(data){
                 response(data);

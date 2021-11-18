@@ -67,7 +67,6 @@
         {#    availableTags, extractLast( request.term ) ) );},#}
         source: function(request, response){
             firstPart = request.term.slice(-1) !== ':';
-            alert(request.term.slice(-1));
         $.ajax({
             type:'GET',
             url : "{% url 'search_info_for_autocomplete' %}",

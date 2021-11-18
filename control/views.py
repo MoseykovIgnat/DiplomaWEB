@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResult, ScGraphName, ScGraphInfo, \
+from .models import ScUsers, ScVariableAutoCompletion, ScPostfixAutoCompletion, ScPaths, ScResults, ScConditions, ScConditionsResult, ScGraphName, ScGraphInfo, \
     ScConditionsOnline
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.http import JsonResponse
@@ -196,6 +196,9 @@ def search_info_for_autocomplete(request):
         print(request.GET.get('maxRows'))
         data = ['a', 'b', 'c', 'd', 'e', 'f']
         print(request.GET.get('nameStartsWith'))
+        qs = ScVariableAutoCompletion.objects.filter(name__startswith=request.GET.get('nameStartsWith')).order_by('name')[:10]
+        for name in qs:
+            print(name.name)
         return JsonResponse(data, safe=False)
 
 

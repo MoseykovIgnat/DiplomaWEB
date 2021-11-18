@@ -201,7 +201,7 @@ def search_info_for_autocomplete(request):
         first_part = request.GET.get('firstPart')
         # Фильтр либо в комментарии, либо в имени
         print(first_part)
-        if first_part:
+        if first_part == 'true':
             qs = ScVariableAutoCompletion.objects.filter(name__icontains=request.GET.get('nameStartsWith')).order_by(
                 'name')[:limit]
             for name in qs:

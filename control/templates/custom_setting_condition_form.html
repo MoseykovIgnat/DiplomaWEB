@@ -39,7 +39,7 @@
       "Scheme"
     ];
     function split( val ) {
-      return val.split( /,\s*/ );
+      return val.split( /:\s*/ );
     }
     function extractLast( term ) {
       return split( term ).pop();
@@ -55,11 +55,23 @@
       })
       .autocomplete({
         minLength: 0,
-        source: function( request, response ) {
-          // delegate back to autocomplete, but extract the last term
-          response( $.ui.autocomplete.filter(
-            availableTags, extractLast( request.term ) ) );
-        },
+        {#source: function( request, response ) {#}
+        {#  // delegate back to autocomplete, but extract the last term#}
+        {#  response( $.ui.autocomplete.filter(#}
+        {#    availableTags, extractLast( request.term ) ) );},#}
+        source: function(request, response){
+        $.ajax({
+            type:'GET',
+            url : "{% url 'search_info_for_autocomplete' %}",
+            data:{
+                maxRows: 12, // показать первые 12 результатов
+                nameStartsWith: request.term // поисковая фраза
+            },
+            success: function(data){
+                response(data);
+            }
+        });
+    },
         focus: function() {
           // prevent value inserted on focus
           return false;
@@ -71,8 +83,7 @@
           // add the selected item
           terms.push( ui.item.value );
           // add placeholder to get the comma-and-space at the end
-          terms.push( "" );
-          this.value = terms.join( ", " );
+          this.value = terms.join( ":" );
           return false;
         }
       });

@@ -22,6 +22,7 @@ urlpatterns = [
     path(PREFIX + 'change_dot_condition/', views.change_dot_condition, name='change_dot_condition'),
     path(PREFIX + 'save_new_graph_name/', views.save_new_graph_name, name='save_new_graph_name'),
     path(PREFIX + 'update_info_in_graphs/', views.update_info_in_graphs, name='update_info_in_graphs'),
+    path(PREFIX + 'search_info_for_autocomplite/', views.search_info_for_autocomplete, name='search_info_for_autocomplete'),
 
 ]
 

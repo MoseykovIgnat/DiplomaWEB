@@ -205,7 +205,6 @@ def search_info_for_autocomplete(request):
             qs_postfix = ScPostfixAutoCompletion.objects.filter(postfix_id=name.postfix_id).order_by('name')
             for postfix in qs_postfix:
                 data.append(name.name+postfix.name)
-            print(name.name)
         return JsonResponse(data, safe=False)
 
 def save_new_graph_name(request):

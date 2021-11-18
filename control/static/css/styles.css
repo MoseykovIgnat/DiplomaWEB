@@ -4,8 +4,16 @@
     list-style: none;
 }
 .ui-autocomplete {
-   z-index: 9999999 !important;
+    z-index: 9999999 !important;
+    max-height: 200px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    padding-right: 20px;
 }
+
+
 
 .main-info{
     margin-left: auto;

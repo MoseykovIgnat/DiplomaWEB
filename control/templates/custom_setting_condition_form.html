@@ -14,8 +14,6 @@
 
   <script>
   $(document).ready( function() {
-    var lastItem = null;
-    var firstPart;
     var availableTags = [
       "ActionScript",
       "AppleScript",
@@ -41,12 +39,9 @@
       "Scheme"
     ];
     function split( val ) {
-      if (firstPart){
-      return val.split( / \s*/ );}
-      else {
-          return val.split( /:\s*/ );
-      }
+      return val.split( / \s*/ );
     }
+
     function extractLast( term ) {
       return split( term ).pop();
     }
@@ -66,15 +61,12 @@
         {#  response( $.ui.autocomplete.filter(#}
         {#    availableTags, extractLast( request.term ) ) );},#}
         source: function(request, response){
-            firstPart = request.term.slice(-1) !== ':';
         $.ajax({
             type:'GET',
             url : "{% url 'search_info_for_autocomplete' %}",
             data:{
-                maxRows: 10, // показать первые 12 результатов (Может быть и 1к но и
+                maxRows: 100, // показать первые n результатов (Может быть и 1к но и
                 nameStartsWith: extractLast(request.term), // поисковая фраза
-                lastItem: lastItem,
-                firstPart: firstPart,
             },
             success: function(data){
                 response(data);

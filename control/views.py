@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import ScUsers, ScVariableAutoCompletion, ScPostfixAutoCompletion, ScPaths, ScResults, ScConditions, ScConditionsResult, ScGraphName, ScGraphInfo, \
+from .models import ScUsers, ScVariableAutoCompletion, ScPostfixAutoCompletion, ScPaths, ScResults, ScConditions, \
+    ScConditionsResult, ScGraphName, ScGraphInfo, \
     ScConditionsOnline
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.http import JsonResponse
@@ -197,12 +198,18 @@ def search_info_for_autocomplete(request):
         data = []
         print(request.GET.get('nameStartsWith'))
         limit = request.GET.get('maxRows')
-        #Фильтр либо в комментарии, либо в имени
-        qs = ScVariableAutoCompletion.objects.filter(name__icontains=request.GET.get('nameStartsWith')).order_by('name')[:10]
-        for name in qs:
-            data.append(name.name)
-            print(name.name)
-        return JsonResponse(data, safe=False)
+        first_part = request.GET.get('first_part')
+        # Фильтр либо в комментарии, либо в имени
+        print(first_part)
+        if first_part:
+            qs = ScVariableAutoCompletion.objects.filter(name__icontains=request.GET.get('nameStartsWith')).order_by(
+                'name')[:10]
+            for name in qs:
+                data.append(name.name)
+                print(name.name)
+            return JsonResponse(data, safe=False)
+        else:
+            return JsonResponse(['a', 'x', 'a'], safe=False)
 
 
 def save_new_graph_name(request):

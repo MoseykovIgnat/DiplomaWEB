@@ -14,7 +14,6 @@
 
   <script>
   $(document).ready( function() {
-    var isItFirstComplete = true;
     var lastItem = null;
     var firstPart;
     var availableTags = [
@@ -68,7 +67,6 @@
         {#    availableTags, extractLast( request.term ) ) );},#}
         source: function(request, response){
             firstPart = request.term.slice(-1) !== ':';
-            alert(firstPart);
         $.ajax({
             type:'GET',
             url : "{% url 'search_info_for_autocomplete' %}",
@@ -96,7 +94,6 @@
           // add placeholder to get the comma-and-space at the end
           terms.push("");
           this.value = terms.join('');
-          isItFirstComplete = !isItFirstComplete;
           lastItem = ui.item.value;
           return false;
         }

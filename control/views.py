@@ -194,10 +194,11 @@ def del_exist_condition(request):
 def search_info_for_autocomplete(request):
     if request.method == 'GET' and request.is_ajax():
         print(request.GET.get('maxRows'))
-        data = ['a', 'b', 'c', 'd', 'e', 'f']
+        data = []
         print(request.GET.get('nameStartsWith'))
         qs = ScVariableAutoCompletion.objects.filter(name__startswith=request.GET.get('nameStartsWith')).order_by('name')[:10]
         for name in qs:
+            data.append(name)
             print(name.name)
         return JsonResponse(data, safe=False)
 

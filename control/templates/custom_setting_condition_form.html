@@ -39,7 +39,7 @@
       "Scheme"
     ];
     function split( val ) {
-      return val.split( /:\s*/ );
+      return val.split( / \s*/ );
     }
     function extractLast( term ) {
       return split( term ).pop();
@@ -83,7 +83,8 @@
           // add the selected item
           terms.push( ui.item.value );
           // add placeholder to get the comma-and-space at the end
-          this.value = terms.join( ":" );
+          terms.push("");
+          this.value = terms.join(' ');
           return false;
         }
       });

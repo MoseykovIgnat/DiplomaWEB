@@ -177,7 +177,9 @@
                 nameStartsWith: extractLast(request.term), // поисковая фраза
             },
             success: function(data){
+                console.log(data);
                 response(data);
+
             }
         });
     },

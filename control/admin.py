@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResult, ScGraphName, ScGraphInfo
+from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResult, ScGraphName, ScGraphInfo,\
+    ScVariableAutoCompletion, ScPostfixAutoCompletion
 
 
 class ScConditionsResultAdmin(admin.ModelAdmin):
@@ -34,12 +35,24 @@ class ScUsersAdmin(admin.ModelAdmin):
     list_filter = ('name', 'status')
 
 
+class ScVariableAutoCompletionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'comment', 'postfix_id')
+    list_filter = ('name', 'comment', 'postfix_id')
+
+
+class ScPostfixAutoCompletionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'comment', 'postfix_id')
+    list_filter = ('name', 'comment', 'postfix_id')
+
+
 admin.site.register(ScUsers, ScUsersAdmin)
 admin.site.register(ScPaths, ScPathsAdmin)
 admin.site.register(ScResults, ScResultsAdmin)
 admin.site.register(ScConditionsResult, ScConditionsResultAdmin)
 admin.site.register(ScConditions, ScConditionsAdmin)
 admin.site.register(ScGraphInfo, ScGraphInfoAdmin)
+admin.site.register(ScPostfixAutoCompletion, ScPostfixAutoCompletionAdmin)
+admin.site.register(ScVariableAutoCompletion, ScVariableAutoCompletionAdmin)
 admin.site.register(ScGraphName)
 
 # Register your models here.

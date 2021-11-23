@@ -67,7 +67,13 @@
           lastItem = ui.item.value;
           return false;
         }
-      });
+      })
+    .data( "autocomplete" )._renderItem = function( ul, item ) {
+    return $( "<li></li>" )
+        .data( "item.autocomplete", item )
+        .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
+        .appendTo( ul );
+        };
 
         $( "#id_min_val" )
       // don't navigate away from the field on tab when selecting an item
@@ -203,12 +209,6 @@
           return false;
         }
       })
-    .data( "autocomplete" )._renderItem = function( ul, item ) {
-            return $( "<li></li>" )
-                .data( "item.autocomplete", item )
-                .append( "<a>" + item.label + "<br>" + item.desc + "</a>" )
-                .appendTo( ul );
-        };
   } );
 
 

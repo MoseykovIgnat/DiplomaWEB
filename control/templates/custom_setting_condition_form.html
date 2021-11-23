@@ -31,6 +31,11 @@
           event.preventDefault();
         }
       })
+      .autocomplete( "instance" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+            .append( "<div>" + "HIHIHI" + "<br>" + item.comment + "</div>" )
+            .appendTo( ul );
+        }
       .autocomplete({
         minLength: 1,
         {#source: function( request, response ) {#}
@@ -168,6 +173,10 @@
       })
       .autocomplete({
         minLength: 1,
+        {#source: function( request, response ) {#}
+        {#  // delegate back to autocomplete, but extract the last term#}
+        {#  response( $.ui.autocomplete.filter(#}
+        {#    availableTags, extractLast( request.term ) ) );},#}
         source: function(request, response){
         $.ajax({
             type:'GET',
@@ -177,9 +186,7 @@
                 nameStartsWith: extractLast(request.term), // поисковая фраза
             },
             success: function(data){
-                console.log(data);
                 response(data);
-
             }
         });
     },
@@ -199,12 +206,7 @@
           lastItem = ui.item.value;
           return false;
         }
-      })
-      .autocomplete( "instance" )._renderItem = function( ul, item ) {
-      return $( "<li>" )
-        .append( "<div>" + "HIHIHI" + "<br>" + item.comment + "</div>" )
-        .appendTo( ul );
-    };
+      });
   } );
 
 

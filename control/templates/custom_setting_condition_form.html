@@ -168,10 +168,6 @@
       })
       .autocomplete({
         minLength: 1,
-        {#source: function( request, response ) {#}
-        {#  // delegate back to autocomplete, but extract the last term#}
-        {#  response( $.ui.autocomplete.filter(#}
-        {#    availableTags, extractLast( request.term ) ) );},#}
         source: function(request, response){
         $.ajax({
             type:'GET',
@@ -201,7 +197,12 @@
           lastItem = ui.item.value;
           return false;
         }
-      });
+      })
+      .autocomplete( "instance" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+        .append( "<div>" + item.value + "<br>" + item.comment + "</div>" )
+        .appendTo( ul );
+    };
   } );
 
 

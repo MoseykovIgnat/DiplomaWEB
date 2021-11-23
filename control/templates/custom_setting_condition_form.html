@@ -31,11 +31,6 @@
           event.preventDefault();
         }
       })
-      .autocomplete( "instance" )._renderItem = function( ul, item ) {
-          return $( "<li>" )
-            .append( "<div>" + "HIHIHI" + "<br>" + item.comment + "</div>" )
-            .appendTo( ul );
-        }
       .autocomplete({
         minLength: 1,
         {#source: function( request, response ) {#}
@@ -206,7 +201,12 @@
           lastItem = ui.item.value;
           return false;
         }
-      });
+      })
+          .autocomplete( "instance" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+            .append( "<div>" + "HIHIHI" + "<br>" + item.comment + "</div>" )
+            .appendTo( ul );
+        }    ;
   } );
 
 

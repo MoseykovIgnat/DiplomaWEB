@@ -140,15 +140,15 @@
       <div class="modal-body" >
           <form method="POST" id="condition_create">
             {% csrf_token %}
-            <div class="form-group cond_name d-flex justify-content-center">
+            <div class="form-group cond_name">
                 <label style="color: black">Name of your conditional</label>
                 <input type="text" class="form-control collectes-date-chargement-min " id="id_cond_name" placeholder="Insert name of your condition">
             </div>
-            <div class="form-group cond_formula d-flex justify-content-center">
+            <div class="form-group cond_formula">
                 <label style="color: black">Formula for condition</label>
                 <textarea class="form-control collectes-date-chargement-min " id="id_formula" rows="3"></textarea>
             </div>
-            <div class="form-group cond_type d-flex justify-content-center">
+            <div class="form-group cond_type">
                  <label style="color: black">Conditional type</label>
                 <p><select  class="form-select collectes-date-chargement-min text-center" aria-label="Default select example" id="id_cond_type">
                     <option selected value="1">Digit result of formula</option>
@@ -160,31 +160,31 @@
                     <option value="6">Result in interval</option>
                 </select></p>
             </div>
-            <div class="form-group cond_min_val d-flex justify-content-center">
+            <div class="form-group cond_min_val">
                 <label style="color: black">Minimum value</label>
                 <textarea class="form-control collectes-date-chargement-min " id="id_min_val" rows="3"></textarea>
             </div>
-            <div class="form-group cond_max_val d-flex justify-content-center">
+            <div class="form-group cond_max_val">
                 <label style="color: black">Maximum value</label>
                 <textarea class="form-control collectes-date-chargement-min " id="id_max_val" rows="3"></textarea>
             </div>
-            <div class="form-group cond_limit_val d-flex justify-content-center">
+            <div class="form-group cond_limit_val">
                 <label style="color: black">Limit value</label>
                 <textarea class="form-control collectes-date-chargement-min " id="id_limit_val" rows="3"></textarea>
             </div>
-            <div class="form-group cond_display_method d-flex justify-content-center">
+            <div class="form-group cond_display_method">
                  <label style="color: black">Conditional display method</label>
                 <p><select  class="form-select collectes-date-chargement-min text-center" aria-label="Default select example" id="id_display_method">
                     <option selected value="Text">Text</option>
                     <option value="Text+Siren">Text+Siren</option>
                 </select></p>
             </div>
-            <div class="form-group cond_priority_for_signal_alert d-flex justify-content-center">
-                <label style="color: black">Interval Time</label>
+            <div class="form-group cond_priority_for_signal_alert">
+                <label class="text-centre" style="color: black">Interval Time</label>
                 <input type="number" min="0" max="5" class="form-control collectes-date-chargement-min text-center" id="id_priority_for_alert" placeholder="Insert priority for alert from 1 to 5 (INTEGER)">
             </div>
-            <div class="form-group cond_interval_for_signal_alert d-flex justify-content-center">
-                <label style="color: black">Interval Time</label>
+            <div class="form-group cond_interval_for_signal_alert">
+                <label class="text-centre" style="color: black">Interval Time</label>
                 <input type="number" min="30" max="600" class="form-control collectes-date-chargement-min text-center" id="id_interval_for_alert" placeholder="Insert interval for alert from 30 to 600 sec (INTEGER)">
             </div>
             <button type="submit" class="btn btn-outline-dark">Submit</button>

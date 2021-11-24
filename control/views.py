@@ -203,7 +203,7 @@ def search_info_for_autocomplete(request):
         for name in qs_var:
             qs_postfix = ScPostfixAutoCompletion.objects.filter(postfix_id=name.postfix_id).order_by('name')
             for postfix in qs_postfix:
-                data.append({'value': name.name+postfix.name, 'desc': name.comment})
+                data.append({'value': name.name+postfix.name, 'desc': name.comment + ' ('+postfix.comment+').'})
         return JsonResponse(data, safe=False)
 
 

@@ -217,7 +217,7 @@
     <script>
     $('#id_cond_type').on('change', function (){
 
-        if (this.value === 2 || this.value === '3' || this.value === '4' || this.value === '5'){
+        if (this.value === '2' || this.value === '3' || this.value === '4' || this.value === '5'){
             $(".cond_limit_val").show();
             $(".cond_min_val").hide();
             $(".cond_max_val").hide();
@@ -234,6 +234,12 @@
             $(".cond_max_val").hide();
             $(".cond_limit_val").hide();
             $(".cond_display_method").hide();
+        }
+        if (this.value === '7'){
+            $(".cond_min_val").hide();
+            $(".cond_max_val").hide();
+            $(".cond_limit_val").hide();
+            $(".cond_display_method").show();
         }
     });
 

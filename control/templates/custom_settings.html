@@ -132,20 +132,73 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Добавление новой переменной</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Добавление новой условия</h5>
         <button type="button" class="close btn btn-outline-dark" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" >
-            <form action="{% url 'condition_create' %}"
-                method="post">
-                {% csrf_token %}
-                <div class="new_condition_form">
-
-                </div>
-                <button class="button btn btn-primary" type="submit">Create!</button>
+          <form method="POST" id="condition_create">
+            {% csrf_token %}
+            <div class="form-group cond_name">
+                <label style="color: black">Name of your conditional</label>
+                <input type="text" class="form-control collectes-date-chargement-min text-center" id="id_cond_name" placeholder="Insert name of your condition">
+            </div>
+            <div class="form-group cond_formula">
+                <label style="color: black">Formula for condition</label>
+                <textarea class="form-control collectes-date-chargement-min text-center" id="id_formula" rows="3"></textarea>
+            </div>
+            <div class="form-group cond_type">
+                 <label style="color: black">Conditional type</label>
+                <p><select  class="form-select collectes-date-chargement-min text-center" aria-label="Default select example" id="id_cond_type">
+                    <option selected>Choose conditional type</option>
+                    <option value="1">Digit result of formula</option>
+                    <option value="7">Bool result</option>
+                    <option value="2"><</option>
+                    <option value="3">></option>
+                    <option value="4">>=</option>
+                    <option value="5"><=</option>
+                    <option value="6">Result in interval</option>
+                </select></p>
+            </div>
+            <div class="form-group cond_min_val">
+                <label style="color: black">Minimum value</label>
+                <textarea class="form-control collectes-date-chargement-min text-center" id="id_min_val" rows="3"></textarea>
+            </div>
+            <div class="form-group cond_max_val">
+                <label style="color: black">Maximum value</label>
+                <textarea class="form-control collectes-date-chargement-min text-center" id="id_max_val" rows="3"></textarea>
+            </div>
+            <div class="form-group cond_min_val">
+                <label style="color: black">Limit value</label>
+                <textarea class="form-control collectes-date-chargement-min text-center" id="id_limit_val" rows="3"></textarea>
+            </div>
+            <div class="form-group cond_display_method">
+                 <label style="color: black">Conditional type</label>
+                <p><select  class="form-select collectes-date-chargement-min text-center" aria-label="Default select example" id="id_cond_type">
+                    <option selected>Choose conditional type</option>
+                    <option value="Text">Text</option>
+                    <option value="Text+Siren">Text+Siren</option>
+                </select></p>
+            </div>
+            <div class="form-group cond_priority_for_signal_alert">
+                <label style="color: black">Interval Time</label>
+                <input type="number" min="0" max="5" class="form-control collectes-date-chargement-min text-center" id="id_priority_for_alert" placeholder="Insert priority for alert from 1 to 5 (INTEGER)">
+            </div>
+            <div class="form-group cond_interval_for_signal_alert">
+                <label style="color: black">Interval Time</label>
+                <input type="number" min="30" max="600" class="form-control collectes-date-chargement-min text-center" id="id_interval_for_alert" placeholder="Insert interval for alert from 30 to 600 sec (INTEGER)">
+            </div>
+            <button type="submit" class="btn btn-outline-dark">Submit</button>
             </form>
+{#            <form action="{% url 'condition_create' %}"#}
+{#                method="post">#}
+{#                {% csrf_token %}#}
+{#                <div class="new_condition_form">#}
+{##}
+{#                </div>#}
+{#                <button class="button btn btn-primary" type="submit">Create!</button>#}
+{#            </form>#}
       </div>
     </div>
   </div>
@@ -250,137 +303,137 @@
         .appendTo( ul );
     };
 
-    {#    $( "#id_min_val" )#}
-    {#  // don't navigate away from the field on tab when selecting an item#}
-    {#  .on( "keydown", function( event ) {#}
-    {#    if ( event.keyCode === $.ui.keyCode.TAB &&#}
-    {#        $( this ).autocomplete( "instance" ).menu.active ) {#}
-    {#      event.preventDefault();#}
-    {#    }#}
-    {#  })#}
-    {#  .autocomplete({#}
-    {#    minLength: 1,#}
-        {#source: function( request, response ) {#}
-        {#  // delegate back to autocomplete, but extract the last term#}
-        {#  response( $.ui.autocomplete.filter(#}
-        {#    availableTags, extractLast( request.term ) ) );},#}
-    {#    source: function(request, response){#}
-    {#    $.ajax({#}
-    {#        type:'GET',#}
-    {#        url : "{% url 'search_info_for_autocomplete' %}",#}
-    {#        data:{#}
-    {#            maxRows: 100, // показать первые n результатов (Может быть и 1к но и#}
-    {#            nameStartsWith: extractLast(request.term), // поисковая фраза#}
-    {#        },#}
-    {#        success: function(data){#}
-    {#            response(data);#}
-    {#        }#}
-    {#    });    },#}
-    {#    focus: function() {#}
-    {#      // prevent value inserted on focus#}
-    {#      return false;#}
-    {#    },#}
-    {#    select: function( event, ui ) {#}
-    {#      var terms = split( this.value );#}
-    {#      // remove the current input#}
-    {#      terms.pop();#}
-    {#      // add the selected item#}
-    {#      terms.push( ui.item.value );#}
-    {#      // add placeholder to get the comma-and-space at the end#}
-    {#      terms.push("");#}
-    {#      this.value = terms.join(' ');#}
-    {#      lastItem = ui.item.value;#}
-    {#      return false;#}
-    {#    }#}
-    {#  });#}
-    {##}
-    {#      $( "#id_max_val" )#}
-    {#  // don't navigate away from the field on tab when selecting an item#}
-    {#  .on( "keydown", function( event ) {#}
-    {#    if ( event.keyCode === $.ui.keyCode.TAB &&#}
-    {#        $( this ).autocomplete( "instance" ).menu.active ) {#}
-    {#      event.preventDefault();#}
-    {#    }#}
-    {#  })#}
-    {#  .autocomplete({#}
-    {#    minLength: 1,#}
-        {#source: function( request, response ) {#}
-        {#  // delegate back to autocomplete, but extract the last term#}
-        {#  response( $.ui.autocomplete.filter(#}
-        {#    availableTags, extractLast( request.term ) ) );},#}
-    {#    source: function(request, response){#}
-    {#    $.ajax({#}
-    {#        type:'GET',#}
-    {#        url : "{% url 'search_info_for_autocomplete' %}",#}
-    {#        data:{#}
-    {#            maxRows: 100, // показать первые n результатов (Может быть и 1к но и#}
-    {#            nameStartsWith: extractLast(request.term), // поисковая фраза#}
-    {#        },#}
-    {#        success: function(data){#}
-    {#            response(data);#}
-    {#        }#}
-    {#    });    },#}
-    {#    focus: function() {#}
-    {#      // prevent value inserted on focus#}
-    {#      return false;#}
-    {#    },#}
-    {#    select: function( event, ui ) {#}
-    {#      var terms = split( this.value );#}
-    {#      // remove the current input#}
-    {#      terms.pop();#}
-    {#      // add the selected item#}
-    {#      terms.push( ui.item.value );#}
-    {#      // add placeholder to get the comma-and-space at the end#}
-    {#      terms.push("");#}
-    {#      this.value = terms.join(' ');#}
-    {#      lastItem = ui.item.value;#}
-    {#      return false;#}
-    {#    }#}
-    {#  });#}
-    {##}
-    {#      $( "#id_limit_val" )#}
-    {#  // don't navigate away from the field on tab when selecting an item#}
-    {#  .on( "keydown", function( event ) {#}
-    {#    if ( event.keyCode === $.ui.keyCode.TAB &&#}
-    {#        $( this ).autocomplete( "instance" ).menu.active ) {#}
-    {#      event.preventDefault();#}
-    {#    }#}
-    {#  })#}
-    {#  .autocomplete({#}
-    {#    minLength: 1,#}
-        {#source: function( request, response ) {#}
-        {#  // delegate back to autocomplete, but extract the last term#}
-        {#  response( $.ui.autocomplete.filter(#}
-        {#    availableTags, extractLast( request.term ) ) );},#}
-    {#    source: function(request, response){#}
-    {#    $.ajax({#}
-    {#        type:'GET',#}
-    {#        url : "{% url 'search_info_for_autocomplete' %}",#}
-    {#        data:{#}
-    {#            maxRows: 100, // показать первые n результатов (Может быть и 1к но и#}
-    {#            nameStartsWith: extractLast(request.term), // поисковая фраза#}
-    {#        },#}
-    {#        success: function(data){#}
-    {#            response(data);#}
-    {#        }#}
-    {#    });    },#}
-    {#    focus: function() {#}
-    {#      // prevent value inserted on focus#}
-    {#      return false;#}
-    {#    },#}
-    {#    select: function( event, ui ) {#}
-    {#      var terms = split( this.value );#}
-    {#      // remove the current input#}
-    {#      terms.pop();#}
-    {#      // add the selected item#}
-    {#      terms.push( ui.item.value );#}
-    {#      // add placeholder to get the comma-and-space at the end#}
-    {#      terms.push("");#}
-    {#      this.value = terms.join(' ');#}
-    {#      lastItem = ui.item.value;#}
-    {#      return false;#}
-    {#    }#}
-    {#  })#}
+       $( "#id_min_val" )
+     // don't navigate away from the field on tab when selecting an item
+     .on( "keydown", function( event ) {
+       if ( event.keyCode === $.ui.keyCode.TAB &&
+           $( this ).autocomplete( "instance" ).menu.active ) {
+         event.preventDefault();
+       }
+     })
+     .autocomplete({
+       minLength: 1,
+        source: function( request, response ) {
+         // delegate back to autocomplete, but extract the last term
+         response( $.ui.autocomplete.filter(
+           availableTags, extractLast( request.term ) ) );},
+       source: function(request, response){
+       $.ajax({
+           type:'GET',
+           url : "{% url 'search_info_for_autocomplete' %}",
+           data:{
+               maxRows: 100, // показать первые n результатов (Может быть и 1к но и
+               nameStartsWith: extractLast(request.term), // поисковая фраза
+           },
+           success: function(data){
+               response(data);
+           }
+       });    },
+       focus: function() {
+         // prevent value inserted on focus
+         return false;
+       },
+       select: function( event, ui ) {
+         var terms = split( this.value );
+         // remove the current input
+         terms.pop();
+         // add the selected item
+         terms.push( ui.item.value );
+         // add placeholder to get the comma-and-space at the end
+         terms.push("");
+         this.value = terms.join(' ');
+         lastItem = ui.item.value;
+         return false;
+       }
+     });
+
+         $( "#id_max_val" )
+     // don't navigate away from the field on tab when selecting an item
+     .on( "keydown", function( event ) {
+       if ( event.keyCode === $.ui.keyCode.TAB &&
+           $( this ).autocomplete( "instance" ).menu.active ) {
+         event.preventDefault();
+       }
+     })
+     .autocomplete({
+       minLength: 1,
+        source: function( request, response ) {
+         // delegate back to autocomplete, but extract the last term
+         response( $.ui.autocomplete.filter(
+           availableTags, extractLast( request.term ) ) );},
+       source: function(request, response){
+       $.ajax({
+           type:'GET',
+           url : "{% url 'search_info_for_autocomplete' %}",
+           data:{
+               maxRows: 100, // показать первые n результатов (Может быть и 1к но и
+               nameStartsWith: extractLast(request.term), // поисковая фраза
+           },
+           success: function(data){
+               response(data);
+           }
+       });    },
+       focus: function() {
+         // prevent value inserted on focus
+         return false;
+       },
+       select: function( event, ui ) {
+         var terms = split( this.value );
+         // remove the current input
+         terms.pop();
+         // add the selected item
+         terms.push( ui.item.value );
+         // add placeholder to get the comma-and-space at the end
+         terms.push("");
+         this.value = terms.join(' ');
+         lastItem = ui.item.value;
+         return false;
+       }
+     });
+
+         $( "#id_limit_val" )
+     // don't navigate away from the field on tab when selecting an item
+     .on( "keydown", function( event ) {
+       if ( event.keyCode === $.ui.keyCode.TAB &&
+           $( this ).autocomplete( "instance" ).menu.active ) {
+         event.preventDefault();
+       }
+     })
+     .autocomplete({
+       minLength: 1,
+        source: function( request, response ) {
+         // delegate back to autocomplete, but extract the last term
+         response( $.ui.autocomplete.filter(
+           availableTags, extractLast( request.term ) ) );},
+       source: function(request, response){
+       $.ajax({
+           type:'GET',
+           url : "{% url 'search_info_for_autocomplete' %}",
+           data:{
+               maxRows: 100, // показать первые n результатов (Может быть и 1к но и
+               nameStartsWith: extractLast(request.term), // поисковая фраза
+           },
+           success: function(data){
+               response(data);
+           }
+       });    },
+       focus: function() {
+         // prevent value inserted on focus
+         return false;
+       },
+       select: function( event, ui ) {
+         var terms = split( this.value );
+         // remove the current input
+         terms.pop();
+         // add the selected item
+         terms.push( ui.item.value );
+         // add placeholder to get the comma-and-space at the end
+         terms.push("");
+         this.value = terms.join(' ');
+         lastItem = ui.item.value;
+         return false;
+       }
+     })
   } );
 
 

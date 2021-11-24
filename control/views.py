@@ -287,7 +287,7 @@ def condition_create(request):
     username = request.user.username
     user_id = ScUsers.objects.get(name=username)
     if request.method == 'POST':
-        print(request.POST['formula'])
+        print(request.POST)
         # print(request.POST['formula'])
         # if '0)' in request.POST['formula']:
         #     request.POST = request.POST.copy()

@@ -14,47 +14,47 @@
 
 
 
-{#    <script>#}
-{#     $(document).ready(function (){#}
-{#      $('input#div_id_min_val').css("disabled","true");#}
-{#      $('input#div_id_max_val').css("disabled","true");#}
-{#      $('input#div_id_limit_val').css("disabled","true");#}
-{#      $('input#div_id_priority').css("disabled","true");#}
-{#      $('input#div_id_alert_interval').css("disabled","true");#}
-{##}
-{##}
-{#    })#}
-{#    </script>#}
-{#    <script>#}
-{#    $('#id_cond_type').on('change', function (){#}
-{#        if (this.value == 2 || this.value == 3 || this.value == 4 || this.value == 5){#}
-{#            $('#div_id_limit_val').css("disabled","false");#}
-{#            $('#div_id_min_val').css("disabled","true");#}
-{#            $('#div_id_max_val').css("disabled","true");#}
-{#        }#}
-{#        if (this.value == 6){#}
-{#            $('#div_id_min_val').css("disabled","false");#}
-{#            $('#div_id_max_val').css("disabled","false");#}
-{#            $('#id_disabled_method').css("disabled","false");#}
-{#            $('#div_id_limit_val').css("disabled","true");#}
-{#        }#}
-{#        if (this.value == 1){#}
-{#            $('#div_id_min_val').css("disabled","true");#}
-{#            $('#div_id_max_val').css("disabled","true");#}
-{#            $('#div_id_limit_val').css("disabled","true");#}
-{#        }#}
-{#    });#}
-{#    $('#id_disabled_method').on('change', function (){#}
-{#        if (this.value == "Text+Siren"){#}
-{#            $('#div_id_priority').css("disabled","false");#}
-{#            $('#div_id_alert_interval').css("disabled","false");#}
-{#        }#}
-{#        if (this.value == "Text"){#}
-{#            $('#div_id_priority').css("disabled","true");#}
-{#            $('#div_id_alert_interval').css("disabled","true");#}
-{#        }#}
-{##}
-{##}
-{#    });#}
-{#    </script>#}
+    <script>
+     $(document).ready(function (){
+      $('input#div_id_min_val').css("disabled","true");
+      $('input#div_id_max_val').css("disabled","true");
+      $('input#div_id_limit_val').css("disabled","true");
+      $('input#div_id_priority').css("disabled","true");
+      $('input#div_id_alert_interval').css("disabled","true");
+
+
+    })
+    </script>
+    <script>
+    $('#id_cond_type').on('change', function (){
+        if (this.value == 2 || this.value == 3 || this.value == 4 || this.value == 5){
+            $('#div_id_limit_val').css("disabled","false");
+            $('#div_id_min_val').css("disabled","true");
+            $('#div_id_max_val').css("disabled","true");
+        }
+        if (this.value == 6){
+            $('#div_id_min_val').css("disabled","false");
+            $('#div_id_max_val').css("disabled","false");
+            $('#id_disabled_method').css("disabled","false");
+            $('#div_id_limit_val').css("disabled","true");
+        }
+        if (this.value == 1){
+            $('#div_id_min_val').css("disabled","true");
+            $('#div_id_max_val').css("disabled","true");
+            $('#div_id_limit_val').css("disabled","true");
+        }
+    });
+    $('#id_disabled_method').on('change', function (){
+        if (this.value == "Text+Siren"){
+            $('#div_id_priority').css("disabled","false");
+            $('#div_id_alert_interval').css("disabled","false");
+        }
+        if (this.value == "Text"){
+            $('#div_id_priority').css("disabled","true");
+            $('#div_id_alert_interval').css("disabled","true");
+        }
+
+
+    });
+    </script>
 {% endblock javascript %}

@@ -142,11 +142,11 @@
             {% csrf_token %}
             <div class="form-group cond_name">
                 <label style="color: black">Name of your conditional</label>
-                <input type="text" class="form-control collectes-date-chargement-min text-center" id="id_cond_name" placeholder="Insert name of your condition">
+                <input type="text" class="form-control collectes-date-chargement-min " id="id_cond_name" placeholder="Insert name of your condition">
             </div>
             <div class="form-group cond_formula">
                 <label style="color: black">Formula for condition</label>
-                <textarea class="form-control collectes-date-chargement-min text-center" id="id_formula" rows="3"></textarea>
+                <textarea class="form-control collectes-date-chargement-min " id="id_formula" rows="3"></textarea>
             </div>
             <div class="form-group cond_type">
                  <label style="color: black">Conditional type</label>
@@ -162,15 +162,15 @@
             </div>
             <div class="form-group cond_min_val">
                 <label style="color: black">Minimum value</label>
-                <textarea class="form-control collectes-date-chargement-min text-center" id="id_min_val" rows="3"></textarea>
+                <textarea class="form-control collectes-date-chargement-min " id="id_min_val" rows="3"></textarea>
             </div>
             <div class="form-group cond_max_val">
                 <label style="color: black">Maximum value</label>
-                <textarea class="form-control collectes-date-chargement-min text-center" id="id_max_val" rows="3"></textarea>
+                <textarea class="form-control collectes-date-chargement-min " id="id_max_val" rows="3"></textarea>
             </div>
             <div class="form-group cond_min_val">
                 <label style="color: black">Limit value</label>
-                <textarea class="form-control collectes-date-chargement-min text-center" id="id_limit_val" rows="3"></textarea>
+                <textarea class="form-control collectes-date-chargement-min " id="id_limit_val" rows="3"></textarea>
             </div>
             <div class="form-group cond_display_method">
                  <label style="color: black">Conditional type</label>
@@ -220,13 +220,13 @@
             $(".cond_min_val").hide();
             $(".cond_max_val").hide();
         }
-        if (this.value == 6){
+        if (this.value === 6){
             $(".cond_min_val").show();
             $(".cond_max_val").show();
             {#$('#id_disabled_method').css("disabled","false");#}
             $(".cond_limit_val").hide();
         }
-        if (this.value == 1){
+        if (this.value === 1){
             $('#div_id_min_val').css("disabled","true");
             $('#div_id_max_val').css("disabled","true");
             $('#div_id_limit_val').css("disabled","true");

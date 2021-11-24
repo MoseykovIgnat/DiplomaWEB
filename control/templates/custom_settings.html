@@ -227,11 +227,13 @@
             $(".cond_limit_val").hide();
         }
         if (this.value === 1){
-            $('#div_id_min_val').css("disabled","true");
-            $('#div_id_max_val').css("disabled","true");
-            $('#div_id_limit_val').css("disabled","true");
+            $(".cond_min_val").hide();
+            $(".cond_max_val").hide();
+            $(".cond_limit_val").hide();
         }
     });
+
+
     $('#id_display_method').on('change', function (){
         if (this.value === "Text+Siren"){
              $(".cond_priority_for_signal_alert").hide();

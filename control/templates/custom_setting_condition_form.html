@@ -70,7 +70,8 @@
       })
         .autocomplete( "instance" )._renderItem = function( ul, item ) {
       return $( "<li>" )
-        .append( item.desc )
+
+        .append( "<div><strong>" + item.value + "</strong><br><span style='color: #808080'>" + item.desc + "</span></div>" )
         .appendTo( ul );
     };
 

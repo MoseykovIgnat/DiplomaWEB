@@ -174,7 +174,7 @@
             </div>
             <div class="form-group cond_display_method">
                  <label style="color: black">Conditional type</label>
-                <p><select  class="form-select collectes-date-chargement-min text-center" aria-label="Default select example" id="id_cond_type">
+                <p><select  class="form-select collectes-date-chargement-min text-center" aria-label="Default select example" id="id_display_method">
                     <option selected value="Text">Text</option>
                     <option value="Text+Siren">Text+Siren</option>
                 </select></p>
@@ -440,6 +440,42 @@
 
     <!-- Form for new variables -->
 <script>
+    $(document).on('submit', '#add_new_condition_modal',function(e){
+        e.preventDefault();
+    $.ajax({
+        type:'POST',
+        url : "{% url 'condition_create' %}",
+        data:{
+            comment:$('#id_cond_name').val(),
+            cond_type:$('#id_cond_type').val(),
+            min_val:$('#id_min_val').val(),
+            max_val:$('#id_max_val').val(),
+            limit_val:$('#id_limit_val').val(),
+            display_method:$('#id_display_method').val(),
+            formula:$('#id_formula').val(),
+            priority:$('#id_priority_for_alert').val(),
+            alert_interval:$('#id_interval_for_alert').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success: function (response) {
+            alert('All is good');
+                    {#$('#post_new_var_form').trigger('reset');#}
+                    {#$('.paths_data').remove();#}
+                    {#for(i=0;i<response.length;i++) {#}
+                    {#$('.new_variable_table').append('<tr class="paths_data"><td>'+response[i]['fields']['path']+'</td><td>'+response[i]['fields']['source']+'</td><td>'+response[i]['fields']['interval_time']+'</td><td>');#}
+                    {#$('#add_new_variable_modal').modal('hide');                    }#}
+
+            },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
+});
+</script>
+
+    <!-- Form for new conditions -->
+<script>
     $(document).on('submit', '#post_new_var_form',function(e){
         e.preventDefault();
     $.ajax({
@@ -468,6 +504,7 @@
     });
 });
 </script>
+
 
     <!-- Highlighting lines of path table -->
 <script>

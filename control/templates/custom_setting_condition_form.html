@@ -70,7 +70,7 @@
       })
         .autocomplete( "instance" )._renderItem = function( ul, item ) {
       return $( "<li>" )
-        .append( "item.value" )
+        .append( item.desc )
         .appendTo( ul );
     };
 

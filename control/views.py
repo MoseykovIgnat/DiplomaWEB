@@ -243,7 +243,7 @@ def change_dot_condition(request):
 
 def add_new_variable(request):
     if request.method == "POST":
-        scpaths_model = models.ScPaths()
+        scpaths_model = ScPaths()
         user = request.user.username
         user_id = ScUsers.objects.get(name=user)
         scpaths_model.user_id = user_id.id

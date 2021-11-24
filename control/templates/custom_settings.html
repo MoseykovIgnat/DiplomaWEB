@@ -198,7 +198,7 @@
       return split( term ).pop();
     }
 
-    $( ".new_condition_form" )
+    $( ".new_condition_form #id_formula" )
       // don't navigate away from the field on tab when selecting an item
       .on( "keydown", function( event ) {
         if ( event.keyCode === $.ui.keyCode.TAB &&

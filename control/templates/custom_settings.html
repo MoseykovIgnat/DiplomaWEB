@@ -238,6 +238,8 @@
     $('#add_new_variable_modal').modal('show')
     });
 </script>
+
+    <!-- Auto complete for new condition -->
 <script>
   $(document).ready( function() {
 
@@ -249,7 +251,7 @@
       return split( term ).pop();
     }
 
-    $( "#var_path" )
+    $( "#id_formula" )
       // don't navigate away from the field on tab when selecting an item
       .on( "keydown", function( event ) {
         if ( event.keyCode === $.ui.keyCode.TAB &&

@@ -211,6 +211,7 @@
          $(".cond_limit_val").hide();
          $(".cond_priority_for_signal_alert").hide();
          $(".cond_interval_for_signal_alert").hide();
+         $(".cond_display_method").hide();
     });
     </script>
     <script>
@@ -220,16 +221,19 @@
             $(".cond_limit_val").show();
             $(".cond_min_val").hide();
             $(".cond_max_val").hide();
+            $(".cond_display_method").show();
         }
         if (this.value === '6'){
             $(".cond_min_val").show();
             $(".cond_max_val").show();
             $(".cond_limit_val").hide();
+            $(".cond_display_method").show();
         }
         if (this.value === '1'){
             $(".cond_min_val").hide();
             $(".cond_max_val").hide();
             $(".cond_limit_val").hide();
+            $(".cond_display_method").hide();
         }
     });
 

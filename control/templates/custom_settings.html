@@ -204,6 +204,47 @@
 {% endblock %}
 
 {% block javascript %}
+<script>
+     $(document).ready(function (){
+         $(".cond_min_val").hide();
+         $(".cond_max_val").hide();
+         $(".cond_limit_val").hide();
+         $(".cond_priority_for_signal_alert").hide();
+         $(".cond_interval_for_signal_alert").hide();
+    });
+    </script>
+    <script>
+    $('#id_cond_type').on('change', function (){
+        if (this.value === 2 || this.value === 3 || this.value === 4 || this.value === 5){
+            $(".cond_limit_val").show();
+            $(".cond_min_val").hide();
+            $(".cond_max_val").hide();
+        }
+        if (this.value == 6){
+            $(".cond_min_val").show();
+            $(".cond_max_val").show();
+            {#$('#id_disabled_method').css("disabled","false");#}
+            $(".cond_limit_val").hide();
+        }
+        if (this.value == 1){
+            $('#div_id_min_val').css("disabled","true");
+            $('#div_id_max_val').css("disabled","true");
+            $('#div_id_limit_val').css("disabled","true");
+        }
+    });
+    $('#id_display_method').on('change', function (){
+        if (this.value === "Text+Siren"){
+             $(".cond_priority_for_signal_alert").hide();
+             $(".cond_interval_for_signal_alert").hide();
+        }
+        if (this.value === "Text"){
+             $(".cond_priority_for_signal_alert").show();
+             $(".cond_interval_for_signal_alert").show();
+        }
+
+
+    });
+    </script>
     <!-- JavaScript for variables-->
 
     <!-- Delete exist variable -->
@@ -345,7 +386,13 @@
          lastItem = ui.item.value;
          return false;
        }
-     });
+     })
+       .autocomplete( "instance" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+
+        .append( "<div><strong>" + item.value + "</strong><br><span style='color: #808080'>" + item.desc + "</span></div>" )
+        .appendTo( ul );
+    };
 
          $( "#id_max_val" )
      // don't navigate away from the field on tab when selecting an item
@@ -389,7 +436,13 @@
          lastItem = ui.item.value;
          return false;
        }
-     });
+     })
+         .autocomplete( "instance" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+
+        .append( "<div><strong>" + item.value + "</strong><br><span style='color: #808080'>" + item.desc + "</span></div>" )
+        .appendTo( ul );
+    };
 
          $( "#id_limit_val" )
      // don't navigate away from the field on tab when selecting an item
@@ -434,6 +487,12 @@
          return false;
        }
      })
+      .autocomplete( "instance" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+
+        .append( "<div><strong>" + item.value + "</strong><br><span style='color: #808080'>" + item.desc + "</span></div>" )
+        .appendTo( ul );
+    }
   } );
 
 

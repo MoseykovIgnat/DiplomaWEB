@@ -215,6 +215,7 @@
     </script>
     <script>
     $('#id_cond_type').on('change', function (){
+        alert('hi');
         if (this.value === 2 || this.value === 3 || this.value === 4 || this.value === 5){
             $(".cond_limit_val").show();
             $(".cond_min_val").hide();
@@ -235,11 +236,11 @@
 
 
     $('#id_display_method').on('change', function (){
-        if (this.value === "Text+Siren"){
+        if (this.value === "Text"){
              $(".cond_priority_for_signal_alert").hide();
              $(".cond_interval_for_signal_alert").hide();
         }
-        if (this.value === "Text"){
+        if (this.value === "Text+Siren"){
              $(".cond_priority_for_signal_alert").show();
              $(".cond_interval_for_signal_alert").show();
         }

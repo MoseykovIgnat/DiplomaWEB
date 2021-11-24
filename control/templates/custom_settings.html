@@ -168,7 +168,7 @@
                 <label style="color: black">Maximum value</label>
                 <textarea class="form-control collectes-date-chargement-min " id="id_max_val" rows="3"></textarea>
             </div>
-            <div class="form-group cond_min_val">
+            <div class="form-group cond_limit_val">
                 <label style="color: black">Limit value</label>
                 <textarea class="form-control collectes-date-chargement-min " id="id_limit_val" rows="3"></textarea>
             </div>
@@ -217,7 +217,7 @@
     <script>
     $('#id_cond_type').on('change', function (){
 
-        if (this.value === '2' || this.value === '3' || this.value === '4' || this.value === '5'){
+        if (this.value === 2 || this.value === '3' || this.value === '4' || this.value === '5'){
             $(".cond_limit_val").show();
             $(".cond_min_val").hide();
             $(".cond_max_val").hide();

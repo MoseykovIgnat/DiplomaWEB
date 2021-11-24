@@ -288,27 +288,27 @@ def condition_create(request):
     user_id = ScUsers.objects.get(name=username)
     if request.method == 'POST':
         print(request.POST)
-        # print(request.POST['formula'])
-        # if '0)' in request.POST['formula']:
-        #     request.POST = request.POST.copy()
-        #     request.POST['formula'] = request.POST['formula'].replace('0)', '0sec)')
-        # form = ScConditionsForm(user_id, request.POST)
-        # if form.is_valid():
-        #     formula = request.POST.get('formula')
-        #     formula = formula.replace('0)', '0sec)')
-        #     vars_formula = get_vars_formula(formula)
-        #     for new_var in vars_formula:
-        #         obj, created = ScPaths.objects.update_or_create(
-        #             user_id=user_id.id,
-        #             path=new_var, interval_time=5, status='Online',
-        #             defaults={}
-        #         )
-        #     instance = form.save(commit=False)
-        #     instance.user_id = user_id.id
-        #     instance.isalert = 0
-        #     instance.time_create_or_alert = datetime.now(tz=timezone.utc)
-        #     instance.save()
-        #     return redirect('custom_settings')
+        print(request.POST['formula'])
+        if '0)' in request.POST['formula']:
+            request.POST = request.POST.copy()
+            request.POST['formula'] = request.POST['formula'].replace('0)', '0sec)')
+        form = ScConditionsForm(user_id, request.POST)
+        if form.is_valid():
+            formula = request.POST.get('formula')
+            formula = formula.replace('0)', '0sec)')
+            vars_formula = get_vars_formula(formula)
+            for new_var in vars_formula:
+                obj, created = ScPaths.objects.update_or_create(
+                    user_id=user_id.id,
+                    path=new_var, interval_time=5, status='Online',
+                    defaults={}
+                )
+            instance = form.save(commit=False)
+            instance.user_id = user_id.id
+            instance.isalert = 0
+            instance.time_create_or_alert = datetime.now(tz=timezone.utc)
+            instance.save()
+            return redirect('custom_settings')
     else:
         form = ScConditionsForm(user_id)
     return render(request,

@@ -323,6 +323,7 @@
         $.ajax({
             type:'GET',
             url : "{% url 'search_info_for_autocomplete' %}",
+            status : 'postfix',
             data:{
                 maxRows: 100, // показать первые n результатов (Может быть и 1к но и
                 nameStartsWith: extractLast(request.term), // поисковая фраза

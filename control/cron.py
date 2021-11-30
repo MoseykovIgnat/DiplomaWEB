@@ -9,7 +9,7 @@ import json
 
 def get_vars_formula(formula):
     x = re.findall(
-        "(([A-Za-z0-9_]+):((?:\\.|[A-Za-z0-9_.\-\/])+):([A-Za-z0-9_]+)(?:\(([+-]?\d+)([a-z]+)(?:,([+-]?\d+)([a-z]+))\))?)",
+        "(([A-Za-z0-9_]+):((?:\\.|[A-Za-z0-9_.\-\/\ ])+):([A-Za-z0-9_]+)(?:\(([+-]?\d+)([a-z]+)(?:,([+-]?\d+)([a-z]+))\))?)",
         formula)
     vars_formula = list()
     for i in range(len(x)):

@@ -164,8 +164,6 @@ def update_condition_results():
                     bool_result = bool(result <= limit_val)
                     if not bool_result:
                         ids_for_signal_alarm.append(condition.cond_id)
-                    if not bool_result:
-                        ids_for_signal_alarm.append(condition.cond_id)
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=val_formula,
                                                    bool_result=bool_result, text_formula=text_formula,
                                                    val_result=result, result_formula=result_formula,
@@ -183,6 +181,7 @@ def signal_alarm(siren_ids, connection, cursor):
         condition = ScConditions.objects.get(cond_id=siren_id)
         condition_result = ScConditionsResult.objects.get(cond_id=siren_id)
         print(condition.isalert)
+        print
         print(condition_result.val_result)
         if condition.isalert == 1:
             if condition.alert_interval < (condition_result.time_calc - condition.time_create_or_alert).total_seconds():

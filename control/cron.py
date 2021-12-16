@@ -176,7 +176,7 @@ def update_condition_results():
 
 def signal_alarm(siren_ids, connection, cursor):
     query_for_input_messages = "insert into messages (user, process, loglevel, topic, subject, attachment, alarm) values(%s, %s, %s, %s, %s, %s, %s)"
-    query_for_get_id = 'select id,time from messages where user=%s and subject=%s order by time limit 1'
+    query_for_get_id = 'select id,time from messages where user=%s and subject=%s order by time desc limit 1'
     query_for_input_attachment = 'insert into attachments (message_id, name, size, type, value, inline) values (%s, %s, %s, %s, %s, %s)'
     for siren_id in siren_ids:
         condition = ScConditions.objects.get(cond_id=siren_id)

@@ -7,6 +7,7 @@ import re
 import json
 import SQLParser.xxxdbrc
 import pymysql as MySQLdb
+import os
 
 
 def get_connection_journal_db():
@@ -25,6 +26,7 @@ def close_connection_journal_db(cur, conn):
     try:
         cur.close()
         conn.close()
+        print('Connection is closed')
     except Exception as e:
         print('Cannot close the connection', e)
 
@@ -228,6 +230,7 @@ def update_condition_results():
 
 
 def test():
+    os.system('setup2k')
     cur, con = get_connection_journal_db()
     close_connection_journal_db(cur, con)
     t_update = 5  # Время обновления в секундах

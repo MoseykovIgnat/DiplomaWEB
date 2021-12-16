@@ -7,7 +7,18 @@ import re
 import json
 import SQLParser.xxxdbrc
 import pymysql as MySQLdb
-import os
+
+#CON FOR PRODUCTION
+# def get_connection_journal_db():
+#     config = SQLParser.xxxdbrc.config('journal')
+#     connection = MySQLdb.connect(host=config["hostname"],
+#                                  user=config["username"],
+#                                  passwd=config["password"],
+#                                  db=config["dbname"],
+#                                  port=config["port"],
+#                                  charset='utf8')
+#     cursor = connection.cursor(MySQLdb.cursors.DictCursor)
+#     return cursor, connection
 
 
 def get_connection_journal_db():
@@ -227,7 +238,6 @@ def update_condition_results():
 
 
 def test():
-    os.system('setup2k')
     cur, con = get_connection_journal_db()
     close_connection_journal_db(cur, con)
     t_update = 5  # Время обновления в секундах

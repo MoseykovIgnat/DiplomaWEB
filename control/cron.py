@@ -182,6 +182,8 @@ def signal_alarm(siren_ids, connection, cursor):
     for siren_id in siren_ids:
         condition = ScConditions.objects.get(cond_id=siren_id)
         condition_result = ScConditionsResult.objects.get(cond_id=siren_id)
+        print(condition.isalert)
+        print(condition_result.val_result)
         if condition.isalert == 1:
             if condition.alert_interval < (condition_result.time_calc - condition.time_create_or_alert).total_seconds():
                 subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'

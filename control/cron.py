@@ -216,10 +216,10 @@ def signal_alarm(siren_ids, connection, cursor):
             subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
             username = condition.user
             # Создадим JSON с информацией
-            info = {"The condition was calculated in": str((condition_result.time_calc + timedelta(hours=7))),
+            info = {"The condition was calculated in": (condition_result.time_calc + timedelta(hours=7)),
                     "Result formula": condition_result.result_formula,
                     "Value Formula": condition_result.val_formula, "Text Formula": condition_result.text_formula}
-            value_json = json.dumps(info)
+            value_json = json.dumps(info, default=str)
             size = len(info)
             # Посчитаем длину json
             # Записали в messages

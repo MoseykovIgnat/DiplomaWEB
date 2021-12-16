@@ -186,6 +186,7 @@ def signal_alarm(siren_ids, connection, cursor):
                 print('Время расчета'+str(condition_result.time_calc))
                 print('Время создания или сигнала'+str(condition.time_create_or_alert))
                 print('Разница времен'+str((condition_result.time_calc - condition.time_create_or_alert).total_seconds()))
+                print()
                 subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
                 username = condition.user
                 # Создадим JSON с информацией
@@ -212,6 +213,7 @@ def signal_alarm(siren_ids, connection, cursor):
             else:
                 print('Маленькая разница времен!!!!')
                 print('Разница времен'+str((condition_result.time_calc - condition.time_create_or_alert).total_seconds()))
+                print()
         if condition.isalert == 0:
             # закидываем в журнальчик
             subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
@@ -247,12 +249,11 @@ def test():
     cur, con = get_connection_journal_db()
     t_update = 5  # Время обновления в секундах
     t_end = time.time() + 60
-    signal_alarm(update_condition_results(), con, cur)
-    # while time.time() < t_end:
-    #     t_start = time.time()
-    #     signal_alarm(update_condition_results(), con, cur)
-    #     # update_condition_results()
-    #     t_res = t_update - (time.time() - t_start)
-    #     if t_res > 0:
-    #         time.sleep(t_res)
+    while time.time() < t_end:
+        t_start = time.time()
+        signal_alarm(update_condition_results(), con, cur)
+        # update_condition_results()
+        t_res = t_update - (time.time() - t_start)
+        if t_res > 0:
+            time.sleep(t_res)
     close_connection_journal_db(cur, con)

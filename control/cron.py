@@ -228,6 +228,8 @@ def update_condition_results():
 
 
 def test():
+    cur, con = get_connection_journal_db()
+    close_connection_journal_db(cur, con)
     t_update = 5  # Время обновления в секундах
     t_end = time.time() + 60
     while time.time() < t_end:

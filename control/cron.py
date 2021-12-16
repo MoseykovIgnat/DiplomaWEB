@@ -183,8 +183,8 @@ def signal_alarm(siren_ids, connection, cursor):
         condition_result = ScConditionsResult.objects.get(cond_id=siren_id)
         if condition.isalert == 1:
             if int(condition.alert_interval) < (condition_result.time_calc - condition.time_create_or_alert).total_seconds():
-                print('Время расчета'+condition_result.time_calc)
-                print('Время создания или сигнала'+condition.time_create_or_alert)
+                print('Время расчета'+condition_result.time_calc.total_seconds())
+                print('Время создания или сигнала'+condition.time_create_or_alert.total_seconds())
                 print('Разница времен'+(condition_result.time_calc - condition.time_create_or_alert).total_seconds())
                 subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
                 username = condition.user

@@ -188,7 +188,7 @@ def signal_alarm(siren_ids, connection, cursor):
         if condition.isalert == 1:
             if condition.alert_interval < (condition_result.time_calc - condition.time_create_or_alert).total_seconds():
                 subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
-                username = ScUsers.objects.get(id=condition.cond_id).name
+                username = condition.user
                 # Создадим JSON с информацией
                 info = {"The condition was calculated in": (condition_result.time_calc + timedelta(hours=7)),
                         "Result formula": condition_result.result_formula,

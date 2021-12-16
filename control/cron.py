@@ -228,9 +228,9 @@ def update_condition_results():
 
 
 def test():
-    cursor, connection = get_connection_journal_db()
-    cursor.execute('insert into test_cron(test_value) values (1)')
-    connection.commit()
+    # cursor, connection = get_connection_journal_db()
+    # cursor.execute('insert into test_cron(test_value) values (1)')
+    # connection.commit()
     t_update = 5  # Время обновления в секундах
     t_end = time.time() + 60
     while time.time() < t_end:
@@ -240,4 +240,4 @@ def test():
         t_res = t_update - (time.time() - t_start)
         if t_res > 0:
             time.sleep(t_res)
-    close_connection_journal_db(cursor, connection)
+    # close_connection_journal_db(cursor, connection)

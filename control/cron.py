@@ -183,9 +183,9 @@ def signal_alarm(siren_ids, connection, cursor):
         condition_result = ScConditionsResult.objects.get(cond_id=siren_id)
         if condition.isalert == 1:
             if int(condition.alert_interval) < (condition_result.time_calc - condition.time_create_or_alert).total_seconds():
-                print(int(condition.alert_interval))
-                print((condition_result.time_calc - condition.time_create_or_alert).total_seconds())
-                print()
+                print('Время расчета'+condition_result.time_calc)
+                print('Время создания или сигнала'+condition.time_create_or_alert)
+                print('Разница времен'+(condition_result.time_calc - condition.time_create_or_alert).total_seconds())
                 subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
                 username = condition.user
                 # Создадим JSON с информацией
@@ -201,7 +201,7 @@ def signal_alarm(siren_ids, connection, cursor):
                 # Получили id нашего message
                 cursor.execute(query_for_get_id, (username, subject))
                 message = cursor.fetchone()
-                print(message['time'])
+                print('time in onlweblog'+message['time'])
                 # Записали attachment
                 cursor.execute(query_for_input_attachment,
                                (message['id'], 'alarm.json', str(size), 'application/json; charset=utf8', value_json,

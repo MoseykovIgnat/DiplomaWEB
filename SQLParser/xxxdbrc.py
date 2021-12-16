@@ -23,7 +23,7 @@ class config(dict):
             dirs = [ './',
                      '.testrelease/',
                      '.testrelease/.mainrelease/',
-                     os.environ['SND2KROOT']+'/',
+                     '/work/snd2000/root'+'/',
                      ]
 
             files = [ ('.'+prefix+'dbrc', 'db'),

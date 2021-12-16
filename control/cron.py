@@ -23,12 +23,10 @@ def get_connection_journal_db():
 
 
 def close_connection_journal_db(cur, conn):
-    try:
-        cur.close()
-        conn.close()
-        print('Connection is closed')
-    except Exception as e:
-        print('Cannot close the connection', e)
+    cur.close()
+    conn.close()
+    print('Connection is closed')
+
 
 
 def get_vars_formula(formula):

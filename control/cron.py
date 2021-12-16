@@ -73,11 +73,13 @@ def update_condition_results():
         else:
             result = eval(digit_formula)
             if condition.cond_type == '7':
-                if condition.cond_type == '7':
-                    result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
-                                                       bool_result=bool(result), text_formula=condition.formula,
-                                                       time_calc=(datetime.now(tz=timezone.utc)))
-                    result_for_db.save()
+                bool_result = bool(result)
+                if not bool_result and condition.display_method == 'Text+Siren':
+                    ids_for_signal_alarm.append(condition.cond_id)
+                result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
+                                                   bool_result=bool_result, text_formula=condition.formula,
+                                                   time_calc=(datetime.now(tz=timezone.utc)))
+                result_for_db.save()
             if condition.cond_type == '1':
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                    val_result=result,
@@ -116,7 +118,7 @@ def update_condition_results():
                 result_formula = str(eval(str(digit_formula))) + ' in ' + '[' + str(
                     eval(str(digit_min_val))) + ' ; ' + str(eval(str(digit_max_val))) + '] ?'
                 bool_result = bool(max_val >= result >= min_val)
-                if not bool_result:
+                if not bool_result and condition.display_method == 'Text+Siren':
                     ids_for_signal_alarm.append(condition.cond_id)
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=val_formula,
                                                    bool_result=bool_result, text_formula=text_formula,
@@ -141,28 +143,28 @@ def update_condition_results():
                     text_formula = condition.formula + '<' + condition.limit_val
                     result_formula = str(eval(str(digit_formula))) + '<' + str(eval(str(digit_limit_val)))
                     bool_result = bool(result < limit_val)
-                    if not bool_result:
+                    if not bool_result and condition.display_method == 'Text+Siren':
                         ids_for_signal_alarm.append(condition.cond_id)
                 if condition.cond_type == '3':
                     val_formula = digit_formula + '>' + str(digit_limit_val)
                     text_formula = condition.formula + '>' + condition.limit_val
                     result_formula = str(eval(str(digit_formula))) + '>' + str(eval(str(digit_limit_val)))
                     bool_result = bool(result > limit_val)
-                    if not bool_result:
+                    if not bool_result and condition.display_method == 'Text+Siren':
                         ids_for_signal_alarm.append(condition.cond_id)
                 if condition.cond_type == '4':
                     val_formula = digit_formula + '>=' + str(digit_limit_val)
                     text_formula = condition.formula + '>=' + condition.limit_val
                     result_formula = str(eval(str(digit_formula))) + '>=' + str(eval(str(digit_limit_val)))
                     bool_result = bool(result >= limit_val)
-                    if not bool_result:
+                    if not bool_result and condition.display_method == 'Text+Siren':
                         ids_for_signal_alarm.append(condition.cond_id)
                 if condition.cond_type == '5':
                     val_formula = digit_formula + '<=' + str(digit_limit_val)
                     text_formula = condition.formula + '<=' + condition.limit_val
                     result_formula = str(eval(str(digit_formula))) + '<=' + str(eval(str(digit_limit_val)))
                     bool_result = bool(result <= limit_val)
-                    if not bool_result:
+                    if not bool_result and condition.display_method == 'Text+Siren':
                         ids_for_signal_alarm.append(condition.cond_id)
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=val_formula,
                                                    bool_result=bool_result, text_formula=text_formula,

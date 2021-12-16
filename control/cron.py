@@ -208,7 +208,7 @@ def signal_alarm(siren_ids, connection, cursor):
                                 'y'))
                 connection.commit()
 
-                condition.time_create_or_alert = message['time']
+                condition.time_create_or_alert = datetime.now(tz=timezone.utc)
                 condition.save()
         if condition.isalert == 0:
             # закидываем в журнальчик
@@ -233,7 +233,7 @@ def signal_alarm(siren_ids, connection, cursor):
                             'y'))
             connection.commit()
 
-            condition.time_create_or_alert = message['time']
+            condition.time_create_or_alert = datetime.now(tz=timezone.utc)
             condition.isalert = 1
             condition.save()
 

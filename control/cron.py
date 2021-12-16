@@ -209,6 +209,9 @@ def signal_alarm(siren_ids, connection, cursor):
 
                 condition.time_create_or_alert = datetime.now(tz=timezone.utc)
                 condition.save()
+            else:
+                print('Маленькая разница времен!!!!')
+                print('Разница времен'+str((condition_result.time_calc - condition.time_create_or_alert).total_seconds()))
         if condition.isalert == 0:
             # закидываем в журнальчик
             subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'

@@ -11,7 +11,7 @@ import os
 
 
 def get_connection_journal_db():
-    config = SQLParser.xxxdbrc.config('sc')
+    config = SQLParser.xxxdbrc.config('journal')
     connection = MySQLdb.connect(host=config["hostname"],
                                  user=config["username"],
                                  passwd=config["password"],

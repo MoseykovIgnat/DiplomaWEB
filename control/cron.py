@@ -8,7 +8,8 @@ import json
 import SQLParser.xxxdbrc
 import pymysql as MySQLdb
 
-#CON FOR PRODUCTION
+
+# connection FOR PRODUCTION
 # def get_connection_journal_db():
 #     config = SQLParser.xxxdbrc.config('journal')
 #     connection = MySQLdb.connect(host=config["hostname"],
@@ -36,7 +37,6 @@ def close_connection_journal_db(cur, conn):
     cur.close()
     conn.close()
     print('Connection is closed')
-
 
 
 def get_vars_formula(formula):
@@ -174,64 +174,64 @@ def update_condition_results():
     return ids_for_signal_alarm
 
 
-# def signal_alarm(siren_ids):
-#     query_for_input_messages = "insert into messages (user, process, loglevel, topic, subject, attachment, alarm) values(%s, %s, %s, %s, %s, %s, %s)"
-#     query_for_get_id = 'select id,time from messages where user=%s and subject=%s limit 1'
-#     query_for_input_attachment = 'insert into attachments (message_id, name, size, type, value, inline) values (%s, %s, %s, %s, %s, %s)'
-#     for siren_id in siren_ids:
-#         condition = ScConditions.objects.get(cond_id=siren_id)
-#         condition_result = ScConditionsResult.objects.get(cond_id=siren_id)
-#         if condition.isalert == 1:
-#             if condition.alert_interval < (condition_result.time_calc - condition.time_create_or_alert).total_seconds():
-#                 subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
-#                 username = ScUsers.objects.get(id=condition.cond_id).name
-#                 # Создадим JSON с информацией
-#                 info = {"The condition was calculated in": (condition_result.time_calc + timedelta(hours=7)),
-#                         "Result formula": condition_result.result_formula,
-#                         "Value Formula": condition_result.val_formula, "Text Formula": condition_result.text_formula}
-#                 value_json = json.loads(info)
-#                 size = len(info)
-#                 # Посчитаем длину json
-#                 # Записали в messages
-#                 cursor.execute(query_for_input_messages, (username, 'sam_sc', 'w', 'user-alarm', subject, 'y', 'y'))
-#                 connection.commit()
-#                 # Получили id нашего message
-#                 cursor.execute(query_for_get_id, (username, subject))
-#                 message = cursor.fetchone()
-#                 # Записали attachment
-#                 cursor.execute(query_for_input_attachment,
-#                                (message['id'], 'alarm.json', str(size), 'application/json; charset=utf8', value_json,
-#                                 'y'))
-#                 connection.commit()
-#
-#                 condition.time_create_or_alert = message['time']
-#                 condition.save()
-#         if condition.isalert == 0:
-#             # закидываем в журнальчик
-#             subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
-#             username = ScUsers.objects.get(id=condition.cond_id).name
-#             # Создадим JSON с информацией
-#             info = {"The condition was calculated in": (condition_result.time_calc + timedelta(hours=7)),
-#                     "Result formula": condition_result.result_formula,
-#                     "Value Formula": condition_result.val_formula, "Text Formula": condition_result.text_formula}
-#             value_json = json.loads(info)
-#             size = len(info)
-#             # Посчитаем длину json
-#             # Записали в messages
-#             cursor.execute(query_for_input_messages, (username, 'sam_sc', 'w', 'user-alarm', subject, 'y', 'y'))
-#             connection.commit()
-#             # Получили id нашего message
-#             cursor.execute(query_for_get_id, (username, subject))
-#             message = cursor.fetchone()
-#             # Записали attachment
-#             cursor.execute(query_for_input_attachment,
-#                            (message['id'], 'alarm.json', str(size), 'application/json; charset=utf8', value_json,
-#                             'y'))
-#             connection.commit()
-#
-#             condition.time_create_or_alert = message['time']
-#             condition.isalert = 1
-#             condition.save()
+def signal_alarm(siren_ids, connection, cursor):
+    query_for_input_messages = "insert into messages (user, process, loglevel, topic, subject, attachment, alarm) values(%s, %s, %s, %s, %s, %s, %s)"
+    query_for_get_id = 'select id,time from messages where user=%s and subject=%s order by time limit 1'
+    query_for_input_attachment = 'insert into attachments (message_id, name, size, type, value, inline) values (%s, %s, %s, %s, %s, %s)'
+    for siren_id in siren_ids:
+        condition = ScConditions.objects.get(cond_id=siren_id)
+        condition_result = ScConditionsResult.objects.get(cond_id=siren_id)
+        if condition.isalert == 1:
+            if condition.alert_interval < (condition_result.time_calc - condition.time_create_or_alert).total_seconds():
+                subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
+                username = ScUsers.objects.get(id=condition.cond_id).name
+                # Создадим JSON с информацией
+                info = {"The condition was calculated in": (condition_result.time_calc + timedelta(hours=7)),
+                        "Result formula": condition_result.result_formula,
+                        "Value Formula": condition_result.val_formula, "Text Formula": condition_result.text_formula}
+                value_json = json.loads(info)
+                size = len(info)
+                # Посчитаем длину json
+                # Записали в messages
+                cursor.execute(query_for_input_messages, (username, 'sam_sc', 'w', 'user-alarm', subject, 'y', 'y'))
+                connection.commit()
+                # Получили id нашего message
+                cursor.execute(query_for_get_id, (username, subject))
+                message = cursor.fetchone()
+                # Записали attachment
+                cursor.execute(query_for_input_attachment,
+                               (message['id'], 'alarm.json', str(size), 'application/json; charset=utf8', value_json,
+                                'y'))
+                connection.commit()
+
+                condition.time_create_or_alert = message['time']
+                condition.save()
+        if condition.isalert == 0:
+            # закидываем в журнальчик
+            subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
+            username = ScUsers.objects.get(id=condition.cond_id).name
+            # Создадим JSON с информацией
+            info = {"The condition was calculated in": (condition_result.time_calc + timedelta(hours=7)),
+                    "Result formula": condition_result.result_formula,
+                    "Value Formula": condition_result.val_formula, "Text Formula": condition_result.text_formula}
+            value_json = json.loads(info)
+            size = len(info)
+            # Посчитаем длину json
+            # Записали в messages
+            cursor.execute(query_for_input_messages, (username, 'sam_sc', 'w', 'user-alarm', subject, 'y', 'y'))
+            connection.commit()
+            # Получили id нашего message
+            cursor.execute(query_for_get_id, (username, subject))
+            message = cursor.fetchone()
+            # Записали attachment
+            cursor.execute(query_for_input_attachment,
+                           (message['id'], 'alarm.json', str(size), 'application/json; charset=utf8', value_json,
+                            'y'))
+            connection.commit()
+
+            condition.time_create_or_alert = message['time']
+            condition.isalert = 1
+            condition.save()
 
 
 '''Запускается одна задача, которая выполняется постоянно, каждые 5 секунд и проверяет все условия и если нужно - записывает в log журнал'''
@@ -239,13 +239,13 @@ def update_condition_results():
 
 def test():
     cur, con = get_connection_journal_db()
-    close_connection_journal_db(cur, con)
     t_update = 5  # Время обновления в секундах
     t_end = time.time() + 60
     while time.time() < t_end:
         t_start = time.time()
-        # signal_alarm(update_condition_results())
-        update_condition_results()
+        signal_alarm(update_condition_results(), con, cur)
+        # update_condition_results()
         t_res = t_update - (time.time() - t_start)
         if t_res > 0:
             time.sleep(t_res)
+    close_connection_journal_db(cur, con)

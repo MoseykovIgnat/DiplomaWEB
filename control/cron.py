@@ -201,7 +201,6 @@ def signal_alarm(siren_ids, connection, cursor):
                 # Получили id нашего message
                 cursor.execute(query_for_get_id, (username, subject))
                 message = cursor.fetchone()
-                print('time in onlweblog'+message['time'])
                 # Записали attachment
                 cursor.execute(query_for_input_attachment,
                                (message['id'], 'alarm.json', str(size), 'application/json; charset=utf8', value_json,

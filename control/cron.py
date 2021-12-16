@@ -5,28 +5,7 @@ from django.utils import timezone
 import time
 import re
 import json
-import SQLParser.xxxdbrcs
-import pymysql as MySQLdb
-
-
-def get_connection_journal_db():
-    config = SQLParser.xxxdbrc.config('sc')
-    connection = MySQLdb.connect(host=config["hostname"],
-                                 user=config["username"],
-                                 passwd=config["password"],
-                                 db=config["dbname"],
-                                 port=config["port"],
-                                 charset='utf8')
-    cursor = connection.cursor(MySQLdb.cursors.DictCursor)
-    return cursor, connection
-
-
-def close_connection_journal_db(cur, conn):
-    try:
-        cur.close()
-        conn.close()
-    except Exception as e:
-        print('Cannot close the connection', e)
+import SQLParser.xxxdbrc
 
 
 def get_vars_formula(formula):
@@ -164,7 +143,7 @@ def update_condition_results():
     return ids_for_signal_alarm
 
 
-# def signal_alarm(siren_ids, cursor, connection):
+# def signal_alarm(siren_ids):
 #     query_for_input_messages = "insert into messages (user, process, loglevel, topic, subject, attachment, alarm) values(%s, %s, %s, %s, %s, %s, %s)"
 #     query_for_get_id = 'select id,time from messages where user=%s and subject=%s limit 1'
 #     query_for_input_attachment = 'insert into attachments (message_id, name, size, type, value, inline) values (%s, %s, %s, %s, %s, %s)'
@@ -228,16 +207,12 @@ def update_condition_results():
 
 
 def test():
-    # cursor, connection = get_connection_journal_db()
-    # cursor.execute('insert into test_cron(test_value) values (1)')
-    # connection.commit()
     t_update = 5  # Время обновления в секундах
     t_end = time.time() + 60
     while time.time() < t_end:
         t_start = time.time()
-        # signal_alarm(update_condition_results(), cursor, connection)
+        # signal_alarm(update_condition_results())
         update_condition_results()
         t_res = t_update - (time.time() - t_start)
         if t_res > 0:
             time.sleep(t_res)
-    # close_connection_journal_db(cursor, connection)

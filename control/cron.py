@@ -219,7 +219,7 @@ def signal_alarm(siren_ids, connection, cursor):
             info = {"The condition was calculated in": (condition_result.time_calc + timedelta(hours=7)),
                     "Result formula": condition_result.result_formula,
                     "Value Formula": condition_result.val_formula, "Text Formula": condition_result.text_formula}
-            value_json = json.loads(info)
+            value_json = json.dumps(info)
             size = len(info)
             # Посчитаем длину json
             # Записали в messages

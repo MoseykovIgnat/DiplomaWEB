@@ -26,28 +26,7 @@ from django.utils import timezone
 from django.contrib.auth import models
 from .utils import *
 import time
-import SQLParser.xxxdbrc
-import pymysql as MySQLdb
 
-
-def get_connection_journal_db():
-    config = SQLParser.xxxdbrc.config('sc')
-    connection = MySQLdb.connect(host=config["hostname"],
-                                 user=config["username"],
-                                 passwd=config["password"],
-                                 db=config["dbname"],
-                                 port=config["port"],
-                                 charset='utf8')
-    cursor = connection.cursor(MySQLdb.cursors.DictCursor)
-    return cursor, connection
-
-
-def close_connection_journal_db(cur, conn):
-    try:
-        cur.close()
-        conn.close()
-    except Exception as e:
-        print('Cannot close the connection', e)
 
 # Create your views here.
 @receiver(user_logged_in)
@@ -186,10 +165,6 @@ def update_info_in_graphs(request):
 
 
 def is_SAM_working(request):
-    cursor, connection = get_connection_journal_db()
-    cursor.execute('insert into test_cron(test_value) values (1)')
-    connection.commit()
-    close_connection_journal_db(cursor, connection)
     if request.method == 'GET' and request.is_ajax():
         data = {"Result": 'true'}
         return HttpResponse(json.dumps(data), content_type='application/json')

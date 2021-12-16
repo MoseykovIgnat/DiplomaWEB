@@ -6,6 +6,27 @@ import time
 import re
 import json
 import SQLParser.xxxdbrc
+import pymysql as MySQLdb
+
+
+def get_connection_journal_db():
+    config = SQLParser.xxxdbrc.config('sc')
+    connection = MySQLdb.connect(host=config["hostname"],
+                                 user=config["username"],
+                                 passwd=config["password"],
+                                 db=config["dbname"],
+                                 port=config["port"],
+                                 charset='utf8')
+    cursor = connection.cursor(MySQLdb.cursors.DictCursor)
+    return cursor, connection
+
+
+def close_connection_journal_db(cur, conn):
+    try:
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print('Cannot close the connection', e)
 
 
 def get_vars_formula(formula):
@@ -207,6 +228,10 @@ def update_condition_results():
 
 
 def test():
+    cursor, connection = get_connection_journal_db()
+    cursor.execute('insert into test_cron(test_value) values (1)')
+    connection.commit()
+    close_connection_journal_db(cursor, connection)
     t_update = 5  # Время обновления в секундах
     t_end = time.time() + 60
     while time.time() < t_end:

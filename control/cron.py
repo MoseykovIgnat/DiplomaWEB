@@ -11,12 +11,11 @@ import os
 
 
 def get_connection_journal_db():
-    config = SQLParser.xxxdbrc.config('journal')
-    connection = MySQLdb.connect(host=config["hostname"],
-                                 user=config["username"],
-                                 passwd=config["password"],
-                                 db=config["dbname"],
-                                 port=config["port"],
+    connection = MySQLdb.connect(host='sndfarm08-00.sndonline',
+                                 user='test_admin',
+                                 passwd='test_admin',
+                                 db='OnlWeblog',
+                                 port=3306,
                                  charset='utf8')
     cursor = connection.cursor(MySQLdb.cursors.DictCursor)
     return cursor, connection

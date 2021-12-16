@@ -22,7 +22,7 @@ import pymysql as MySQLdb
 
 
 def get_connection_journal_db():
-    connection = MySQLdb.connect(host='sndfarm08-00.sndonline',
+    connection = MySQLdb.connect(host='localhost',
                                  user='test_admin',
                                  passwd='test_admin',
                                  db='OnlWeblog',

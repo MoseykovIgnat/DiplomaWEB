@@ -185,7 +185,7 @@ def signal_alarm(siren_ids, connection, cursor):
             if int(condition.alert_interval) < (condition_result.time_calc - condition.time_create_or_alert).total_seconds():
                 print('Время расчета'+str(condition_result.time_calc))
                 print('Время создания или сигнала'+str(condition.time_create_or_alert))
-                print('Разница времен'+(condition_result.time_calc - condition.time_create_or_alert).total_seconds())
+                print('Разница времен'+str((condition_result.time_calc - condition.time_create_or_alert).total_seconds()))
                 subject = '<!-- {sadness sound} --> Signal Alert! Condition:' + condition.comment + ' не выполнено!'
                 username = condition.user
                 # Создадим JSON с информацией

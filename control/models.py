@@ -157,3 +157,12 @@ class ScPostfixAutoCompletion(models.Model):
     class Meta:
         managed = False
         db_table = 'sc_postfix_auto_completion'
+
+
+class ScConditionsTags(models.Model):
+    cond = models.ForeignKey(ScConditions, models.DO_NOTHING)
+    tag = models.CharField(max_length=40, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_conditions_tags'

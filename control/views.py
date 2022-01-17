@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import ScUsers, ScVariableAutoCompletion, ScPostfixAutoCompletion, ScPaths, ScResults, ScConditions, \
-    ScConditionsResult, ScGraphName, ScGraphInfo, \
-    ScConditionsOnline
+    ScConditionsResult, ScGraphName, ScGraphInfo, ScConditionsTags, ScConditionsOnline
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.http import JsonResponse
 from django.dispatch import receiver
@@ -283,12 +282,9 @@ def graph_editor(request):
 
 
 def condition_create(request):
-    user = request.user
     username = request.user.username
     user_id = ScUsers.objects.get(name=username)
     if request.method == 'POST':
-        print(request.POST)
-        print(request.POST['formula'])
         if '0)' in request.POST['formula']:
             request.POST = request.POST.copy()
             request.POST['formula'] = request.POST['formula'].replace('0)', '0sec)')
@@ -297,6 +293,7 @@ def condition_create(request):
             formula = request.POST.get('formula')
             formula = formula.replace('0)', '0sec)')
             vars_formula = get_vars_formula(formula)
+            tags_in_condition = re.findall(r'\w+', request.POST['tags'])
             for new_var in vars_formula:
                 obj, created = ScPaths.objects.update_or_create(
                     user_id=user_id.id,
@@ -308,6 +305,12 @@ def condition_create(request):
             instance.isalert = 0
             instance.time_create_or_alert = datetime.now(tz=timezone.utc)
             instance.save()
+            for tag in tags_in_condition:
+                obj, created = ScConditionsTags.objects.update_or_create(
+                    cond_id=instance.id,
+                    tag=tag,
+                    defaults={}
+                )
             return redirect('custom_settings')
     else:
         form = ScConditionsForm(user_id)

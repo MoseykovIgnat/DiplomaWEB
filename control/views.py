@@ -307,7 +307,7 @@ def condition_create(request):
             instance.save()
             for tag in tags_in_condition:
                 obj, created = ScConditionsTags.objects.update_or_create(
-                    cond_id=instance.id,
+                    cond_id=instance.cond_id,
                     tag=tag,
                     defaults={}
                 )

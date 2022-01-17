@@ -145,7 +145,7 @@
               {% if request.user|has_group:"Expert" %}
             <div class="form-group is_required_condition">
                 <input class="form-check-input is_required_condition" type="checkbox" id="id_is_required_condition">
-                <label class="form-check-label" for="id_is_required_condition">Default switch checkbox input</label>
+                <label style="color: black" class="form-check-label" for="id_is_required_condition">Default switch checkbox input</label>
             </div>
               {% endif %}
             <div class="form-group cond_name">
@@ -528,7 +528,7 @@
 <script>
     $(document).on('submit', '#add_new_condition_modal',function(e){
         e.preventDefault();
-        var is_required = $('#is_required_condition').serialize() ? 1 : 0;
+        var is_required = $('#id_is_required_condition').serialize() ? 1 : 0;
         $.ajax({
         type:'POST',
         url : "{% url 'condition_create' %}",

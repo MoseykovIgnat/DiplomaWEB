@@ -306,7 +306,7 @@ def condition_create(request):
             instance.user_id = user_id.id
             instance.isalert = 0
             instance.time_create_or_alert = datetime.now(tz=timezone.utc)
-            instance.is_required_condition = 1 if int(request.POST['is_required_condition']) else 0
+            print(request.POST['is_required_condition'])
             instance.save()
             for tag in tags_in_condition:
                 obj, created = ScConditionsTags.objects.update_or_create(

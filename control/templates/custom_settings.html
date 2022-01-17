@@ -542,7 +542,7 @@
             priority:$('#id_priority_for_alert').val(),
             tags: $('#id_cond_tags').val(),
             alert_interval:$('#id_interval_for_alert').val(),
-            is_required_condition:$('#is_required_condition').val(),
+            is_required_condition:$('#is_required_condition').is(":checked"),
 
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'

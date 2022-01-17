@@ -60,6 +60,7 @@ class ScConditions(models.Model):
     isalert = models.IntegerField(blank=True, null=True)
     alert_interval = models.IntegerField(blank=True, null=True)
     time_create_or_alert = models.DateTimeField(blank=True, null=True)
+    is_required_condition = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

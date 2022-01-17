@@ -44,7 +44,7 @@
             <td>Bool result</td>
             {% endif %}
             <td>{{ data.display_method }}</td>
-            <td>{{ data.alert_interval|default_if_none:"&times;"  }}</td>
+            <td>{{ data.alert_interval|default_if_none:" " }}</td>
             <td>{{ data.max_val|default_if_none:"&times;" }}</td>
             <td>{{ data.min_val|default_if_none:"&times;" }}</td>
             <td>{{ data.limit_val|default_if_none:"&times;" }}</td>

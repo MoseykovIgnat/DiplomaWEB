@@ -313,6 +313,7 @@ def condition_create(request):
                     tag=tag,
                     defaults={}
                 )
+            print(request.POST['is_required_condition'])
             return redirect('custom_settings')
     else:
         form = ScConditionsForm(user_id)

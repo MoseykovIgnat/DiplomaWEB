@@ -53,6 +53,7 @@ class ScConditionsForm(forms.ModelForm):
                                   label='Condition priority for signal alert')
     alert_interval = forms.IntegerField(required=False, min_value=30, max_value=600,
                                         label='Interval for condition signal alert')
+    is_required_condition = forms.IntegerField(required=False, blank=True, null=True)
 
     class Meta:
         model = ScConditions

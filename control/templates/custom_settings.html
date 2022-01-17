@@ -141,7 +141,13 @@
       </div>
       <div class="modal-body" >
           <form method="POST" id="condition_create">
-            {% csrf_token %}
+              {% load control_extras %}
+              {% if request.user|has_group:"Expert" %}
+            <div class="form-group is_required_condition">
+                <label style="color: black">Is this condition required?</label>
+                <input type="checkbox" value="1" class="form-control collectes-date-chargement-min " id="id_is_required_condition">
+            </div>
+              {% endif %}
             <div class="form-group cond_name">
                 <label style="color: black">Name of your conditional</label>
                 <input type="text" class="form-control collectes-date-chargement-min " id="id_cond_name" placeholder="Insert name of your condition">
@@ -536,6 +542,7 @@
             priority:$('#id_priority_for_alert').val(),
             tags: $('#id_cond_tags').val(),
             alert_interval:$('#id_interval_for_alert').val(),
+            is_required_condition:$('#is_required_condition').val(),
 
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'

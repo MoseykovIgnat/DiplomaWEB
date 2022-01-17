@@ -144,8 +144,8 @@
               {% load control_extras %}
               {% if request.user|has_group:"Expert" %}
             <div class="form-group is_required_condition">
-                <label style="color: black">Is this condition required?</label>
-                <input type="checkbox" value="1" class="form-control collectes-date-chargement-min " id="id_is_required_condition">
+                <input class="form-check-input is_required_condition" type="checkbox" id="id_is_required_condition">
+                <label class="form-check-label" for="id_is_required_condition">Default switch checkbox input</label>
             </div>
               {% endif %}
             <div class="form-group cond_name">
@@ -528,7 +528,8 @@
 <script>
     $(document).on('submit', '#add_new_condition_modal',function(e){
         e.preventDefault();
-    $.ajax({
+        var is_required = $('#is_required_condition').serialize() ? 1 : 0;
+        $.ajax({
         type:'POST',
         url : "{% url 'condition_create' %}",
         data:{
@@ -542,7 +543,7 @@
             priority:$('#id_priority_for_alert').val(),
             tags: $('#id_cond_tags').val(),
             alert_interval:$('#id_interval_for_alert').val(),
-            is_required_condition:$('#is_required_condition').serialize(),
+            is_required_condition:is_required,
 
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'

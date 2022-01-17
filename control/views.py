@@ -293,6 +293,7 @@ def condition_create(request):
             formula = request.POST.get('formula')
             formula = formula.replace('0)', '0sec)')
             vars_formula = get_vars_formula(formula)
+            print(vars_formula)
             tags_in_condition = re.findall(r'\w+', request.POST['tags'])
             for new_var in vars_formula:
                 obj, created = ScPaths.objects.update_or_create(

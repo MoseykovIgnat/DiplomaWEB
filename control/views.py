@@ -175,6 +175,7 @@ def del_exist_condition(request):
     user_id_for_del = ScUsers.objects.get(name=user)
     cond_id = ScConditions.objects.get(user_id=user_id_for_del, comment=cond_name)
     ScConditionsResult.objects.filter(cond_id=cond_id.cond_id).delete()
+    ScConditionsTags.objects.filter(cond_id=cond_id.cond_id).delete()
     data = ScConditions.objects.filter(user_id=user_id_for_del)
     conditions = ScConditions.objects.filter(user_id=user_id_for_del, comment=cond_name)
     for condition in conditions:

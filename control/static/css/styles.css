@@ -1,9 +1,4 @@
-.sidebar-nav {
-    margin-top: 20%;
-    margin-bottom: 20%;
-    padding: 0;
-    list-style: none;
-}
+
 .ui-autocomplete {
     z-index: 9999999 !important;
     max-height: 50%;

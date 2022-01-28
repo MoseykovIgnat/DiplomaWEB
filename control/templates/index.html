@@ -470,6 +470,8 @@
 
                     $('.Cond_res').remove()
                     $('#condTable caption').remove()
+                alert(response)
+                alert(response[0])
                 if (response.length===0) {
                     $('#condTable').prepend('<caption style="display: table-caption; text-align: center;">Данные отсутствуют</caption>');
                 }

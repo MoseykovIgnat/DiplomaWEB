@@ -10,17 +10,31 @@
 
         {% load static %}
     <div class="col-sm-5 text-center">
-        <h1 align="center">Results of conditions</h1 >
+        <h1 align="center">Required results of conditions</h1 >
 
-    	<div>        	
-        	<table class="table table-condensed table-hover shadow p-4 mb-4 bg-white" id="condTable">
+    	<div>
+        	<table class="table table-condensed table-hover shadow p-4 mb-4 bg-white" id="required_condTable">
                 <tr>
                     <th>Инфо</th>
                     <th>Название условия</th>
                     <th>Результат</th>
                     <th>Сирена</th>
                 </tr>
-                <tr class="Cond_res"></tr>
+                <tr class="required_cond_res"></tr>
+            </table>
+        </div>
+
+        <h1 align="center">Unrequired results of conditions</h1 >
+
+    	<div>        	
+        	<table class="table table-condensed table-hover shadow p-4 mb-4 bg-white" id="unrequired_condTable">
+                <tr>
+                    <th>Инфо</th>
+                    <th>Название условия</th>
+                    <th>Результат</th>
+                    <th>Сирена</th>
+                </tr>
+                <tr class="unrequired_cond_res"></tr>
             </table>
         </div>
 
@@ -468,40 +482,47 @@
 
             success: function (response) {
 
-                    $('.Cond_res').remove()
-                    $('#condTable caption').remove()
-                if (response.length===0) {
-                    $('#condTable').prepend('<caption style="display: table-caption; text-align: center;">Данные отсутствуют</caption>');
-                }
-                else {
-                for (i = 0; i < response.length; i++) {
-                    time_calc = new Date(response[0]['time_calc']);
-                    time_calc.toISOString();
-                    time_calc = moment(time_calc.toISOString()).format('DD-MM-YYYY, h:mm:ss');
-                    var condTitle = 'Info about condition:&#013' + (response['unrequited'][i]['time_calc'] ? 'The condition was calculated in ' + time_calc +'&#013' : '')  + (response[i]['result_formula'] ? 'Result formula: ' + response[i]['result_formula']+'&#013' : '') + (response[i]['val_formula'] ? 'Value Formula: ' + response[i]['val_formula']+'&#013' : '')+ (response[i]['text_formula'] ? 'Text Formula: ' + response[i]['text_formula']+'&#013' : '')+ (response[i]['empty_values'] ? 'This sample(s) is(are) empty: ' + response[i]['empty_values']+'&#013' : '');
-                    var condInfo = '<td title="'+ condTitle +'">&times;</td>';
-                    var sirenOption = (response[i]['display_method'] === 'Text+Siren' ? 'Yes!':'No!');
-                    var result;
-                    if (response[i]['empty_values']){
-                        result='Empty value!';
-                    } else {
-                        if (response[i]['bool_result']===0 || response[i]['bool_result']===1) {
-                            if (response[i]['bool_result']===0){
-                                result = 'False';
-                            }
+                    $('.required_cond_res').remove()
+                    $('.unrequired_cond_res').remove()
+                    $('#required_condTable caption').remove()
+                    $('#unrequired_condTable caption').remove()
+                for (var key in response){
+                    var table_id = key === 'required' ? $('#required_condTable') : $('#unrequired_condTable');
+                    var class_name = key === 'required' ? 'required_cond_res' : 'unrequired_cond_res';
+                    if (response[key].length===0) {
+                        table_id.prepend('<caption style="display: table-caption; text-align: center;">Данные отсутствуют</caption>');
+                    }
+                    else {
+                        for (i = 0; i < response[key].length; i++) {
+                            time_calc = new Date(response[key][0]['time_calc']);
+                            time_calc.toISOString();
+                            time_calc = moment(time_calc.toISOString()).format('DD-MM-YYYY, h:mm:ss');
+                            var condTitle = 'Info about condition:&#013' + (response[key][i]['time_calc'] ? 'The condition was calculated in ' + time_calc +'&#013' : '')  + (response[key][i]['result_formula'] ? 'Result formula: ' + response[key][i]['result_formula']+'&#013' : '') + (response[key][i]['val_formula'] ? 'Value Formula: ' + response[key][i]['val_formula']+'&#013' : '')+ (response[key][i]['text_formula'] ? 'Text Formula: ' + response[key][i]['text_formula']+'&#013' : '')+ (response[key][i]['empty_values'] ? 'This sample(s) is(are) empty: ' + response[key][i]['empty_values']+'&#013' : '');
+                            var condInfo = '<td title="'+ condTitle +'">&times;</td>';
+                            var sirenOption = (response[key][i]['display_method'] === 'Text+Siren' ? 'Yes!':'No!');
+                            var result;
+                            if (response[key][i]['empty_values']){
+                                result='Empty value!';
+                            } else {
+                                if (response[key][i]['bool_result']===0 || response[key][i]['bool_result']===1) {
+                                    if (response[key][i]['bool_result']===0){
+                                        result = 'False';
+                                    }
 
-                            if (response[i]['bool_result']===1){
-                                result = 'True';
+                                    if (response[key][i]['bool_result']===1){
+                                        result = 'True';
+                                    }
+                                }
+                                else {
+                                    result = response[key][i]['val_result'];
+                                }
                             }
-                        }
-                        else {
-                            result = response[i]['val_result'];
+                            table_id.append('<tr class=' + class_name + '>'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
+
+
                         }
                     }
-                    $('#condTable').append('<tr class="Cond_res">'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
-
-
-                }}
+                }
             },
             error: function (response) {
                 console.log(response);

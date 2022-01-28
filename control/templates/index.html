@@ -517,7 +517,7 @@
                                     result = response[key][i]['val_result'];
                                 }
                             }
-                            table_id.append('<tr class="unrequired_cond_res">'+condInfo+'<td>' + response[i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
+                            table_id.append('<tr class=' + class_name + '>'+condInfo+'<td>' + response[key][i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
 
 
                         }

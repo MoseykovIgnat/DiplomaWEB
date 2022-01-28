@@ -143,10 +143,17 @@
           <form method="POST" id="condition_create">
               {% load control_extras %}
               {% if request.user|has_group:"Expert" %}
-            <div class="form-group is_required_condition">
-                <input class="form-check-input is_required_condition" type="checkbox" id="id_is_required_condition">
-                <label style="color: black" class="form-check-label" for="id_is_required_condition">Default switch checkbox input</label>
-            </div>
+                  <div class="switch">
+                      <label>
+                        Off
+                        <input type="checkbox" checked>
+                        <span class="lever"></span> On
+                      </label>
+                    </div>
+{#            <div class="form-group is_required_condition">#}
+{#                <input class="form-check-input is_required_condition" type="checkbox" id="id_is_required_condition">#}
+{#                <label style="color: black" class="form-check-label" for="id_is_required_condition">Default switch checkbox input</label>#}
+{#            </div>#}
               {% endif %}
             <div class="form-group cond_name">
                 <label style="color: black">Name of your conditional</label>

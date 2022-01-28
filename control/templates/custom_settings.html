@@ -143,7 +143,7 @@
           <form method="POST" id="condition_create">
               {% load control_extras %}
               {% if request.user|has_group:"Expert" %}
-                  <div>
+                  <div class="form-group is_required">
                       <label style="color: black">Is it required condition?</label>
                       <label class="custom-control teleport-switch">
                         <span class="teleport-switch-control-description">No</span>
@@ -234,6 +234,7 @@
          $(".cond_priority_for_signal_alert").hide();
          $(".cond_interval_for_signal_alert").hide();
          $(".cond_display_method").hide();
+         $(".cond_tags").hide();
     });
 
     $('#id_cond_type').on('change', function (){
@@ -269,10 +270,13 @@
         if (this.value === "Text"){
              $(".cond_priority_for_signal_alert").hide();
              $(".cond_interval_for_signal_alert").hide();
+             $(".cond_tags").hide();
         }
         if (this.value === "Text+Siren"){
              $(".cond_priority_for_signal_alert").show();
              $(".cond_interval_for_signal_alert").show();
+             $(".cond_tags").show();
+
         }
 
 

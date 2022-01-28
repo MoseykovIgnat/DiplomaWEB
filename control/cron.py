@@ -171,7 +171,7 @@ def update_condition_results():
                                                    val_result=result, result_formula=result_formula,
                                                    time_calc=(datetime.now(tz=timezone.utc)))
                 result_for_db.save()
-                print('done')
+    print('done')
     return ids_for_signal_alarm
 
 

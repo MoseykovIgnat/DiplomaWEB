@@ -143,13 +143,13 @@
           <form method="POST" id="condition_create">
               {% load control_extras %}
               {% if request.user|has_group:"Expert" %}
-                  <div class="mb-4">
-                      <span class="text-muted small">Switch 1</span>
+                  <div>
+                      <label style="color: black">Is it required condition?</label>
                       <label class="custom-control teleport-switch">
-                        <span class="teleport-switch-control-description">Off</span>
-                        <input type="checkbox" class="teleport-switch-control-input" checked="">
+                        <span class="teleport-switch-control-description">No</span>
+                        <input type="checkbox" id="id_is_required_condition" class="teleport-switch-control-input form-control collectes-date-chargement-min" checked="">
                         <span class="teleport-switch-control-indicator"></span>
-                        <span class="teleport-switch-control-description">On</span>
+                        <span class="teleport-switch-control-description">Yes</span>
                       </label>
                   </div>
 {#            <div class="form-group is_required_condition">#}
@@ -537,7 +537,7 @@
 <script>
     $(document).on('submit', '#add_new_condition_modal',function(e){
         e.preventDefault();
-        var is_required = $('#id_is_required_condition').serialize() ? 1 : 0;
+        var is_required = document.getElementById('id_is_required_condition').checked ? 1 : 0;
         $.ajax({
         type:'POST',
         url : "{% url 'condition_create' %}",

@@ -156,7 +156,6 @@ def update_info_about_conditions(request):
             except:
                 print("Condition isn't ready")
         data = json.dumps(conditions_information)
-        print(data)
         return HttpResponse(data, content_type='application/json')
 
 

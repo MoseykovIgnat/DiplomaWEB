@@ -143,20 +143,22 @@
           <form method="POST" id="condition_create">
               {% load control_extras %}
               {% if request.user|has_group:"Expert" %}
-                  <div class="switch">
-                      <label>
-                        Off
-                        <input type="checkbox" checked>
-                        <span class="lever"></span> On
+                  <div class="mb-4">
+                      <span class="text-muted small">Switch 1</span>
+                      <label class="custom-control teleport-switch">
+                        <span class="teleport-switch-control-description">Off</span>
+                        <input type="checkbox" class="teleport-switch-control-input" checked="">
+                        <span class="teleport-switch-control-indicator"></span>
+                        <span class="teleport-switch-control-description">On</span>
                       </label>
-                    </div>
+                  </div>
 {#            <div class="form-group is_required_condition">#}
 {#                <input class="form-check-input is_required_condition" type="checkbox" id="id_is_required_condition">#}
 {#                <label style="color: black" class="form-check-label" for="id_is_required_condition">Default switch checkbox input</label>#}
 {#            </div>#}
               {% endif %}
             <div class="form-group cond_name">
-                <label style="color: black">Name of your conditional</label>
+                <label style="color: black">Name of your condition</label>
                 <input type="text" class="form-control collectes-date-chargement-min " id="id_cond_name" placeholder="Insert name of your condition">
             </div>
             <div class="form-group cond_formula">

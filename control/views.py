@@ -98,6 +98,38 @@ def update_leds(request):
         return HttpResponse(result_conditions, content_type='application/json')
 
 
+# def update_info_about_conditions(request):
+#     # condition = ScConditions.objects.get(cond_id=140)
+#     # condition_result = ScConditionsResult.objects.get(cond_id=140)
+#     # print((condition.time_create_or_alert + timedelta(hours=7)))
+#     if request.method == 'GET' and request.is_ajax():
+#         user = request.user.username
+#         user_id = ScUsers.objects.get(name=user)
+#         list_of_users = [user_id.id]
+#         group = models.Group.objects.get(name='Expert')
+#         query_users = group.user_set.all()
+#         for g in query_users:
+#             user_id_from_group = ScUsers.objects.get(name=g)
+#             list_of_users.append(user_id_from_group.id)
+#         condition_result = list()
+#         a = ScConditions.objects.filter(user_id__in=list_of_users)
+#         # group = models.Group.objects.get(name='Opers')
+#         # usersz = group.user_set.all()
+#
+#         for i in a:
+#             try:
+#                 b = ScConditionsResult.objects.get(cond_id=i.cond_id)
+#                 cond_data = {"name": i.comment, "val_result": b.val_result, "bool_result": b.bool_result,
+#                              "display_method": i.display_method,
+#                              "val_formula": b.val_formula, "text_formula": b.text_formula,
+#                              "cond_type": i.cond_type,
+#                              "value_result": b.val_result, "result_formula": b.result_formula,
+#                              "empty_values": b.empty_values, "time_calc": str(b.time_calc)}
+#                 condition_result.append(cond_data)
+#             except:
+#                 print("Condition isn't ready")
+#         data = json.dumps(condition_result)
+#         return HttpResponse(data, content_type='application/json')
 def update_info_about_conditions(request):
     # condition = ScConditions.objects.get(cond_id=140)
     # condition_result = ScConditionsResult.objects.get(cond_id=140)
@@ -105,16 +137,9 @@ def update_info_about_conditions(request):
     if request.method == 'GET' and request.is_ajax():
         user = request.user.username
         user_id = ScUsers.objects.get(name=user)
-        list_of_users = [user_id.id]
-        group = models.Group.objects.get(name='Expert')
-        query_users = group.user_set.all()
-        for g in query_users:
-            user_id_from_group = ScUsers.objects.get(name=g)
-            list_of_users.append(user_id_from_group.id)
-        condition_result = list()
-        a = ScConditions.objects.filter(user_id__in=list_of_users)
-        # group = models.Group.objects.get(name='Opers')
-        # usersz = group.user_set.all()
+        conditions_information = {'required': [], 'unrequited': []}
+
+        a = ScConditions.objects.filter(user_id=user_id)
         for i in a:
             try:
                 b = ScConditionsResult.objects.get(cond_id=i.cond_id)
@@ -124,10 +149,14 @@ def update_info_about_conditions(request):
                              "cond_type": i.cond_type,
                              "value_result": b.val_result, "result_formula": b.result_formula,
                              "empty_values": b.empty_values, "time_calc": str(b.time_calc)}
-                condition_result.append(cond_data)
+                if i.is_required_condition:
+                    conditions_information['required'].append(cond_data)
+                else:
+                    conditions_information['unrequited'].append(cond_data)
             except:
                 print("Condition isn't ready")
-        data = json.dumps(condition_result)
+        data = json.dumps(conditions_information)
+        print(data)
         return HttpResponse(data, content_type='application/json')
 
 
@@ -203,7 +232,7 @@ def search_info_for_autocomplete(request):
         for name in qs_var:
             qs_postfix = ScPostfixAutoCompletion.objects.filter(postfix_id=name.postfix_id).order_by('name')
             for postfix in qs_postfix:
-                data.append({'value': name.name+postfix.name, 'desc': name.comment + ' ('+postfix.comment+').'})
+                data.append({'value': name.name + postfix.name, 'desc': name.comment + ' (' + postfix.comment + ').'})
         return JsonResponse(data, safe=False)
 
 

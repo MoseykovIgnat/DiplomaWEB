@@ -137,24 +137,39 @@ def update_info_about_conditions(request):
     if request.method == 'GET' and request.is_ajax():
         user = request.user.username
         user_id = ScUsers.objects.get(name=user)
-        conditions_information = {'required': [], 'unrequited': []}
+        conditions_information = {'required': [], 'unrequired': []}
 
-        a = ScConditions.objects.filter(user_id=user_id)
-        for i in a:
+        # Получаем необязательные условия пользователя
+        unrequired_conditions_of_this_user = ScConditions.objects.filter(user_id=user_id, is_required_condition=False)
+        for elem in unrequired_conditions_of_this_user:
             try:
-                b = ScConditionsResult.objects.get(cond_id=i.cond_id)
-                cond_data = {"name": i.comment, "val_result": b.val_result, "bool_result": b.bool_result,
-                             "display_method": i.display_method,
+                b = ScConditionsResult.objects.get(cond_id=elem.cond_id)
+                cond_data = {"name": elem.comment, "val_result": b.val_result, "bool_result": b.bool_result,
+                             "display_method": elem.display_method,
                              "val_formula": b.val_formula, "text_formula": b.text_formula,
-                             "cond_type": i.cond_type,
+                             "cond_type": elem.cond_type,
                              "value_result": b.val_result, "result_formula": b.result_formula,
                              "empty_values": b.empty_values, "time_calc": str(b.time_calc)}
-                if i.is_required_condition:
-                    conditions_information['required'].append(cond_data)
-                else:
-                    conditions_information['unrequited'].append(cond_data)
+                conditions_information['unrequired'].append(cond_data)
             except:
                 print("Condition isn't ready")
+
+        # Получаем обязательные условия
+        required_conditions = ScConditions.objects.filter(is_required_condition=True)
+        for elem in required_conditions:
+            try:
+                b = ScConditionsResult.objects.get(cond_id=elem.cond_id)
+                print(elem.user)
+                cond_data = {"name": elem.comment, "val_result": b.val_result, "bool_result": b.bool_result,
+                             "display_method": elem.display_method,
+                             "val_formula": b.val_formula, "text_formula": b.text_formula,
+                             "cond_type": elem.cond_type,
+                             "value_result": b.val_result, "result_formula": b.result_formula,
+                             "empty_values": b.empty_values, "time_calc": str(b.time_calc)}
+                conditions_information['required'].append(cond_data)
+            except:
+                print("Condition isn't ready")
+
         data = json.dumps(conditions_information)
         return HttpResponse(data, content_type='application/json')
 

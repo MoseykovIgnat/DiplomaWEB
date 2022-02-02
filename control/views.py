@@ -149,8 +149,7 @@ def update_info_about_conditions(request):
                              "val_formula": b.val_formula, "text_formula": b.text_formula,
                              "cond_type": elem.cond_type,
                              "value_result": b.val_result, "result_formula": b.result_formula,
-                             "empty_values": b.empty_values, "time_calc": str(b.time_calc),
-                             "creator_of_the_condition": str(elem.user)}
+                             "empty_values": b.empty_values, "time_calc": str(b.time_calc)}
                 conditions_information['unrequired'].append(cond_data)
             except:
                 print("Condition isn't ready")

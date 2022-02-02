@@ -149,7 +149,8 @@ def update_info_about_conditions(request):
                              "val_formula": b.val_formula, "text_formula": b.text_formula,
                              "cond_type": elem.cond_type,
                              "value_result": b.val_result, "result_formula": b.result_formula,
-                             "empty_values": b.empty_values, "time_calc": str(b.time_calc)}
+                             "empty_values": b.empty_values, "time_calc": str(b.time_calc),
+                             "creator_of_the_condition": elem.user}
                 conditions_information['unrequired'].append(cond_data)
             except:
                 print("Condition isn't ready")
@@ -159,13 +160,13 @@ def update_info_about_conditions(request):
         for elem in required_conditions:
             try:
                 b = ScConditionsResult.objects.get(cond_id=elem.cond_id)
-                print(elem.user)
                 cond_data = {"name": elem.comment, "val_result": b.val_result, "bool_result": b.bool_result,
                              "display_method": elem.display_method,
                              "val_formula": b.val_formula, "text_formula": b.text_formula,
                              "cond_type": elem.cond_type,
                              "value_result": b.val_result, "result_formula": b.result_formula,
-                             "empty_values": b.empty_values, "time_calc": str(b.time_calc)}
+                             "empty_values": b.empty_values, "time_calc": str(b.time_calc),
+                             "creator_of_the_condition": elem.user}
                 conditions_information['required'].append(cond_data)
             except:
                 print("Condition isn't ready")

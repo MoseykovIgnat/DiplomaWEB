@@ -134,6 +134,8 @@ def update_info_about_conditions(request):
         required_conditions = ScConditions.objects.filter(is_required_condition=True)
         insert_information_about_conditions(required_conditions, conditions_information, 'required')
 
+        conditions_information['required'].sort(key=lambda k: k['display_method'], reverse=True)
+        conditions_information['unrequired'].sort(key=lambda k: k['display_method'], reverse=True)
         data = json.dumps(conditions_information)
         return HttpResponse(data, content_type='application/json')
 

@@ -218,6 +218,11 @@ def search_info_for_autocomplete(request):
         return JsonResponse(data, safe=False)
 
 
+def change_condition_display_method(request):
+    if request.method == 'POST' and request.is_ajax():
+        print('POST')
+
+
 def save_new_graph_name(request):
     if request.method == "POST":
         print('ok i save new graph name')

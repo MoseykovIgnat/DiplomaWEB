@@ -14,7 +14,7 @@
 
     	<div>
         	<table class="table table-condensed table-hover shadow p-4 mb-4 bg-white" id="required_condTable">
-                <tr>
+                <tr class="row-of-data>
                     <th>Инфо</th>
                     <th>Название условия</th>
                     <th>Результат</th>
@@ -28,7 +28,7 @@
 
     	<div>        	
         	<table class="table table-condensed table-hover shadow p-4 mb-4 bg-white" id="unrequired_condTable">
-                <tr>
+                <tr class="row-of-data>
                     <th>Инфо</th>
                     <th>Название условия</th>
                     <th>Результат</th>
@@ -499,7 +499,7 @@
                             time_calc = moment(time_calc.toISOString()).format('DD-MM-YYYY, h:mm:ss');
                             var condTitle = 'Info about condition: &#013' + (response[key][i]['time_calc'] ? 'The condition was calculated in ' + time_calc +'&#013' : '')  + (response[key][i]['creator_of_the_condition'] ? 'Creator of the condition:  ' + response[key][i]['creator_of_the_condition'] +'&#013' : '')  + (response[key][i]['result_formula'] ? 'Result formula: ' + response[key][i]['result_formula']+'&#013' : '') + (response[key][i]['val_formula'] ? 'Value Formula: ' + response[key][i]['val_formula']+'&#013' : '')+ (response[key][i]['text_formula'] ? 'Text Formula: ' + response[key][i]['text_formula']+'&#013' : '') + (response[key][i]['empty_values'] ? 'This sample(s) is(are) empty: ' + response[key][i]['empty_values']+'&#013' : '') + (response[key][i]['condition_tags'] ? 'Condition tags: ' + response[key][i]['condition_tags']+'&#013' : '');
                             var condInfo = '<td title="'+ condTitle +'">&times;</td>';
-                            var sirenOption = ((response[key][i]['display_method'] === 'Text+Siren') && (response[key][i]['alert_interval']) && (response[key][i]['priority']) ? '<button>' + 'Yes' + '</button>':'No!');
+                            var sirenOption = ( (response[key][i]['alert_interval']) && (response[key][i]['priority']) ? '<button id="change_display_method">' + 'Yes' + '</button>':'No!');
                             var result;
                             if (response[key][i]['empty_values']){
                                 result='Empty value!';
@@ -542,27 +542,16 @@
         setInterval(update_info_about_variables,5000);
         setInterval(update_info_about_conditions,5000);
     })
-{##}
-{#        $('button').on('click',function (e) {#}
-{#        e.preventDefault();#}
-{#        // GET AJAX request#}
-{#        $.ajax({#}
-{#            type: 'GET',#}
-{#            url: "{% url 'display_data' %}",#}
-{#            datatype: 'json',#}
-{##}
-{#            success: function (response) {#}
-{#                    for(i=0;i<response.length;i++) {#}
-{#                    $('#success').append('<tr><td>'+response[i]['pk']+'</td><td>'+response[i]['fields']['value']+'</td><td>'+response[i]['fields']['flag']+'</td><td>'+response[i]['fields']['submission_date']+'</td><td>');#}
-{#                    }#}
-{##}
-{#            },#}
-{#            error: function (response) {#}
-{#                console.log(response)#}
-{#            }#}
-{#        })#}
-{#    })#}
     </script>
+
+<script>
+    $(document).on('click',"#change_display_method",function (e){
+        e.preventDefault();
+        var rowOfData = $(this).closest(".row-of-data");
+        alert(rowOfData);
+
+    });
+</script>
 
 {#    <script>#}
     {#Форма с POST#}

@@ -116,7 +116,9 @@ def update_info_about_conditions(request):
                              "empty_values": condition_info_from_sc_results.empty_values,
                              "time_calc": str(condition_info_from_sc_results.time_calc),
                              "creator_of_the_condition": str(elem.user),
-                             "condition_tags": '; '.join(tags)}
+                             "condition_tags": '; '.join(tags),
+                             "alert_interval": elem.alert_interval,
+                             "priority": elem.priority}
                 conditions_information_dict[is_required].append(cond_data)
             except:
                 print("Condition isn't ready")

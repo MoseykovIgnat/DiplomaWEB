@@ -106,6 +106,7 @@ def update_info_about_conditions(request):
                 condition_tags = list(ScConditionsTags.objects.filter(cond_id=elem.cond_id))
                 tags = ''
                 for tag in condition_tags:
+                    print(tag.tag)
                     tags.join(tag.tag)
                 cond_data = {"name": elem.comment, "val_result": condition_info_from_sc_results.val_result,
                              "bool_result": condition_info_from_sc_results.bool_result,

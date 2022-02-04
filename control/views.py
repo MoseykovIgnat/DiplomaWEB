@@ -104,10 +104,7 @@ def update_info_about_conditions(request):
             try:
                 condition_info_from_sc_results = ScConditionsResult.objects.get(cond_id=elem.cond_id)
                 condition_tags = list(ScConditionsTags.objects.filter(cond_id=elem.cond_id))
-                tags = ''
-                for tag in condition_tags:
-                    print(tag.tag)
-                    tags.join(tag.tag)
+                tags = [tag.tag for tag in condition_tags]
                 cond_data = {"name": elem.comment, "val_result": condition_info_from_sc_results.val_result,
                              "bool_result": condition_info_from_sc_results.bool_result,
                              "display_method": elem.display_method,
@@ -119,7 +116,7 @@ def update_info_about_conditions(request):
                              "empty_values": condition_info_from_sc_results.empty_values,
                              "time_calc": str(condition_info_from_sc_results.time_calc),
                              "creator_of_the_condition": str(elem.user),
-                             "condition_tags": tags}
+                             "condition_tags": '; '.join(tags)}
                 conditions_information_dict[is_required].append(cond_data)
             except:
                 print("Condition isn't ready")

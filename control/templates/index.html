@@ -19,6 +19,7 @@
                     <th>Название условия</th>
                     <th>Результат</th>
                     <th>Сирена</th>
+                    <th>Настройки сирены</th>
                 </tr>
                 <tr class="required_cond_res"></tr>
             </table>
@@ -33,6 +34,7 @@
                     <th>Название условия</th>
                     <th>Результат</th>
                     <th>Сирена</th>
+                    <th>Настройки сирены</th>
                 </tr>
                 <tr class="unrequired_cond_res"></tr>
             </table>
@@ -517,7 +519,7 @@
                                     result = response[key][i]['val_result'];
                                 }
                             }
-                            table_id.append('<tr class=' + class_name + '>'+condInfo+'<td>' + response[key][i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
+                            table_id.append('<tr class=' + class_name + '>'+condInfo+'<td>' + response[key][i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>' + <td><button>status</button></td>);
 
 
                         }

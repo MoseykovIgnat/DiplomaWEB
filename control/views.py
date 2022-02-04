@@ -103,7 +103,7 @@ def update_info_about_conditions(request):
         for elem in query_of_conditions:
             try:
                 condition_info_from_sc_results = ScConditionsResult.objects.get(cond_id=elem.cond_id)
-                condition_tags = ScConditionsTags.objects.filter(cond_id=elem.cond_id)
+                condition_tags = list(ScConditionsTags.objects.filter(cond_id=elem.cond_id))
                 cond_data = {"name": elem.comment, "val_result": condition_info_from_sc_results.val_result,
                              "bool_result": condition_info_from_sc_results.bool_result,
                              "display_method": elem.display_method,

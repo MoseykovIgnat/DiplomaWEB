@@ -547,7 +547,7 @@
 <script>
     $(document).on('click',"#change_display_method",function (e){
         e.preventDefault();
-        var rowOfData = $(this).closest(".row-of-data");
+        var rowOfData = $(this).closest(".row-of-data").html();
         alert(rowOfData);
 
     });

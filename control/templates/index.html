@@ -546,7 +546,7 @@
     $(document).on('click',"#change_display_method",function (e){
         e.preventDefault();
         var rowOfData = $(this).closest(".required_cond_res");
-        alert(rowOfData)
+        alert(rowOfData.html());
         $.ajax({
             type:'POST',
             url : "{% url 'change_condition_display_method' %}",

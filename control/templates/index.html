@@ -515,7 +515,7 @@
                                     result = response[key][i]['val_result'];
                                 }
                             }
-                            table_id.append('<tr class=' + class_name + '>'+condInfo+'<td>' + response[key][i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
+                            table_id.append('<tr class=' + class_name + '>'+condInfo+'<td id="cond_name_in_table" data-name-of-creator="'+response[key][i]['creator_of_the_condition']+ '">' + response[key][i]['name'] + '</td>+<td>' + result + '</td>+<td>' + sirenOption + '</td>');
 
 
                         }
@@ -545,7 +545,7 @@
 <script>
     $(document).on('click',"#change_display_method",function (e){
         e.preventDefault();
-        var rowOfData = $(this).closest(".required_cond_res").getElementsByTagName('td')[1];
+        var rowOfData = $(this).closest("#cond_name_in_table").html();
         alert(rowOfData);
         $.ajax({
             type:'POST',

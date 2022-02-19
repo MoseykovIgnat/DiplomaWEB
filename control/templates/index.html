@@ -554,7 +554,7 @@
             data:{
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                 action: 'post',
-                creator: creator,
+                creator: creator.val(),
                 cond_name: condName,
             },
             success: function (response) {

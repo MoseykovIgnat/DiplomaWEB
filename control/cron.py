@@ -125,7 +125,8 @@ def update_condition_results():
                                                    val_result=result, result_formula=result_formula,
                                                    time_calc=(datetime.now(tz=timezone.utc)))
                 result_for_db.save()
-            if condition.cond_type == '2' or condition.cond_type == '3' or condition.cond_type == '4' or condition.cond_type == '5':
+            if condition.cond_type == '2' or condition.cond_type == '3'\
+                    or condition.cond_type == '4' or condition.cond_type == '5':
                 if not condition.limit_val.isdigit():
                     formula = condition.limit_val
                     vars_limit_val = get_vars_formula(formula)

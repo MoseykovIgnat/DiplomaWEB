@@ -547,9 +547,23 @@
 <script>
     $(document).on('click',"#change_display_method",function (e){
         e.preventDefault();
-        var rowOfData = $(this).closest(".row-of-data").html();
-        alert(rowOfData);
-
+        var rowOfData = $(this).closest(".row-of-data");
+        alert(rowOfData)
+        $.ajax({
+            type:'POST',
+            url : "{% url 'change_condition_display_method' %}",
+            data:{
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success: function (response) {
+                    $('.new_condition_form').html(response);
+                    $('#add_new_condition_modal').modal('show')
+                },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });
     });
 </script>
 

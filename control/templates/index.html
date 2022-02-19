@@ -553,9 +553,7 @@
             data:{
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                 action: 'post',
-                data:{
                 var_path: rowOfData,
-                },
             },
             success: function (response) {
                 $(this).innerText = $(this).innerText === "Yes" ? 'No' : 'Yes';

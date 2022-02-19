@@ -497,7 +497,7 @@
                             time_calc = moment(time_calc.toISOString()).format('DD-MM-YYYY, h:mm:ss');
                             var condTitle = 'Info about condition: &#013' + (response[key][i]['time_calc'] ? 'The condition was calculated in ' + time_calc +'&#013' : '')  + (response[key][i]['creator_of_the_condition'] ? 'Creator of the condition:  ' + response[key][i]['creator_of_the_condition'] +'&#013' : '')  + (response[key][i]['result_formula'] ? 'Result formula: ' + response[key][i]['result_formula']+'&#013' : '') + (response[key][i]['val_formula'] ? 'Value Formula: ' + response[key][i]['val_formula']+'&#013' : '')+ (response[key][i]['text_formula'] ? 'Text Formula: ' + response[key][i]['text_formula']+'&#013' : '') + (response[key][i]['empty_values'] ? 'This sample(s) is(are) empty: ' + response[key][i]['empty_values']+'&#013' : '') + (response[key][i]['condition_tags'] ? 'Condition tags: ' + response[key][i]['condition_tags']+'&#013' : '');
                             var condInfo = '<td title="'+ condTitle +'">&times;</td>';
-                            var sirenOption = ( (response[key][i]['alert_interval']) && (response[key][i]['priority']) ? '<button id="change_display_method">' + 'Yes' + '</button>':'No!');
+                            var sirenOption = ( (response[key][i]['alert_interval']) && (response[key][i]['priority']) ? (response[key][i]['display_method'] === "Text+Siren") ? '<button id="change_display_method">' + 'Yes' + '</button>':'<button id="change_display_method">' + 'No' + '</button>':'No!');
                             var result;
                             if (response[key][i]['empty_values']){
                                 result='Empty value!';

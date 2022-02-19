@@ -221,7 +221,8 @@ def search_info_for_autocomplete(request):
 def change_condition_display_method(request):
     if request.method == 'POST' and request.is_ajax():
         print('POST')
-
+    a = {'result of change dot name': 'true'}
+    return HttpResponse(json.dumps(a), content_type='application/json')
 
 def save_new_graph_name(request):
     if request.method == "POST":

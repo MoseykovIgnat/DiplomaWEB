@@ -219,7 +219,7 @@ def search_info_for_autocomplete(request):
 
 
 def change_condition_display_method(request):
-    print(ScConditions.objects.filter(user__name=request.POST.get('creator'), comment=request.POST.get('cond_name')))
+    print(list(ScConditions.objects.filter(user__name=request.POST.get('creator'), comment=request.POST.get('cond_name'))))
     a = {'result of change dot name': 'true'}
     return HttpResponse(json.dumps(a), content_type='application/json')
 

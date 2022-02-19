@@ -559,8 +559,13 @@
                 cond_name: condName,
             },
             success: function (response) {
-                button.text(button.text() === "Yes" ? 'No' : 'Yes');
-                button.text('WORK');
+                if (button.text() === "Yes"){
+                    button.text('No');
+                }
+                else{
+                    button.text('Yes');
+                }
+                
 
                 },
             error : function(xhr,errmsg,err) {

@@ -545,6 +545,7 @@
 <script>
     $(document).on('click',"#change_display_method",function (e){
         e.preventDefault();
+        var button = $(this);
         var rowOfData = $(this).parents("tr");
         var creator = rowOfData.children('#cond_name_in_table').attr("data-name-of-creator")
         var condName = rowOfData.children('#cond_name_in_table').html()
@@ -558,7 +559,8 @@
                 cond_name: condName,
             },
             success: function (response) {
-                $(this).text($(this).text() === "Yes" ? 'No' : 'Yes');
+                button.text(button.text() === "Yes" ? 'No' : 'Yes');
+                button.text('WORK');
 
                 },
             error : function(xhr,errmsg,err) {

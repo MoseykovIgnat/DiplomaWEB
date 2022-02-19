@@ -552,7 +552,10 @@
             url : "{% url 'change_condition_display_method' %}",
             data:{
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
+                action: 'post',
+                data:{
+                var_path: rowOfData,
+                },
             },
             success: function (response) {
                 $(this).innerText = $(this).innerText === "Yes" ? 'No' : 'Yes';

@@ -545,8 +545,8 @@
 <script>
     $(document).on('click',"#change_display_method",function (e){
         e.preventDefault();
-        var rowOfData = $(this).closest(".required_cond_res");
-        alert(rowOfData.html());
+        var rowOfData = $(this).closest(".required_cond_res").getElementsByTagName('td')[1];
+        alert(rowOfData);
         $.ajax({
             type:'POST',
             url : "{% url 'change_condition_display_method' %}",

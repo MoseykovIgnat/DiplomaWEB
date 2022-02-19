@@ -10,7 +10,7 @@ class ScConditionsResultAdmin(admin.ModelAdmin):
 
 
 class ScConditionsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'formula', 'cond_type', 'max_val', 'min_val', 'limit_val', 'comment', 'display_method', 'priority',
+    list_display = ('user','cond_id', 'formula', 'cond_type', 'max_val', 'min_val', 'limit_val', 'comment', 'display_method', 'priority',
                     'isalert', 'alert_interval', 'time_create_or_alert', 'is_required_condition')
     list_filter = ('user', 'formula')
 

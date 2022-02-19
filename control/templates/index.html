@@ -545,7 +545,7 @@
 <script>
     $(document).on('click',"#change_display_method",function (e){
         e.preventDefault();
-        var rowOfData = $(this).closest(".required_cond_res").getElementsByTagName('td')[1];
+        var rowOfData = $(this).closest(".required_cond_res");
         alert(rowOfData);
         $.ajax({
             type:'POST',

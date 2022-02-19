@@ -547,16 +547,15 @@
         e.preventDefault();
         var rowOfData = $(this).parents("tr");
         var creator = rowOfData.children('#cond_name_in_table').attr("data-name-of-creator")
-        var cond_name = rowOfData.children('#cond_name_in_table').html()
-        alert(creator);
-        alert(cond_name);
+        var condName = rowOfData.children('#cond_name_in_table').html()
         $.ajax({
             type:'POST',
             url : "{% url 'change_condition_display_method' %}",
             data:{
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                 action: 'post',
-                var_path: rowOfData,
+                creator: creator,
+                cond_name: condName,
             },
             success: function (response) {
                 $(this).innerText = $(this).innerText === "Yes" ? 'No' : 'Yes';

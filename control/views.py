@@ -76,12 +76,12 @@ def index(request):
 def alert(request):
     user = request.user.username
     user_id = ScUsers.objects.get(name=user)
-    your_variables = ScPaths.objects.filter(user_id=user_id.id)
-    your_conditions = ScConditions.objects.filter(user_id=user_id.id)
+    # your_variables = ScPaths.objects.filter(user_id=user_id.id)
+    # your_conditions = ScConditions.objects.filter(user_id=user_id.id)
     return render(
         request,
         'alert.html',
-        context={'your_variables': your_variables, 'your_conditions': your_conditions},
+        # context={'your_variables': your_variables, 'your_conditions': your_conditions},
     )
 
 

@@ -5,7 +5,7 @@ PREFIX = ''
 
 urlpatterns = [
     path(PREFIX + '', views.index, name='home'),
-    path(PREFIX + 'alert/', views.custom_settings, name='alert'),
+    path(PREFIX + 'alert/', views.alert, name='alert'),
     path(PREFIX + 'custom_settings/', views.custom_settings, name='custom_settings'),
     path(PREFIX + 'graph_editor/', views.graph_editor, name='graph_editor'),
     path(PREFIX + 'create_post/', views.create_post, name='create_post'),

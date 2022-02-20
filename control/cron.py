@@ -250,7 +250,9 @@ def signal_alarm(siren_ids, connection, cursor):
                 # write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
                 #                                        query_for_input_messages, query_for_get_id,
                 #                                        query_for_input_attachment)
-
+            else:
+                condition.isalert = 1
+                condition.save()
 
 
 '''Запускается одна задача, которая выполняется постоянно, каждые 5 секунд и проверяет все условия и если нужно - записывает в log журнал'''

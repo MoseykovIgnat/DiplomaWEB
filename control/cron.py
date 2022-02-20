@@ -209,7 +209,7 @@ def write_history_of_alerts(condition, condition_result):
     query_to_save = ScAlertHistory(comment=condition.comment,
                                    creator=condition.user,
                                    time_calc=condition_result.time_calc + timedelta(hours=7),
-                                   is_required_condition=condition.is_reqiuried,
+                                   is_required_condition=condition.is_required_condition,
                                    text_formula=condition_result.text_formula,
                                    val_formula=condition_result.val_formula,
                                    bool_result=condition_result.bool_result,

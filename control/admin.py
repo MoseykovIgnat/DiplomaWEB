@@ -1,11 +1,17 @@
 from django.contrib import admin
 from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResult, ScGraphName, ScGraphInfo,\
-    ScVariableAutoCompletion, ScPostfixAutoCompletion
+    ScVariableAutoCompletion, ScPostfixAutoCompletion, ScAlertHistory
 
 
 class ScConditionsResultAdmin(admin.ModelAdmin):
     list_display = ('cond_id', 'val_result', 'bool_result', 'val_formula', 'text_formula', 'result_formula',
                     'time_calc', 'empty_values')
+    list_filter = ('cond_id', 'val_result')
+
+
+class ScAlertHistoryAdmin(admin.ModelAdmin):
+    list_display = ('comment', 'creator', 'time_calc', 'is_required_condition', 'text_formula', 'val_formula',
+                    'bool_result', 'val_result')
     list_filter = ('cond_id', 'val_result')
 
 
@@ -46,6 +52,7 @@ class ScPostfixAutoCompletionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ScUsers, ScUsersAdmin)
+admin.site.register(ScAlertHistory, ScAlertHistoryAdmin)
 admin.site.register(ScPaths, ScPathsAdmin)
 admin.site.register(ScResults, ScResultsAdmin)
 admin.site.register(ScConditionsResult, ScConditionsResultAdmin)

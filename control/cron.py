@@ -259,8 +259,8 @@ def test():
     t_end = time.time() + 60
     while time.time() < t_end:
         t_start = time.time()
-        # signal_alarm(update_condition_results(), con, cur)
-        update_condition_results()
+        signal_alarm(update_condition_results(), con, cur)
+        # update_condition_results()
         t_res = t_update - (time.time() - t_start)
         if t_res > 0:
             time.sleep(t_res)

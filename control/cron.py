@@ -236,6 +236,7 @@ def signal_alarm(siren_ids, connection, cursor):
                     #                                        query_for_input_attachment)
                 else:
                     condition.time_create_or_alert = datetime.now(tz=timezone.utc)
+                    condition.save()
                 print('Время расчета' + str(condition_result.time_calc))
                 print('Время создания или сигнала' + str(condition.time_create_or_alert))
                 print('Разница времен' + str(

@@ -1,5 +1,5 @@
 from .models import ScConditionsResult
-from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsOnline
+from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsOnline, ScAlertHistory
 from datetime import datetime, timedelta
 from django.utils import timezone
 import time
@@ -205,6 +205,18 @@ def write_info_of_required_condition_in_db(connection, cursor, condition, condit
     condition.save()
 
 
+def write_history_of_alerts(condition, condition_result):
+    query_to_save = ScAlertHistory(comment=condition.comment,
+                                   creator=condition.user,
+                                   time_calc=condition_result.time_calc + timedelta(hours=7),
+                                   is_required_condition=condition.is_reqiuried,
+                                   text_formula=condition_result.text_formula,
+                                   val_formula=condition_result.val_formula,
+                                   bool_result=condition_result.bool_result,
+                                   val_result=condition_result.val_result)
+    query_to_save.save()
+
+
 def signal_alarm(siren_ids, connection, cursor):
     query_for_input_messages = "insert into messages (user, process, loglevel, topic, subject, attachment, alarm) values(%s, %s, %s, %s, %s, %s, %s)"
     query_for_get_id = 'select id,time from messages where user=%s and subject=%s order by time desc limit 1'
@@ -212,25 +224,30 @@ def signal_alarm(siren_ids, connection, cursor):
     for siren_id in siren_ids:
         condition = ScConditions.objects.get(cond_id=siren_id)
         condition_result = ScConditionsResult.objects.get(cond_id=siren_id)
-        if condition.isalert == 1:
-            if int(condition.alert_interval) < (
-                    condition_result.time_calc - condition.time_create_or_alert).total_seconds():
-                write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
-                                                       query_for_input_messages, query_for_get_id,
-                                                       query_for_input_attachment)
-                print('Время расчета' + str(condition_result.time_calc))
-                print('Время создания или сигнала' + str(condition.time_create_or_alert))
-                print('Разница времен' + str(
-                    (condition_result.time_calc - condition.time_create_or_alert).total_seconds()))
-            else:
-                print('Маленькая разница времен!!!!')
-                print('Разница времен' + str(
-                    (condition_result.time_calc - condition.time_create_or_alert).total_seconds()))
-                print()
-        if condition.isalert == 0:
-            write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
-                                                   query_for_input_messages, query_for_get_id,
-                                                   query_for_input_attachment, is_alert=True)
+        if condition.is_required_condition == 1:
+            if condition.isalert == 1:
+                if int(condition.alert_interval) < (
+                        condition_result.time_calc - condition.time_create_or_alert).total_seconds():
+                    write_history_of_alerts(condition, condition_result)
+                    # write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
+                    #                                        query_for_input_messages, query_for_get_id,
+                    #                                        query_for_input_attachment)
+                    print('Время расчета' + str(condition_result.time_calc))
+                    print('Время создания или сигнала' + str(condition.time_create_or_alert))
+                    print('Разница времен' + str(
+                        (condition_result.time_calc - condition.time_create_or_alert).total_seconds()))
+                else:
+                    print('Маленькая разница времен!!!!')
+                    print('Разница времен' + str(
+                        (condition_result.time_calc - condition.time_create_or_alert).total_seconds()))
+                    print()
+            if condition.isalert == 0:
+                write_history_of_alerts(condition, condition_result)
+                # write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
+                #                                        query_for_input_messages, query_for_get_id,
+                #                                        query_for_input_attachment, is_alert=True)
+        else:
+            write_history_of_alerts(condition, condition_result)
 
 
 '''Запускается одна задача, которая выполняется постоянно, каждые 5 секунд и проверяет все условия и если нужно - записывает в log журнал'''
@@ -242,8 +259,8 @@ def test():
     t_end = time.time() + 60
     while time.time() < t_end:
         t_start = time.time()
-        signal_alarm(update_condition_results(), con, cur)
-        # update_condition_results()
+        # signal_alarm(update_condition_results(), con, cur)
+        update_condition_results()
         t_res = t_update - (time.time() - t_start)
         if t_res > 0:
             time.sleep(t_res)

@@ -167,3 +167,18 @@ class ScConditionsTags(models.Model):
     class Meta:
         managed = False
         db_table = 'sc_conditions_tags'
+
+
+class ScAlertHistory(models.Model):
+    comment = models.CharField(max_length=200, blank=True, null=True)
+    creator = models.CharField(max_length=150, blank=True, null=True)
+    time_calc = models.DateTimeField(blank=True, null=True)
+    is_required_condition = models.IntegerField(blank=True, null=True)
+    text_formula = models.CharField(max_length=1500, blank=True, null=True)
+    val_formula = models.CharField(max_length=1500, blank=True, null=True)
+    bool_result = models.IntegerField(blank=True, null=True)
+    val_result = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_alert_history'

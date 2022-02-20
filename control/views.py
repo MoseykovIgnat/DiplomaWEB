@@ -80,7 +80,7 @@ def alert(request):
     your_conditions = ScConditions.objects.filter(user_id=user_id.id)
     return render(
         request,
-        'custom_settings.html',
+        'alert.html',
         context={'your_variables': your_variables, 'your_conditions': your_conditions},
     )
 

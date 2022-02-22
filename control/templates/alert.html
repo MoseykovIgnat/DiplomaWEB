@@ -11,8 +11,8 @@
                         <tbody class="labels">
 							<tr>
 								<td colspan="6">
-									<label for={{ loop.index }}>{{ data.comment }}</label>
-									<input type="checkbox" name={{ loop.index }} id={{ loop.index }} data-toggle="toggle">
+									<label for={{forloop.counter}}>{{ data.comment }}</label>
+									<input type="checkbox" name={{forloop.counter}} id={{forloop.counter}} data-toggle="toggle">
 								</td>
 							</tr>
 						</tbody>

@@ -84,7 +84,7 @@ def alert(request):
     return render(
         request,
         'alert.html',
-        context={'your_conditions': your_conditions},
+        context={'your_conditions': your_conditions, 'required_conditions': required_conditions},
     )
 
 

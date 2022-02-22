@@ -41,16 +41,35 @@
     <div class="col-sm-5 text-center">
 	<h1 align="center">Optional sound notifications</h1 >
 
-    	<div>
-        	<table class="table table-condensed table-hover shadow p-4 mb-4 bg-white" id="">
-                <tr class="row-of-data">
-                    <th>Инфо</th>
-                    <th>Название условия</th>
-                    <th>Результат</th>
-                    <th>Сирена</th>
-                </tr>
-            </table>
-        </div>
+                <table>
+                    {% for data in required_conditions %}
+                        <tbody class="labels">
+							<tr>
+								<td colspan="6">
+									<label for={{forloop.counter}}>{{ data.comment }}</label>
+									<input type="checkbox" name={{forloop.counter}} id={{forloop.counter}} data-toggle="toggle">
+								</td>
+							</tr>
+						</tbody>
+
+                        <tbody class="hide">
+									<tr>
+							<td colspan="2">Time of calculate: {{ data.time_calc }}</td>
+							<td>Name of creator: {{ data.creator }}</td>
+							<td>Bool result: {{ data.bool_result }}</td>
+							<td colspan="2">Value result: {{ data.val_result }}</td>
+						</tr>
+						<tr>
+							<td colspan="6">Text Formula: {{ data.text_formula }}</td>
+						</tr>
+						<tr>
+							<td colspan="6">Value formula: {{ data.val_formula }}</td>
+						</tr>
+						</tbody>
+
+                    {% endfor %}
+
+				</table>
     </div>
     </div>
 

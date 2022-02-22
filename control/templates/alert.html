@@ -77,4 +77,11 @@
 
 {% endblock %}
 {% block javascript %}
+    <script>
+    $(document).ready(function() {
+        $('[data-toggle="toggle"]').change(function(){
+            $(this).parents().next('.hide').toggle();
+        });
+    });
+    </script>
 {% endblock javascript %}

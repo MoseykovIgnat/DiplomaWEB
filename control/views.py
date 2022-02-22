@@ -79,6 +79,7 @@ def alert(request):
     # your_variables = ScPaths.objects.filter(user_id=user_id.id)
 
     your_conditions = ScAlertHistory.objects.filter(creator=user)
+    print(your_conditions.values())
     return render(
         request,
         'alert.html',

@@ -7,7 +7,33 @@
     <div class="col-sm-5 text-center">
 	    <h1 align="center">Required sound notifications</h1 >
                 <table>
-					<tbody>
+                    {% for data in your_conditions %}
+                        <tbody class="labels">
+							<tr>
+								<td colspan="6">
+									<label for={{ data.comment }}>{{ data.comment }}</label>
+									<input type="checkbox" name={{ data.comment }} id={{ data.comment }} data-toggle="toggle">
+								</td>
+							</tr>
+						</tbody>
+
+                        <tbody class="hide">
+									<tr>
+							<td colspan="2">Time of calculate: {{ data.time_calc }}</td>
+							<td>Name of creator: {{ data.creator }}</td>
+							<td>Bool result: {{ data.bool_result }}</td>
+							<td colspan="2">Value result: {{ data.val_result }}</td>
+						</tr>
+						<tr>
+							<td colspan="6">Text Formula: {{ data.text_formula }}</td>
+						</tr>
+						<tr>
+							<td colspan="6">Value formula: {{ data.val_formula }}</td>
+						</tr>
+						</tbody>
+                    
+                    {% endfor %}
+
 						<tbody class="labels">
 							<tr>
 								<td colspan="6">
@@ -53,7 +79,7 @@
 							<td colspan="6">Val formula</td>
 						</tr>
 						</tbody>
-                    </tbody>
+
 				</table>
     </div>
     <div class="col-sm-5 text-center">

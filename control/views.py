@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import ScUsers, ScVariableAutoCompletion, ScPostfixAutoCompletion, ScPaths, ScResults, ScConditions, \
-    ScConditionsResult, ScGraphName, ScGraphInfo, ScConditionsTags, ScConditionsOnline
+    ScConditionsResult, ScGraphName, ScGraphInfo, ScConditionsTags, ScConditionsOnline, ScAlertHistory
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.http import JsonResponse
 from django.dispatch import receiver
@@ -77,11 +77,12 @@ def alert(request):
     user = request.user.username
     user_id = ScUsers.objects.get(name=user)
     # your_variables = ScPaths.objects.filter(user_id=user_id.id)
-    # your_conditions = ScConditions.objects.filter(user_id=user_id.id)
+
+    your_conditions = ScAlertHistory.objects.filter(creator=user)
     return render(
         request,
         'alert.html',
-        # context={'your_variables': your_variables, 'your_conditions': your_conditions},
+        context={'your_conditions': your_conditions},
     )
 
 

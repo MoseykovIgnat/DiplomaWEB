@@ -44,7 +44,8 @@ def is_user_still_online(request):
         user = request.user.username
         if request.user.groups.filter(name='Opers').exists():
             ScUsers.objects.filter(name=user).update(last_activity=request.POST.get('current_datetime'))
-
+        data = {"Result": 'true'}
+        return HttpResponse(json.dumps(data), content_type='application/json')
 
 def formula_without_priority_staples(x):
     if x[0] == '(':

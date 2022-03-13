@@ -5,7 +5,7 @@ PREFIX = ''
 
 urlpatterns = [
     path(PREFIX + '', views.index, name='home'),
-    path(PREFIX + 'alert/', views.alert, name='alert'),
+    path(PREFIX + 'alert/', views.load_alert_data, name='alert'),
     path(PREFIX + 'custom_settings/', views.custom_settings, name='custom_settings'),
     path(PREFIX + 'graph_editor/', views.graph_editor, name='graph_editor'),
     path(PREFIX + 'create_post/', views.create_post, name='create_post'),
@@ -19,6 +19,7 @@ urlpatterns = [
     path(PREFIX + 'condition_create', views.condition_create, name='condition_create'),
     path(PREFIX + 'del_exist_condition/', views.del_exist_condition, name='del_exist_condition'),
     path(PREFIX + 'is_SAM_working/', views.is_SAM_working, name='is_SAM_working'),
+    path(PREFIX + 'is_user_still_online/', views.is_user_still_online, name='is_user_still_online'),
     path(PREFIX + 'rename_dot_name/', views.rename_dot_name, name='rename_dot_name'),
     path(PREFIX + 'change_dot_condition/', views.change_dot_condition, name='change_dot_condition'),
     path(PREFIX + 'save_new_graph_name/', views.save_new_graph_name, name='save_new_graph_name'),

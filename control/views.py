@@ -39,6 +39,13 @@ def got_offline(sender, user, request, **kwargs):
         ScUsers.objects.filter(name=user).update(status='Offline')
 
 
+def is_user_still_online(request):
+    if request.method == 'POST' and request.is_ajax():
+        user = request.user.username
+        if request.user.groups.filter(name='Opers').exists():
+            ScUsers.objects.filter(name=user).update(last_activity=request.POST.get('current_datetime'))
+
+
 def formula_without_priority_staples(x):
     if x[0] == '(':
         x = x[1:]
@@ -73,7 +80,7 @@ def index(request):
         )
 
 
-def alert(request):
+def load_alert_data(request):
     user = request.user.username
     user_id = ScUsers.objects.get(name=user)
     # your_variables = ScPaths.objects.filter(user_id=user_id.id)

@@ -41,9 +41,10 @@ def got_offline(sender, user, request, **kwargs):
 
 def is_user_still_online(request):
     if request.method == 'POST' and request.is_ajax():
-        user = request.user.username
-        if request.user.groups.filter(name='Opers').exists():
-            ScUsers.objects.filter(name=user).update(last_activity=request.POST.get('current_datetime'))
+        print(request.POST.get("current_datetime"))
+        # user = request.user.username
+        # if request.user.groups.filter(name='Opers').exists():
+        #     ScUsers.objects.filter(name=user).update(last_activity=request.POST.get('current_datetime'))
         data = {"Result": 'true'}
         return HttpResponse(json.dumps(data), content_type='application/json')
 

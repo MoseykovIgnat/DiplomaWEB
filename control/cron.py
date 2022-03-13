@@ -68,7 +68,7 @@ def update_condition_results():
         if empty_values:
             result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                empty_values=str(empty_values), text_formula=condition.formula,
-                                               time_calc=(timezone.now()))
+                                               time_calc=(datetime.now()))
             result_for_db.save()
         else:
             result = eval(digit_formula)
@@ -78,13 +78,13 @@ def update_condition_results():
                     ids_for_signal_alarm.append(condition.cond_id)
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                    bool_result=bool_result, text_formula=condition.formula,
-                                                   time_calc=(timezone.now()))
+                                                   time_calc=(datetime.now()))
                 result_for_db.save()
             if condition.cond_type == '1':
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                    val_result=result,
                                                    text_formula=condition.formula,
-                                                   time_calc=(timezone.now()))
+                                                   time_calc=(datetime.now()))
                 result_for_db.save()
             if condition.cond_type == '6':
                 if not condition.max_val.isdigit():
@@ -123,7 +123,7 @@ def update_condition_results():
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=val_formula,
                                                    bool_result=bool_result, text_formula=text_formula,
                                                    val_result=result, result_formula=result_formula,
-                                                   time_calc=(timezone.now()))
+                                                   time_calc=(datetime.now()))
                 result_for_db.save()
             if condition.cond_type == '2' or condition.cond_type == '3' \
                     or condition.cond_type == '4' or condition.cond_type == '5':
@@ -170,7 +170,7 @@ def update_condition_results():
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=val_formula,
                                                    bool_result=bool_result, text_formula=text_formula,
                                                    val_result=result, result_formula=result_formula,
-                                                   time_calc=(timezone.now()))
+                                                   time_calc=(datetime.now()))
                 result_for_db.save()
     print('done')
     return ids_for_signal_alarm
@@ -199,7 +199,7 @@ def write_info_of_required_condition_in_db(connection, cursor, condition, condit
                     'y'))
     connection.commit()
 
-    condition.time_create_or_alert = timezone.now()
+    condition.time_create_or_alert = datetime.now()
     if is_alert:
         condition.isalert = 1
     condition.save()
@@ -235,7 +235,7 @@ def signal_alarm(siren_ids, connection, cursor):
                     #                                        query_for_input_messages, query_for_get_id,
                     #                                        query_for_input_attachment)
                 else:
-                    condition.time_create_or_alert = timezone.now()
+                    condition.time_create_or_alert = datetime.now()
                     condition.save()
                 print('Время расчета' + str(condition_result.time_calc))
                 print('Время создания или сигнала' + str(condition.time_create_or_alert))
@@ -255,7 +255,7 @@ def signal_alarm(siren_ids, connection, cursor):
                 #                                        query_for_input_attachment)
             else:
                 condition.isalert = 1
-                condition.time_create_or_alert = timezone.now()
+                condition.time_create_or_alert = datetime.now()
                 condition.save()
 
 

@@ -6,6 +6,7 @@ import time
 import re
 import json
 import SQLParser.xxxdbrc
+from django.contrib.auth.models import User, Group
 import pymysql as MySQLdb
 
 
@@ -259,7 +260,8 @@ def signal_alarm(siren_ids, connection, cursor):
                 condition.save()
 
 
-'''Запускается одна задача, которая выполняется постоянно, каждые 5 секунд и проверяет все условия и если нужно - записывает в log журнал'''
+'''Запускается одна задача, которая выполняется постоянно, каждые 5 секунд и проверяет все условия и если нужно - 
+записывает в log журнал '''
 
 
 def test():
@@ -277,9 +279,11 @@ def test():
 
 
 def change_status_of_user_in_sc_users():
-    users = ScUsers.objects.all().filter(status="Online").values()
+    users = ScUsers.objects.all().values()
     for user in users:
         if user['last_activity']:
-            print(type(user['last_activity']))
-            if user['last_activity'] + timedelta(minutes=10) < datetime.now().replace(tzinfo=timezone.utc):
-                ScUsers.objects.all().filter(id=user['id']).update(status='Offline')
+            if not User.objects.get(username=user['name']).groups.filter(name='Expert').exists():
+                if user['last_activity'] + timedelta(minutes=10) < datetime.now().replace(tzinfo=timezone.utc):
+                    ScUsers.objects.all().filter(id=user['id']).update(status='Offline')
+                else:
+                    ScUsers.objects.all().filter(id=user['id']).update(status='Online')

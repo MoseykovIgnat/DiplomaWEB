@@ -43,7 +43,7 @@ def is_user_still_online(request):
     if request.method == 'GET' and request.is_ajax():
         user = request.user.username
         if request.user.groups.filter(name='Opers').exists():
-            ScUsers.objects.filter(name=user).update(last_activity=datetime.strptime(request.POST.get("current_datetime"), '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone.utc))
+            ScUsers.objects.filter(name=user).update(last_activity=datetime.strptime(request.GET.get("current_datetime"), '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone.utc))
         data = {"Result": 'true'}
         return HttpResponse(json.dumps(data), content_type='application/json')
 

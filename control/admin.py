@@ -41,7 +41,6 @@ class ScUsersAdmin(admin.ModelAdmin):
     list_filter = ('name', 'status')
 
 
-
 class ScVariableAutoCompletionAdmin(admin.ModelAdmin):
     list_display = ('name', 'comment', 'postfix_id')
     list_filter = ('name', 'comment', 'postfix_id')

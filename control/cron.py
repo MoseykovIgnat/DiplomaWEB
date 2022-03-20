@@ -279,6 +279,6 @@ def test():
 def change_status_of_user_in_sc_users():
     users = ScUsers.objects.all().filter(status="Online").values()
     for user in users:
-        pass
-        # if  user.last_activity
+        if datetime.strptime(user.last_activity, '%Y-%m-%d %H:%M:%S') + timedelta(seconds=10) < datetime.now():
+            user.update(status="Offline")
 

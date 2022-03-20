@@ -47,6 +47,7 @@ def is_user_still_online(request):
         data = {"Result": 'true'}
         return HttpResponse(json.dumps(data), content_type='application/json')
 
+
 def formula_without_priority_staples(x):
     if x[0] == '(':
         x = x[1:]

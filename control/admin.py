@@ -37,8 +37,9 @@ class ScResultsAdmin(admin.ModelAdmin):
 
 
 class ScUsersAdmin(admin.ModelAdmin):
-    list_display = ('name', 'status')
+    list_display = ('name', 'status', 'last_activity')
     list_filter = ('name', 'status')
+
 
 
 class ScVariableAutoCompletionAdmin(admin.ModelAdmin):

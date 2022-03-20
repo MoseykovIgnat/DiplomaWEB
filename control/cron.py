@@ -274,3 +274,11 @@ def test():
         if t_res > 0:
             time.sleep(t_res)
     close_connection_journal_db(cur, con)
+
+
+def change_status_of_user_in_sc_users():
+    users = ScUsers.objects.all().filter(status="Online").values()
+    for user in users:
+        pass
+        # if  user.last_activity
+

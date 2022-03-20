@@ -96,7 +96,7 @@ DATABASES = {
 
 CRONJOBS = [
     ('*/1 * * * *', 'control.cron.test', '>> /tmp/test.log 2>&1'),
-    ('*/10 * * * *', 'control.cron.change_status_of_user_in_sc_users', '>> /tmp/change_status.log 2>&1')
+    ('*/1 * * * *', 'control.cron.change_status_of_user_in_sc_users', '>> /tmp/change_status.log 2>&1')
 ]
 
 CRONTAB_LOCK_JOBS = True

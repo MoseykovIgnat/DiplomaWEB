@@ -101,21 +101,29 @@
     </div>
   </div>
 </div>
+
+<div class="right-corder-container">
+    <button class="right-corder-container-button">
+        <span class="short-text">+</span>
+        <span class="long-text">Add Me</span>
+    </button>
 </div>
 
-<div class="dropdown" id="bottom-right">
-  <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
-</div>
+<a class="fixedButton" href>
+         <div class="roundedFixedBtn"><i class="fa fa-phone"></i></div>
+</a>
 
     {% block javascript %}
     {% endblock javascript %}
 
 <script language="JavaScript">
+$(".right-corder-container-button").hover(function() {
+    $(".long-text").addClass("show-long-text");
+}, function () {
+    $(".long-text").removeClass("show-long-text");
+});
+
+
 $(document).ready(function() {
 
   if(window.location.href.indexOf("/slowcontrol/accounts/login/?next=/") != -1) {
@@ -171,25 +179,6 @@ $(document).ready(function() {
         setInterval(is_SAM_working,60000);
         setInterval(is_user_still_online,300000)
     })
-
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-} 
 </script>
 </body>
 </html>

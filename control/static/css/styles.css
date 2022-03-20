@@ -97,53 +97,61 @@ path.link:hover{
       right: -14px;
       background: #ccc; }
 
- /* Dropdown Button */
-.dropbtn {
-    background-color: #3498DB;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
+    .right-corder-container .right-corder-container-button {
+    height: 62px;
+    width: 62px;
+    border:none;
+    background-color:#6FB583;
+    border-radius: 62px;        /*Transform the square into rectangle, sync that value with the width/height*/
+    transition: all 300ms;      /*Animation to close the button (circle)*/
+    box-shadow:2px 2px 5px rgb(25, 73, 15)  ;
+    cursor:pointer;
 }
 
-/* Dropdown button on hover & focus */
-.dropbtn:hover, .dropbtn:focus {
-    background-color: #2980B9;
-}
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-    display: none;
+.right-corder-container .right-corder-container-button span {
+    font-size: 72px;
+    color:white;
     position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    left: 10px;
+    top: 16px;
+    line-height: 28px;
 }
 
-/* Links inside the dropdown */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
+
+.right-corder-container .right-corder-container-button:hover {
+    transition: all 400ms cubic-bezier(.62,.1,.5,1);
+    width:200px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd}
+/*
+    Long text appears slowly with an animation. That code prepare the animation by hidding the text.
+    The use of display is not there because it does not work well with CSS3 animation.
+*/
+.right-corder-container .right-corder-container-button .long-text {
+    transition: opacity 1000ms; /*Only the text fadein/fadeout is animated*/
+    opacity:0;                /*By default we do not display the text, we want the text to fade in*/
+    color:white;
+    white-space: nowrap;
+    font-size: 0;             /*Set to 0 to not have overflow on the right of the browser*/
+    width: 0;                 /*Set to 0 to not have overflow on the right of the browser*/
+    margin:0;                 /*Set to 0 to not have overflow on the right of the browser*/
+}
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
-
-#bottom-right{
-    right: 0;
-    bottom: 0;
-    position: absolute;
+/*
+    Animation to have a text that appear progressively. We need to play with a delay
+    on the width and the font-size to not have the browser have the text appears on the right
+    side of the browser view port. This has the side-effect of having an horizontal bar.
+*/
+.right-corder-container .right-corder-container-button .long-text.show-long-text{
+  transition: opacity 700ms,
+              width 1ms linear 270ms,       /*two thirds of the animation on the container width*/
+              font-size 1ms linear 270ms;   /*two thirds of the animation on the container width*/
+  opacity:1;
+  margin-top: 2px;                          /*Center the position vertically*/
+  margin-left: 65px;                        /*Center between the + and the right end side*/
+  font-size: 20px;                          /*Text size, cannot be defined initially without moving the scrollbar*/
+  width: auto;                              /*Required to be set with a delay (see animation) to not have scrollbar. Delay is to wait container to size up*/
 }

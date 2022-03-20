@@ -8,6 +8,7 @@ import json
 import SQLParser.xxxdbrc
 from django.contrib.auth.models import User, Group
 import pymysql as MySQLdb
+from loguru import logger
 
 
 # connection FOR PRODUCTION
@@ -279,16 +280,13 @@ def test():
 
 
 def change_status_of_user_in_sc_users():
+    logger.info(f'!!! -INFO Cronjob started {datetime.now().replace(tzinfo=timezone.utc) - timedelta(hours=7)}')
     users = ScUsers.objects.all().values()
     for user in users:
         if user['last_activity']:
             if not User.objects.get(username=user['name']).groups.filter(name='Expert').exists():
                 if user['last_activity'] + timedelta(minutes=10) < datetime.now().replace(
                         tzinfo=timezone.utc) - timedelta(hours=7):
-                    print(user['last_activity'] + timedelta(minutes=10))
-                    print(datetime.now().replace(tzinfo=timezone.utc))
                     ScUsers.objects.all().filter(id=user['id']).update(status='Offline')
-                    print(f'{user["name"]} is offline')
                 else:
                     ScUsers.objects.all().filter(id=user['id']).update(status='Online')
-                    print(f'{user["name"]} is online')

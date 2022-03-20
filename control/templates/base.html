@@ -135,13 +135,11 @@ $(document).ready(function() {
     function is_user_still_online(){
         var now = new Date().toISOString().slice(0, 19).replace('T', ' ');
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: "{% url 'is_user_still_online' %}",
             datatype: 'json',
             data:{
                 current_datetime: now,
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-                action: 'post'
             },
 
             success: function() {

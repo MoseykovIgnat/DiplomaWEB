@@ -541,7 +541,12 @@
 <script>
     $(document).on('submit', '#add_new_condition_modal',function(e){
         e.preventDefault();
-        var is_required = document.getElementById('id_is_required_condition').checked ? 1 : 0;
+        try {
+            var is_required = document.getElementById('id_is_required_condition').checked ? 1 : 0;
+        }
+        catch(e){
+             var is_required = 0
+        }
         $.ajax({
         type:'POST',
         url : "{% url 'condition_create' %}",

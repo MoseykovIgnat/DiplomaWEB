@@ -201,10 +201,6 @@ def write_info_of_required_condition_in_db(connection, cursor, condition, condit
                     'y'))
     connection.commit()
 
-    condition.time_create_or_alert = datetime.now(tz=timezone.utc)
-    if is_alert:
-        condition.isalert = 1
-    condition.save()
 
 
 def write_history_of_alerts(condition, condition_result):
@@ -236,9 +232,8 @@ def signal_alarm(siren_ids, connection, cursor):
                     # write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
                     #                                        query_for_input_messages, query_for_get_id,
                     #                                        query_for_input_attachment)
-                else:
-                    condition.time_create_or_alert = datetime.now(tz=timezone.utc)
-                    condition.save()
+                condition.time_create_or_alert = datetime.now(tz=timezone.utc)
+                condition.save()
                 print('Время расчета' + str(condition_result.time_calc))
                 print('Время создания или сигнала' + str(condition.time_create_or_alert))
                 print('Разница времен' + str(
@@ -255,10 +250,9 @@ def signal_alarm(siren_ids, connection, cursor):
                 # write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
                 #                                        query_for_input_messages, query_for_get_id,
                 #                                        query_for_input_attachment)
-            else:
-                condition.isalert = 1
-                condition.time_create_or_alert = datetime.now(tz=timezone.utc)
-                condition.save()
+            condition.isalert = 1
+            condition.time_create_or_alert = datetime.now(tz=timezone.utc)
+            condition.save()
 
 
 '''Запускается одна задача, которая выполняется постоянно, каждые 5 секунд и проверяет все условия и если нужно - 

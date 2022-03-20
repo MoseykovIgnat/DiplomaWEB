@@ -284,6 +284,8 @@ def change_status_of_user_in_sc_users():
         if user['last_activity']:
             if not User.objects.get(username=user['name']).groups.filter(name='Expert').exists():
                 if user['last_activity'] + timedelta(minutes=10) < datetime.now().replace(tzinfo=timezone.utc):
+                    print(user['last_activity'] + timedelta(minutes=10))
+                    print(datetime.now().replace(tzinfo=timezone.utc))
                     ScUsers.objects.all().filter(id=user['id']).update(status='Offline')
                     print(f'{user["name"]} is offline')
                 else:

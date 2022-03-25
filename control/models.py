@@ -180,6 +180,9 @@ class ScAlertHistory(models.Model):
     bool_result = models.IntegerField(blank=True, null=True)
     val_result = models.FloatField(blank=True, null=True)
 
+    def __str__(self):
+        return self.comment
+
     class Meta:
         managed = False
         db_table = 'sc_alert_history'

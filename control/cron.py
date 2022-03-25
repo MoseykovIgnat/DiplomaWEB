@@ -213,16 +213,27 @@ def write_history_of_alerts_and_info_to_player(condition, condition_result):
                                   val_result=condition_result.val_result)
     alert_object.save()
 
-    list_of_active_users = ScUsers.objects.filter(
-        last_activity__gte=(datetime.now(tz=timezone.utc) - timedelta(minutes=60)))
-    for user in list_of_active_users:
-        logger.info(f"-- [INFO] this is alert ID {alert_object.id}")
-        player_object = ScAlertSoundPlayer(alert=alert_object,
-                                           user=user,
-                                           is_played=0)
-        player_object.save()
+    if alert_object.is_required_condition == 1:
+        list_of_active_users = ScUsers.objects.filter(
+            last_activity__gte=(datetime.now(tz=timezone.utc) - timedelta(minutes=60)))  # todo CHANGE TIMEDELTA
+        if list_of_active_users:
+            for user in list_of_active_users:
+                logger.info(f"-- [INFO] this is alert ID {alert_object.id}")
+                player_object = ScAlertSoundPlayer(alert=alert_object,
+                                                   user=user,
+                                                   is_played=0)
+                player_object.save()
+                logger.info('-- [INFO] Inserted in sc_alert_sound_player. IT required condition')
+    else:
+        user = ScUsers.objects.get(name=alert_object.creator,
+                                   last_activity__gte=(datetime.now(tz=timezone.utc) - timedelta(minutes=60)))
+        if user:
+            player_object = ScAlertSoundPlayer(alert=alert_object,
+                                               user=user,
+                                               is_played=0)
+            player_object.save()
+            logger.info('-- [INFO] Inserted in sc_alert_sound_player. IT WAS nonrequired condition')
 
-    logger.info('-- [INFO] history_of_alerts_and_info_to_player was saved to tables')
 
 
 def signal_alarm(siren_ids, connection, cursor):

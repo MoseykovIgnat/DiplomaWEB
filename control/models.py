@@ -183,3 +183,14 @@ class ScAlertHistory(models.Model):
     class Meta:
         managed = False
         db_table = 'sc_alert_history'
+
+
+class ScAlertSoundPlayer(models.Model):
+    alert = models.ForeignKey(ScAlertHistory, models.DO_NOTHING)
+    user = models.ForeignKey('ScUsers', models.DO_NOTHING)
+    is_played = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sc_alert_sound_player'
+

@@ -1,6 +1,11 @@
 from django.contrib import admin
 from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResult, ScGraphName, ScGraphInfo,\
-    ScVariableAutoCompletion, ScPostfixAutoCompletion, ScAlertHistory
+    ScVariableAutoCompletion, ScPostfixAutoCompletion, ScAlertHistory, ScAlertSoundPlayer
+
+
+class ScAlertSoundPlayerAdmin(admin.ModelAdmin):
+    list_display = ('alert', 'user', 'is_played')
+    list_filter = ('alert', 'user')
 
 
 class ScConditionsResultAdmin(admin.ModelAdmin):
@@ -61,5 +66,6 @@ admin.site.register(ScGraphInfo, ScGraphInfoAdmin)
 admin.site.register(ScPostfixAutoCompletion, ScPostfixAutoCompletionAdmin)
 admin.site.register(ScVariableAutoCompletion, ScVariableAutoCompletionAdmin)
 admin.site.register(ScGraphName)
+admin.site.register(ScAlertSoundPlayer, ScAlertSoundPlayerAdmin)
 
 # Register your models here.

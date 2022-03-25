@@ -1,5 +1,5 @@
 from .models import ScConditionsResult
-from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsOnline, ScAlertHistory
+from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsOnline, ScAlertHistory, ScAlertSoundPlayer
 from datetime import datetime, timedelta
 from django.utils import timezone
 import time
@@ -202,18 +202,26 @@ def write_info_of_required_condition_in_db(connection, cursor, condition, condit
     connection.commit()
 
 
+def write_history_of_alerts_and_info_to_player(condition, condition_result):
+    alert_object = ScAlertHistory(comment=condition.comment,
+                                  creator=condition.user,
+                                  time_calc=condition_result.time_calc + timedelta(hours=7),
+                                  is_required_condition=condition.is_required_condition,
+                                  text_formula=condition_result.text_formula,
+                                  val_formula=condition_result.val_formula,
+                                  bool_result=condition_result.bool_result,
+                                  val_result=condition_result.val_result)
+    alert_object.save()
 
-def write_history_of_alerts(condition, condition_result):
-    query_to_save = ScAlertHistory(comment=condition.comment,
-                                   creator=condition.user,
-                                   time_calc=condition_result.time_calc + timedelta(hours=7),
-                                   is_required_condition=condition.is_required_condition,
-                                   text_formula=condition_result.text_formula,
-                                   val_formula=condition_result.val_formula,
-                                   bool_result=condition_result.bool_result,
-                                   val_result=condition_result.val_result)
-    print("Let's save info in history")
-    query_to_save.save()
+    list_of_active_users = ScUsers.objects.filter(
+        last_activity__gte=(datetime.now(tz=timezone.utc) - timedelta(minutes=60)))
+    for user in list_of_active_users:
+        player_object = ScAlertSoundPlayer(alert=alert_object.id,
+                                           user=user.id,
+                                           is_played=0)
+        player_object.save()
+
+    logger.info('-- [INFO] history_of_alerts_and_info_to_player was saved to tables')
 
 
 def signal_alarm(siren_ids, connection, cursor):
@@ -226,7 +234,7 @@ def signal_alarm(siren_ids, connection, cursor):
         if condition.isalert == 1:
             if int(condition.alert_interval) < (
                     condition_result.time_calc - condition.time_create_or_alert).total_seconds():
-                write_history_of_alerts(condition, condition_result)
+                write_history_of_alerts_and_info_to_player(condition, condition_result)
                 if condition.is_required_condition == 1:
                     pass
                     # write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
@@ -244,7 +252,7 @@ def signal_alarm(siren_ids, connection, cursor):
                     (condition_result.time_calc - condition.time_create_or_alert).total_seconds()))
                 print()
         if condition.isalert == 0:
-            write_history_of_alerts(condition, condition_result)
+            write_history_of_alerts_and_info_to_player(condition, condition_result)
             if condition.is_required_condition == 1:
                 pass
                 # write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
@@ -274,7 +282,7 @@ def test():
 
 
 def change_status_of_user_in_sc_users():
-    logger.info(f'!!! -INFO Cronjob started {datetime.now().replace(tzinfo=timezone.utc) - timedelta(hours=7)}')
+    logger.info(f'-- [INFO] Cronjob started {datetime.now().replace(tzinfo=timezone.utc) - timedelta(hours=7)}')
     users = ScUsers.objects.all().values()
     for user in users:
         if user['last_activity']:

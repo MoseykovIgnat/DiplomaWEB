@@ -217,8 +217,8 @@ def write_history_of_alerts_and_info_to_player(condition, condition_result):
         last_activity__gte=(datetime.now(tz=timezone.utc) - timedelta(minutes=60)))
     for user in list_of_active_users:
         logger.info(f"-- [INFO] this is alert ID {alert_object.id}")
-        player_object = ScAlertSoundPlayer(alert=alert_object.id,
-                                           user=user.id,
+        player_object = ScAlertSoundPlayer(alert=alert_object,
+                                           user=user,
                                            is_played=0)
         player_object.save()
 

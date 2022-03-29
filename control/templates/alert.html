@@ -4,12 +4,12 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles_for_alert.css' %}">
     <div class="row justify-content-center main-info" style="padding-top: 5%">
-    <div class="col-sm-5 text-center">
+    <div class="col-sm-8 text-center">
 	    <h1 align="center">Required sound notifications</h1 >
-                <table>
-                    {% for data in required_conditions %}
+                <table class="table table-condensed table-hover shadow p-4 mb-4 bg-white">
+                    {% for data in conditions %}
                         <tbody class="labels">
-							<tr>
+							<tr {% if data.is_required_condition == 1%} id="required" {% else %} id="nonrequired" {% endif %}>
 								<td colspan="6">
 									<label for={{forloop.counter}}>{{ data.comment }}</label>
 									<input type="checkbox" name={{forloop.counter}} id={{forloop.counter}} data-toggle="toggle">
@@ -37,39 +37,39 @@
 
 				</table>
     </div>
-    <div class="col-sm-5 text-center">
-	<h1 align="center">Optional sound notifications</h1 >
-
-                <table>
-                    {% for data in your_conditions %}
-                        <tbody class="labels">
-							<tr>
-								<td colspan="6">
-									<label for="{{ data.comment }}{{forloop.counter}}">{{ data.comment }}</label>
-									<input type="checkbox" name="{{ data.comment }}{{forloop.counter}}" id="{{ data.comment }}{{forloop.counter}}" data-toggle="toggle">
-								</td>
-							</tr>
-						</tbody>
-
-                        <tbody class="hide" style="display: none;">
-									<tr>
-							<td colspan="2">Time of calculate: {{ data.time_calc }}</td>
-							<td>Name of creator: {{ data.creator }}</td>
-							<td>Bool result: {{ data.bool_result }}</td>
-							<td colspan="2">Value result: {{ data.val_result }}</td>
-						</tr>
-						<tr>
-							<td colspan="6">Text Formula: {{ data.text_formula }}</td>
-						</tr>
-						<tr>
-							<td colspan="6">Value formula: {{ data.val_formula }}</td>
-						</tr>
-						</tbody>
-
-                    {% endfor %}
-
-				</table>
-    </div>
+{#    <div class="col-sm-5 text-center">#}
+{#	<h1 align="center">Optional sound notifications</h1 >#}
+{##}
+{#                <table class="table table-condensed table-hover shadow p-4 mb-4 bg-white">#}
+{#                    {% for data in your_conditions %}#}
+{#                        <tbody class="labels">#}
+{#							<tr>#}
+{#								<td colspan="6">#}
+{#									<label for="{{ data.comment }}{{forloop.counter}}">{{ data.comment }}</label>#}
+{#									<input type="checkbox" name="{{ data.comment }}{{forloop.counter}}" id="{{ data.comment }}{{forloop.counter}}" data-toggle="toggle">#}
+{#								</td>#}
+{#							</tr>#}
+{#						</tbody>#}
+{##}
+{#                        <tbody class="hide" style="display: none;">#}
+{#									<tr>#}
+{#							<td colspan="2">Time of calculate: {{ data.time_calc }}</td>#}
+{#							<td>Name of creator: {{ data.creator }}</td>#}
+{#							<td>Bool result: {{ data.bool_result }}</td>#}
+{#							<td colspan="2">Value result: {{ data.val_result }}</td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td colspan="6">Text Formula: {{ data.text_formula }}</td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<td colspan="6">Value formula: {{ data.val_formula }}</td>#}
+{#						</tr>#}
+{#						</tbody>#}
+{##}
+{#                    {% endfor %}#}
+{##}
+{#				</table>#}
+{#    </div>#}
     </div>
 
 

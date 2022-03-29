@@ -41,7 +41,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'alert' %}">
-                        Alerts <span class="sr-only">(текущая)</span>
+                        Alert History <span class="sr-only">(текущая)</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -113,6 +113,73 @@
          <div class="roundedFixedBtn"><i class="fa fa-phone"></i></div>
 </a>
 
+<div style="position: fixed; right: 20px; bottom: 50px">
+	<div class="sampleDiv">
+        <p>ANDREY</p>
+<!-- 		<table cellspacing="0" cellpadding="0" border="0" width="325">
+  <tr>
+    <td>
+       <table cellspacing="0" cellpadding="1" border="1" width="500" >
+         <tr style="color:white;background-color:grey">
+            <th>Header 1</th>
+            <th>Header 2</th>
+         </tr>
+       </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+       <div style="width:500px; height:600px; overflow:auto; margin-bottom: 10px">
+         <table cellspacing="0" cellpadding="1" border="1" width="480" >
+           <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+           <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+              <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+              <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+              <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+              <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+              <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+              <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+              <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+              <tr>
+             <td>new item</td>
+             <td>new item</td>
+           </tr>
+         </table>
+       </div>
+    </td>
+  </tr>
+</table>
+ -->	</div>
+	<button class="noselect btnShowDiv" id="alarm_button" style="display: block; float: right;">ALARM</button>
+</div>
+
     {% block javascript %}
     {% endblock javascript %}
 
@@ -121,6 +188,12 @@ $(".right-corder-container-button").hover(function() {
     $(".long-text").addClass("show-long-text");
 }, function () {
     $(".long-text").removeClass("show-long-text");
+});
+
+$(document).ready(function(){
+   $('.btnShowDiv').click(function(){
+       $('.sampleDiv').slideToggle(1000);
+   });
 });
 
 

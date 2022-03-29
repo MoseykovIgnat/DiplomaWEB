@@ -25,6 +25,7 @@ from django.utils import timezone
 from django.contrib.auth import models
 from .utils import *
 import time
+from django.db.models import Q
 
 
 # Create your views here.
@@ -82,13 +83,14 @@ def index(request):
 
 def load_alert_data(request) -> render:
     user = request.user.username
-    user_id = ScUsers.objects.get(name=user)
-    your_conditions = ScAlertHistory.objects.filter(creator=user, is_required_condition=0).order_by('-time_calc')
-    required_conditions = ScAlertHistory.objects.filter(is_required_condition=1).order_by('-time_calc')
+    # user_id = ScUsers.objects.get(name=user)
+    # your_conditions = ScAlertHistory.objects.filter(creator=user, is_required_condition=0).order_by('-time_calc')
+    # required_conditions = ScAlertHistory.objects.filter(is_required_condition=1).order_by('-time_calc')
+    all_conditions = ScAlertHistory.objects.filter((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)).order_by('-time_calc')
     return render(
         request,
         'alert.html',
-        context={'your_conditions': your_conditions, 'required_conditions': required_conditions},
+        context={'conditions': all_conditions},
     )
 
 

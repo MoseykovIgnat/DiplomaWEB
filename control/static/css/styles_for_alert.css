@@ -17,9 +17,16 @@ td, th {
 	}
 
 .labels tr td {
-	background-color: #ff6666;
 	font-weight: bold;
 	color: #fff;
+}
+
+#required {
+	background-color: #ff6666;
+}
+
+#nonrequired {
+	background-color: #d9d926;
 }
 
 .label tr td label {

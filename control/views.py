@@ -80,14 +80,11 @@ def index(request):
         )
 
 
-def load_alert_data(request):
+def load_alert_data(request) -> render:
     user = request.user.username
     user_id = ScUsers.objects.get(name=user)
-    # your_variables = ScPaths.objects.filter(user_id=user_id.id)
-
     your_conditions = ScAlertHistory.objects.filter(creator=user, is_required_condition=0).order_by('-time_calc')
     required_conditions = ScAlertHistory.objects.filter(is_required_condition=1).order_by('-time_calc')
-    print(your_conditions.values())
     return render(
         request,
         'alert.html',

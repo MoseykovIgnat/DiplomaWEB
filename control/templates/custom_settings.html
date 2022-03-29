@@ -664,6 +664,7 @@ $(document).on('click',"#add_new_condition",function (e){
         success: function (response) {
                 $('.new_condition_form').html(response);
                 $('#add_new_condition_modal').modal('show')
+
             },
         error : function(xhr,errmsg,err) {
         console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console

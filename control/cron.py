@@ -235,7 +235,6 @@ def write_history_of_alerts_and_info_to_player(condition, condition_result):
             logger.info('-- [INFO] Inserted in sc_alert_sound_player. IT WAS nonrequired condition')
 
 
-
 def signal_alarm(siren_ids, connection, cursor):
     query_for_input_messages = "insert into messages (user, process, loglevel, topic, subject, attachment, alarm) values(%s, %s, %s, %s, %s, %s, %s)"
     query_for_get_id = 'select id,time from messages where user=%s and subject=%s order by time desc limit 1'

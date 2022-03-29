@@ -112,9 +112,9 @@ path.link:hover{
 .right-corder-container .right-corder-container-button span {
     font-size: 72px;
     color:white;
-    position: absolute;
-    left: 10px;
-    top: 16px;
+    position: sticky;
+    bottom: 20px;
+    right: 20px;
     line-height: 28px;
 }
 

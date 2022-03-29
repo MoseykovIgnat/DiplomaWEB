@@ -11,8 +11,8 @@
                         <tbody class="labels">
 							<tr>
 								<td colspan="6">
-									<label for={{forloop.counter}}>{{ data.comment }}</label>
-									<input type="checkbox" name={{ data.comment }}{{forloop.counter}} id={{forloop.counter}} data-toggle="toggle">
+									<label for={{{ data.comment }}{{forloop.counter}}>{{ data.comment }}</label>
+									<input type="checkbox" name={{ data.comment }}{{forloop.counter}} id={{{ data.comment }}{{forloop.counter}} data-toggle="toggle">
 								</td>
 							</tr>
 						</tbody>
@@ -45,7 +45,7 @@
                         <tbody class="labels">
 							<tr>
 								<td colspan="6">
-									<label for={{forloop.counter}}>{{ data.comment }}</label>
+									<label for={{ data.comment }}{{forloop.counter}}>{{ data.comment }}</label>
 									<input type="checkbox" name={{ data.comment }}{{forloop.counter}} id={{ data.comment }}{{forloop.counter}} data-toggle="toggle">
 								</td>
 							</tr>

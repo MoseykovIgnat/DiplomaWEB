@@ -104,7 +104,6 @@ def get_new_alert_sound(request):
         most_primary_alert_id = 0
         for element in new_alerts_to_play:
             alert = ScAlertHistory.objects.get(id=element['alert_id'])
-            alert.
         print(new_alerts_to_play)
         return HttpResponse(new_alerts_to_play, content_type='application/json')
 

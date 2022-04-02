@@ -100,16 +100,19 @@ def get_new_alert_sound(request):
         user = request.user.username
         user_id = ScUsers.objects.get(name=user)
         new_alerts_to_play = ScAlertSoundPlayer.objects.filter(user_id=user_id).values()
-        result = {'alerts': [], 'most_primary_alert': None}
+        result = {"alerts": [], "most_primary_alert": None}
         most_primary_alert = {"id": 0, "priority": 0}
+        ids_of_new_alerts_to_play = []
         for element in new_alerts_to_play:
+            ids_of_new_alerts_to_play.append(element['alert_id'])
             alert = ScAlertHistory.objects.get(id=element['alert_id'])
             result["alerts"].append(alert)
             if alert.priority > most_primary_alert["priority"]:
                 most_primary_alert["id"] = alert.id
         result["most_primary_alert"] = ScAlertHistory.objects.get(id=most_primary_alert["id"])
         print(result)
-        return HttpResponse(new_alerts_to_play, content_type='application/json')
+        ScAlertSoundPlayer.objects.filter(Q(alert_id__in=ids_of_new_alerts_to_play) & Q(user_id=user_id))
+        return HttpResponse(result, content_type='application/json')
 
 
 def get_conditions(request):

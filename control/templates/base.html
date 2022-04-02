@@ -102,13 +102,6 @@
   </div>
 </div>
 
-<div class="right-corder-container">
-    <button class="right-corder-container-button">
-        <span class="short-text">+</span>
-        <span class="long-text">Add Me</span>
-    </button>
-</div>
-
 
 {% if user.is_authenticated  %}
 <div style="position: fixed; right: 20px; bottom: 50px">
@@ -181,15 +174,7 @@
 
     {% block javascript %}
     {% endblock javascript %}
-
-
-<script language="JavaScript">
-$(".right-corder-container-button").hover(function() {
-    $(".long-text").addClass("show-long-text");
-}, function () {
-    $(".long-text").removeClass("show-long-text");
-});
-
+<script>
 $(document).ready(function(){
    $('.btnShowDiv').click(function(){
        $('.sampleDiv').slideToggle(1000);
@@ -204,7 +189,11 @@ $(document).ready(function() {
   }
 
 });
+</script>
 
+{% if user.is_authenticated  %}
+
+<script language="JavaScript">
     function is_SAM_working(){
                 $.ajax({
             type: 'GET',
@@ -269,7 +258,7 @@ $(document).ready(function() {
         setInterval(get_new_alert_sound,5000)
     })
 </script>
-
+{% endif %}
 </body>
 </html>
 

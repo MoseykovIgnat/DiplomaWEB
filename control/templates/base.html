@@ -252,7 +252,7 @@ $(document).ready(function() {
                     }
                     var audio = new Audio(); // Создаём новый элемент Audio
                     audio.src = '{% static 'music/siren_1.mp3' %}'; // Указываем путь к звуку "клика"
-                    console.log(response["most_primary_alert"]["id"]);
+                    alert(JSON.stringify(response["most_primary_alert"]["id"], null, 4));
                     {#audio.id = $(response["most_primary_alert"]["id"]);#}
                     {#audio.autoplay = true; // Автоматически запускаем#}
                     {#var obj_for_audio = $(response["most_primary_alert"]["id"]+"tdlabel");#}

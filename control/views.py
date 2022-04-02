@@ -99,7 +99,7 @@ def get_new_alert_sound(request):
     if request.method == 'GET' and request.is_ajax():
         user = request.user.username
         user_id = ScUsers.objects.get(name=user)
-        new_alerts_to_play = ScAlertSoundPlayer.objects.filter(user_id=user_id)
+        new_alerts_to_play = ScAlertSoundPlayer.objects.filter(user_id=user_id).values()
         data = serialize("json", new_alerts_to_play)
         print(data)
         return HttpResponse(data, content_type='application/json')

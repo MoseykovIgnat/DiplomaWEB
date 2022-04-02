@@ -243,15 +243,18 @@ $(document).ready(function() {
             type: 'GET',
             url: "{% url 'get_new_alert_sound' %}",
             datatype: 'json',
-            success: function() {
-                console.log('Info is updated');
+            success: function (response) {
+                alert(response['alerts']);
 
             },
-            error: function() {
-                console.log('server not working');
+            error: function (response) {
+                console.log(response)
             }
         });
     }
+
+
+
 
     window.onload = function () {
       is_SAM_working();

@@ -16,7 +16,7 @@ class ScConditionsResultAdmin(admin.ModelAdmin):
 
 class ScAlertHistoryAdmin(admin.ModelAdmin):
     list_display = ('comment', 'creator', 'time_calc', 'is_required_condition', 'text_formula', 'val_formula',
-                    'bool_result', 'val_result')
+                    'bool_result', 'val_result', 'priority')
     list_filter = ('comment', 'creator')
 
 

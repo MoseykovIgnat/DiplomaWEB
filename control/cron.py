@@ -210,7 +210,9 @@ def write_history_of_alerts_and_info_to_player(condition, condition_result):
                                   text_formula=condition_result.text_formula,
                                   val_formula=condition_result.val_formula,
                                   bool_result=condition_result.bool_result,
-                                  val_result=condition_result.val_result)
+                                  val_result=condition_result.val_result,
+                                  priority=condition.priority
+                                  )
     alert_object.save()
 
     if alert_object.is_required_condition == 1:

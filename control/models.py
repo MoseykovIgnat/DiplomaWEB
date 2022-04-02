@@ -179,6 +179,7 @@ class ScAlertHistory(models.Model):
     val_formula = models.CharField(max_length=1500, blank=True, null=True)
     bool_result = models.IntegerField(blank=True, null=True)
     val_result = models.FloatField(blank=True, null=True)
+    priority = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.comment

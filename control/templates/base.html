@@ -177,14 +177,11 @@
 
     {% block javascript %}
     {% endblock javascript %}
-    <script>
-    $(document).ready(function() {
-        $('[data-toggle="toggle"]').change(function(){
-            alert($(this));
-        });
-    });
-    </script>
 <script>
+$("body").on('change', '[data-toggle="toggle"]', function(){    // 3rd way
+    $(this).parents().next('.hide').toggle();
+});
+
 $(document).ready(function(){
    $('.btnShowDiv').click(function(){
        $('.sampleDiv').slideToggle(1000);

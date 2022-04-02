@@ -157,3 +157,47 @@ path.link:hover{
 #alarm_button:focus {
     outline: none;
 }
+.container {
+	width: 300px;
+	height: 420px;
+	border: solid 1px #dedede;
+	border-radius: 2px;
+	box-shadow: 0 2px 0 0 rgba(0,0,0,0.04);
+	background: #fff;
+}
+.viewport {
+	overflow: hidden;
+	position: absolute;
+	left: 19px;
+	right: 9px;
+	top: 7px;
+	bottom: 7px;
+}
+.content-box {
+	height: 100%;
+	position: absolute;
+	left: 0;
+	right: -17px;
+	overflow-y: scroll;
+}
+.content-list {
+	padding: 0 20px 0 5px;
+	user-select: none;
+}
+	.content-list li + li { margin-top: 10px; }
+
+.scrollbar, .scroller {
+	width: 4px;
+	position: absolute;
+	top: 0;
+}
+.scrollbar {
+	right: 0;
+	bottom: 0;
+}
+.scroller {
+	left: 0;
+	border-radius: 2px;
+	background: #ccc;
+	cursor: pointer;
+}

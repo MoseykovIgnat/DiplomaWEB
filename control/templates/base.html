@@ -252,11 +252,12 @@ $(document).ready(function() {
                     }
                     var audio = new Audio(); // Создаём новый элемент Audio
                     audio.src = '{% static 'music/siren_1.mp3' %}'; // Указываем путь к звуку "клика"
-                    audio.id = response["alerts"][i]["id"]
+                    audio.id = $(response["most_primary_alert"])
                     audio.autoplay = true; // Автоматически запускаем
-                    $(response["most_primary_alert"]).append(audio);
-                    var onclick_functions = 'onclick="playOrPause('+response["alerts"][i]["id"]+')"';
-                    $(audioName).append('<button id=""' + onclick_functions + ' style="position: relative; float: right;"">TURN OFF</button>');
+                    var obj_for_audio = $("#"+response["most_primary_alert"]+"tdlabel")
+                    obj_for_audio.append(audio);
+                    var onclick_functions = 'onclick="playOrPause('+$(response["most_primary_alert"])+')"';
+                    obj_for_audio.append('<button id=""' + onclick_functions + ' style="position: relative; float: right;"">TURN OFF</button>');
                 }
             },
             error: function (response) {

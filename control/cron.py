@@ -221,7 +221,7 @@ def write_history_of_alerts_and_info_to_player(condition, condition_result):
                 logger.info(f"-- [INFO] this is alert ID {alert_object.id}")
                 player_object = ScAlertSoundPlayer(alert=alert_object,
                                                    user=user,
-                                                   is_played=0)
+                                                   )
                 player_object.save()
                 logger.info('-- [INFO] Inserted in sc_alert_sound_player. IT required condition')
     else:
@@ -230,7 +230,7 @@ def write_history_of_alerts_and_info_to_player(condition, condition_result):
         if user:
             player_object = ScAlertSoundPlayer(alert=alert_object,
                                                user=user,
-                                               is_played=0)
+                                               )
             player_object.save()
             logger.info('-- [INFO] Inserted in sc_alert_sound_player. IT WAS nonrequired condition')
 

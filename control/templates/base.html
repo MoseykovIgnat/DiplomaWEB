@@ -241,6 +241,21 @@ $(document).ready(function() {
         });
     }
 
+        function get_new_alert_sound(){
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'is_user_still_online' %}",
+            datatype: 'json',
+            success: function() {
+                console.log('Info is updated');
+
+            },
+            error: function() {
+                console.log('server not working');
+            }
+        });
+    }
+
     window.onload = function () {
       is_SAM_working();
       is_user_still_online();
@@ -248,7 +263,8 @@ $(document).ready(function() {
 
     $(document).ready(function (){
         setInterval(is_SAM_working,60000);
-        setInterval(is_user_still_online,300000)
+        setInterval(is_user_still_online,300000);
+        setInterval(get_new_alert_sound,5000)
     })
 </script>
 </body>

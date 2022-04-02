@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import ScUsers, ScVariableAutoCompletion, ScPostfixAutoCompletion, ScPaths, ScResults, ScConditions, \
-    ScConditionsResult, ScGraphName, ScGraphInfo, ScConditionsTags, ScConditionsOnline, ScAlertHistory
+    ScConditionsResult, ScGraphName, ScGraphInfo, ScConditionsTags, ScConditionsOnline, ScAlertHistory, ScAlertSoundPlayer
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.http import JsonResponse
 from django.dispatch import receiver
@@ -92,6 +92,11 @@ def load_alert_data(request) -> render:
         'alert.html',
         context={'conditions': all_conditions},
     )
+
+
+def get_new_alert_sound(request):
+    user = request.user.username
+    new_alerts_to_play = ScAlertSoundPlayer
 
 
 def get_conditions(request):

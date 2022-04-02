@@ -4,7 +4,7 @@ from .models import ScUsers, ScPaths, ScResults, ScConditions, ScConditionsResul
 
 
 class ScAlertSoundPlayerAdmin(admin.ModelAdmin):
-    list_display = ('alert', 'user', 'is_played')
+    list_display = ('alert', 'user')
     list_filter = ('alert', 'user')
 
 

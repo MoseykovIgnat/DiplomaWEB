@@ -115,8 +115,6 @@ def get_new_alert_sound(request):
                 result["alerts"].append(alert)
                 if alert["priority"] > most_primary_alert["priority"]:
                     most_primary_alert["id"] = alert["id"]
-        if most_primary_alert["id"] != 0:
-            result["most_primary_alert"] = ScAlertHistory.objects.get(id=most_primary_alert["id"]).values()
         print(result)
         ScAlertSoundPlayer.objects.filter(Q(alert_id__in=ids_of_new_alerts_to_play) & Q(user_id=user_id)).delete()
         return HttpResponse(json.dumps(result, default=str), content_type='application/json')

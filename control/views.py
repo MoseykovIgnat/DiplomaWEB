@@ -103,6 +103,7 @@ def get_new_alert_sound(request):
         result = {'alerts': [], 'most_primary_alert': None}
         most_primary_alert = {"id": 0, "priority": 0}
         for element in new_alerts_to_play:
+            print(element["alert_id"])
             alert = ScAlertHistory.objects.get(id=element['alert_id']).values()
             result["alerts"].append(alert)
             if alert.priority > most_primary_alert["priority"]:

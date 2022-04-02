@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark container-fluid fixed-top">
     <!-- Контейнер (определяет ширину компонента Navbar) -->
         <!-- Бренд и кнопка «Гамбургер» -->
-        <a class="navbar-brand col-sm-7" {% if user.is_authenticated  %} href="{% url 'home' %} {% endif %}">SND Slow Control System</a>
+        <a class="navbar-brand col-sm-7" href="{% url 'home' %}">SND Slow Control System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbar-example" aria-controls="navbar-example"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -35,24 +35,24 @@
             <!-- Этот блок расположен слева -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'home' %} {% endif %}">
+                    <a class="nav-link" href="{% url 'home' %}">
                         Main <span class="sr-only">(текущая)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'alert' %} {% endif %}">
+                    <a class="nav-link" href="{% url 'alert' %}">
                         Alert History <span class="sr-only">(текущая)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'custom_settings' %} {% endif %}">
+                    <a class="nav-link" href="{% url 'custom_settings' %}">
                         Custom variables and formulas
                     </a>
                 </li>
                 {% load control_extras %}
                 {% if request.user|has_group:"Expert" %}
                 <li class="nav-item">
-                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'graph_editor' %} {% endif %}">
+                    <a class="nav-link" href="{% url 'graph_editor' %}">
                         Graph editor
                     </a>
                 </li>

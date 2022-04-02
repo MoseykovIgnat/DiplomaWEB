@@ -35,24 +35,24 @@
             <!-- Этот блок расположен слева -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
+                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'home' %} {% endif %}">
                         Main <span class="sr-only">(текущая)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'alert' %}">
+                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'alert' %} {% endif %}">
                         Alert History <span class="sr-only">(текущая)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'custom_settings' %}">
+                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'custom_settings' %} {% endif %}">
                         Custom variables and formulas
                     </a>
                 </li>
                 {% load control_extras %}
                 {% if request.user|has_group:"Expert" %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'graph_editor' %}">
+                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'graph_editor' %} {% endif %}">
                         Graph editor
                     </a>
                 </li>
@@ -182,7 +182,7 @@
     {% block javascript %}
     {% endblock javascript %}
 
-{% if user.is_authenticated  %}
+
 <script language="JavaScript">
 $(".right-corder-container-button").hover(function() {
     $(".long-text").addClass("show-long-text");
@@ -269,7 +269,7 @@ $(document).ready(function() {
         setInterval(get_new_alert_sound,5000)
     })
 </script>
-{% endif %}
+
 </body>
 </html>
 

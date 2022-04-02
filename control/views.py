@@ -114,7 +114,7 @@ def get_new_alert_sound(request):
                 result["alerts"].append(alert)
 
         print(result)
-        result = sorted(result, key=lambda d: d["priority"], reverse=True)
+        result = sorted(result, key=lambda d: int(d["priority"]), reverse=True)
         ScAlertSoundPlayer.objects.filter(Q(alert_id__in=ids_of_new_alerts_to_play) & Q(user_id=user_id)).delete()
         return HttpResponse(json.dumps(result, default=str), content_type='application/json')
 

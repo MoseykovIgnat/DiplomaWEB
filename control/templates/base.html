@@ -181,6 +181,7 @@
     {% block javascript %}
     {% endblock javascript %}
 
+{% if user.is_authenticated  %}
 <script language="JavaScript">
 $(".right-corder-container-button").hover(function() {
     $(".long-text").addClass("show-long-text");
@@ -267,6 +268,7 @@ $(document).ready(function() {
         setInterval(get_new_alert_sound,5000)
     })
 </script>
+{% endif %}
 </body>
 </html>
 

@@ -297,6 +297,9 @@ def change_status_of_user_in_sc_users():
     users = ScUsers.objects.all().values()
     for user in users:
         if user['last_activity']:
+            if user['last_activity'] + timedelta(minutes=10) < datetime.now().replace(
+                    tzinfo=timezone.utc) - timedelta(hours=7):
+                ScAlertSoundPlayer.objects.filter(user_id=user['id']).delete()
             if not User.objects.get(username=user['name']).groups.filter(name='Expert').exists():
                 if user['last_activity'] + timedelta(minutes=10) < datetime.now().replace(
                         tzinfo=timezone.utc) - timedelta(hours=7):

@@ -119,7 +119,7 @@ def get_new_alert_sound(request):
             result["most_primary_alert"] = ScAlertHistory.objects.get(id=most_primary_alert["id"])
         print(result)
         # todo uncomment to prod ScAlertSoundPlayer.objects.filter(Q(alert_id__in=ids_of_new_alerts_to_play) & Q(user_id=user_id)).delete()
-        return HttpResponse(json.dumps(result), content_type='application/json')
+        return HttpResponse(json.dumps(result, default=str), content_type='application/json')
 
 
 def get_conditions(request):

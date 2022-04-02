@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import ScUsers, ScVariableAutoCompletion, ScPostfixAutoCompletion, ScPaths, ScResults, ScConditions, \
-    ScConditionsResult, ScGraphName, ScGraphInfo, ScConditionsTags, ScConditionsOnline, ScAlertHistory, ScAlertSoundPlayer
+    ScConditionsResult, ScGraphName, ScGraphInfo, ScConditionsTags, ScConditionsOnline, ScAlertHistory, \
+    ScAlertSoundPlayer
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.http import JsonResponse
 from django.dispatch import receiver
@@ -44,7 +45,9 @@ def got_offline(sender, user, request, **kwargs):
 def is_user_still_online(request):
     if request.method == 'GET' and request.is_ajax():
         user = request.user.username
-        ScUsers.objects.filter(name=user).update(last_activity=datetime.strptime(request.GET.get("current_datetime"), '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone.utc))
+        ScUsers.objects.filter(name=user).update(
+            last_activity=datetime.strptime(request.GET.get("current_datetime"), '%Y-%m-%d %H:%M:%S').replace(
+                tzinfo=timezone.utc))
         data = {"Result": 'true'}
         return HttpResponse(json.dumps(data), content_type='application/json')
 
@@ -88,7 +91,8 @@ def load_alert_data(request) -> render:
     # user_id = ScUsers.objects.get(name=user)
     # your_conditions = ScAlertHistory.objects.filter(creator=user, is_required_condition=0).order_by('-time_calc')
     # required_conditions = ScAlertHistory.objects.filter(is_required_condition=1).order_by('-time_calc')
-    all_conditions = ScAlertHistory.objects.filter((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)).order_by('-time_calc')
+    all_conditions = ScAlertHistory.objects.filter(
+        (Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)).order_by('-time_calc')
     return render(
         request,
         'alert.html',
@@ -115,6 +119,7 @@ def get_new_alert_sound(request):
                 result["alerts"].append(alert)
                 if alert["priority"] > most_primary_alert["priority"]:
                     most_primary_alert["id"] = alert["id"]
+            result["most_primary_alert"] = most_primary_alert
         print(result)
         ScAlertSoundPlayer.objects.filter(Q(alert_id__in=ids_of_new_alerts_to_play) & Q(user_id=user_id)).delete()
         return HttpResponse(json.dumps(result, default=str), content_type='application/json')
@@ -267,7 +272,9 @@ def search_info_for_autocomplete(request):
 
 def change_condition_display_method(request):
     query = ScConditions.objects.get(user__name=request.POST.get('creator'), comment=request.POST.get('cond_name'))
-    ScConditions.objects.filter(user__name=request.POST.get('creator'), comment=request.POST.get('cond_name')).update(display_method='Text+Siren') if query.display_method == 'Text' else ScConditions.objects.filter(user__name=request.POST.get('creator'), comment=request.POST.get('cond_name')).update(display_method='Text')
+    ScConditions.objects.filter(user__name=request.POST.get('creator'), comment=request.POST.get('cond_name')).update(
+        display_method='Text+Siren') if query.display_method == 'Text' else ScConditions.objects.filter(
+        user__name=request.POST.get('creator'), comment=request.POST.get('cond_name')).update(display_method='Text')
     a = {'result of change dot name': 'true'}
     return HttpResponse(json.dumps(a), content_type='application/json')
 

@@ -47,6 +47,7 @@ def is_user_still_online(request):
         data = {"Result": 'true'}
         return HttpResponse(json.dumps(data), content_type='application/json')
 
+
 def formula_without_priority_staples(x):
     if x[0] == '(':
         x = x[1:]
@@ -95,8 +96,13 @@ def load_alert_data(request) -> render:
 
 
 def get_new_alert_sound(request):
-    user = request.user.username
-    new_alerts_to_play = ScAlertSoundPlayer
+    if request.method == 'GET' and request.is_ajax():
+        user = request.user.username
+        user_id = ScUsers.objects.get(name=user)
+        new_alerts_to_play = ScAlertSoundPlayer.objects.filter(user_id=user_id)
+        data = serialize("json", new_alerts_to_play)
+        print(data)
+        return HttpResponse(data, content_type='application/json')
 
 
 def get_conditions(request):

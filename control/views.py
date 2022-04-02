@@ -107,6 +107,7 @@ def get_new_alert_sound(request):
         for element in new_alerts_to_play:
             try:
                 alert = model_to_dict(ScAlertHistory.objects.get(id=element['alert_id']))
+                print(alert)
             except Exception as e:
                 logger.warning(f"-- [ERROR] {e}")
             else:

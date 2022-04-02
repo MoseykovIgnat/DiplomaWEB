@@ -244,7 +244,7 @@ $(document).ready(function() {
         function get_new_alert_sound(){
         $.ajax({
             type: 'GET',
-            url: "{% url 'is_user_still_online' %}",
+            url: "{% url 'get_new_alert_sound' %}",
             datatype: 'json',
             success: function() {
                 console.log('Info is updated');

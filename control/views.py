@@ -107,7 +107,7 @@ def get_new_alert_sound(request):
             result["alerts"].append(alert)
             if alert.priority > most_primary_alert["priority"]:
                 most_primary_alert["id"] = alert.id
-
+        result["most_primary_alert"] = ScAlertHistory.objects.get(id=most_primary_alert["id"])
         print(result)
         return HttpResponse(new_alerts_to_play, content_type='application/json')
 

@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark container-fluid fixed-top">
     <!-- Контейнер (определяет ширину компонента Navbar) -->
         <!-- Бренд и кнопка «Гамбургер» -->
-        <a class="navbar-brand col-sm-7" href="{% url 'home' %}">SND Slow Control System</a>
+        <a class="navbar-brand col-sm-7" {% if user.is_authenticated  %} href="{% url 'home' %} {% endif %}">SND Slow Control System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbar-example" aria-controls="navbar-example"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -35,24 +35,24 @@
             <!-- Этот блок расположен слева -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
+                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'home' %} {% endif %}">
                         Main <span class="sr-only">(текущая)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'alert' %}">
+                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'alert' %} {% endif %}">
                         Alert History <span class="sr-only">(текущая)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'custom_settings' %}">
+                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'custom_settings' %} {% endif %}">
                         Custom variables and formulas
                     </a>
                 </li>
                 {% load control_extras %}
                 {% if request.user|has_group:"Expert" %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'graph_editor' %}">
+                    <a class="nav-link" {% if user.is_authenticated  %} href="{% url 'graph_editor' %} {% endif %}">
                         Graph editor
                     </a>
                 </li>
@@ -110,7 +110,7 @@
 </div>
 
 
-
+{% if user.is_authenticated  %}
 <div style="position: fixed; right: 20px; bottom: 50px">
 	<div class="sampleDiv">
         <p>ANDREY</p>
@@ -177,6 +177,7 @@
  -->	</div>
 	<button class="noselect btnShowDiv" id="alarm_button" style="display: block; float: right;">ALARM</button>
 </div>
+{% endif %}
 
     {% block javascript %}
     {% endblock javascript %}

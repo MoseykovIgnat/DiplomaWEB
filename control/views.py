@@ -108,13 +108,14 @@ def get_new_alert_sound(request):
             try:
                 alert = ScAlertHistory.objects.get(id=element['alert_id'])
             except Exception as e:
-                logger.warning("-- [ERROR] {e}")
+                logger.warning(f"-- [ERROR] {e}")
             else:
                 ids_of_new_alerts_to_play.append(element['alert_id'])
                 result["alerts"].append(alert)
                 if alert.priority > most_primary_alert["priority"]:
                     most_primary_alert["id"] = alert.id
-        result["most_primary_alert"] = ScAlertHistory.objects.get(id=most_primary_alert["id"])
+        if most_primary_alert["id"] != 0:
+            result["most_primary_alert"] = ScAlertHistory.objects.get(id=most_primary_alert["id"])
         print(result)
         ScAlertSoundPlayer.objects.filter(Q(alert_id__in=ids_of_new_alerts_to_play) & Q(user_id=user_id)).delete()
         return HttpResponse(result, content_type='application/json')

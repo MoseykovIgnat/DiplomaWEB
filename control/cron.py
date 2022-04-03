@@ -205,7 +205,7 @@ def write_info_of_required_condition_in_db(connection, cursor, condition, condit
 def write_history_of_alerts_and_info_to_player(condition, condition_result):
     alert_object = ScAlertHistory(comment=condition.comment,
                                   creator=condition.user,
-                                  time_calc=condition_result.time_calc + timedelta(hours=7),
+                                  time_calc=condition_result.time_calc,
                                   is_required_condition=condition.is_required_condition,
                                   text_formula=condition_result.text_formula,
                                   val_formula=condition_result.val_formula,

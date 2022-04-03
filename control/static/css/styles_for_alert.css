@@ -21,19 +21,9 @@ td, th {
 	color: #fff;
 }
 
-#required {
-	background-color: #ff6666;
-}
-
-#nonrequired {
-	background-color: #d9d926;
-}
 
 .label tr td label {
 	display: block;
 }
 
 
-[data-toggle="toggle"] {
-	display: none;
-}

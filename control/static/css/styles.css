@@ -201,3 +201,15 @@ path.link:hover{
 	background: #ccc;
 	cursor: pointer;
 }
+
+#required {
+	background-color: #ff6666;
+}
+
+#nonrequired {
+	background-color: #d9d926;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}

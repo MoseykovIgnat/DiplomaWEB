@@ -132,12 +132,11 @@ $("body").on('change', '[data-toggle="toggle"]', function(){    // 3rd way
 });
 
 $("body").on('click', '#mute_button', function(){
-    if ($(this).children("i").classList.contains("fa-bell-slash")) {
-        $(this).children("i").classList.remove("fa-bell-slash");
-        $(this).children("i").classList.add("fa-bell");
+    var child = $(this.children)
+    if (child.hasClass("fa-bell-slash")) {
+        child.removeClass("fa-bell-slash").addClass("fa-bell");
     } else {
-        $(this).children("i").classList.remove("fa-bell");
-        $(this).children("i").classList.add("fa-bell-slash");
+        child.removeClass("fa-bell").addClass("fa-bell-slash");
     }
     $(this).find('i').toggleClass('fa-eye-slash').toggleClass('fa-eye');
 });

@@ -109,6 +109,8 @@ def get_more_alert_history_info(request):
             ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id__gt=request.GET.get('last_alert_id'))).order_by('-time_calc')
         if not new:
             new = "None"
+        else:
+            new = new.values()
         print(new)
         return HttpResponse(json.dumps(new, default=str), content_type='application/json')
 

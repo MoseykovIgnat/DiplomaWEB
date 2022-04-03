@@ -92,7 +92,7 @@ def load_alert_data(request) -> render:
     # your_conditions = ScAlertHistory.objects.filter(creator=user, is_required_condition=0).order_by('-time_calc')
     # required_conditions = ScAlertHistory.objects.filter(is_required_condition=1).order_by('-time_calc')
     all_conditions = ScAlertHistory.objects.filter(
-        (Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)).order_by('-time_calc')[:100]
+        (Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)).order_by('-time_calc')[:10]
     return render(
         request,
         'alert.html',
@@ -103,11 +103,25 @@ def load_alert_data(request) -> render:
 def get_more_alert_history_info(request):
     if request.method == 'GET' and request.is_ajax():
         user = request.user.username
-        # new = ScAlertHistory.objects.filter(
-        #     ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id__gt=request.POST.get('last_alert_id'))).order_by('-time_calc')
         result = []
         new = ScAlertHistory.objects.filter(
             ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id__gt=request.GET.get('last_alert_id'))).order_by('-time_calc')
+        if not new:
+            result = "None"
+        else:
+            new = new.values()
+            for elem in new:
+                result.append(elem)
+        print(result)
+        return HttpResponse(json.dumps(result, default=str), content_type='application/json')
+
+
+def upload_more_information_to_the_end_of_history_table(request):
+    if request.method == 'GET' and request.is_ajax():
+        user = request.user.username
+        result = []
+        new = ScAlertHistory.objects.filter(
+            ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id__lt=request.GET.get('last_alert_id'))).order_by('-time_calc')[:10]
         if not new:
             result = "None"
         else:

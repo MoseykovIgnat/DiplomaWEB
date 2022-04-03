@@ -141,6 +141,17 @@ body_obj.on('click', '#mute_button', function(){
     }
 });
 
+body_obj.on('click', '#delete_button_alert', function(){
+
+    $(this).remove()
+    var child = $(this.children)
+    if (child.hasClass("fa-bell-slash")) {
+        child.removeClass("fa-bell-slash").addClass("fa-bell");
+    } else {
+        child.removeClass("fa-bell").addClass("fa-bell-slash");
+    }
+});
+
 
 $(document).ready(function(){
    $('.btnShowDiv').click(function(){
@@ -218,8 +229,10 @@ $(document).ready(function() {
                     var obj_for_audio = $("#"+alert_id+"tdlabel");
                     console.log(alert_id+"tdlabel");
                     obj_for_audio.append(audio);
-                    var onclick_functions = 'onclick="playOrPause('+alert_id+')"';
-                    obj_for_audio.append('<button class="btn" id="mute_button"' + onclick_functions + ' style="position: relative; float: right;""><i class="fa-regular fa-bell-slash" aria-hidden="true"></i></button>');
+                    var onclick_function_delete_alert_button = 'onclick="deleteAudioAlert('+alert_id+')"';
+                    var onclick_function_play_or_pause = 'onclick="playOrPause('+alert_id+')"';
+                    obj_for_audio.append('<button class="btn" id="delete_button_alert"' + onclick_function_delete_alert_button + ' style="position: relative; float: right;""><i class="fa-regular fa-circle-trash"></i></button>');
+                    obj_for_audio.append('<button class="btn" id="mute_button"' + onclick_function_play_or_pause + ' style="position: relative; float: right;""><i class="fa-regular fa-bell-slash" aria-hidden="true"></i></button>');
                 }
             },
             error: function (response) {
@@ -228,8 +241,13 @@ $(document).ready(function() {
         });
     }
     function playOrPause(audioID) {
-        myaAudio = document.getElementById(audioID)
-        myaAudio.paused ? myaAudio.play() : myaAudio.pause()
+        myAudio = document.getElementById(audioID)
+        myAudio.paused ? myaAudio.play() : myaAudio.pause()
+    }
+
+    function deleteAudioAlert(audioID){
+        myAudio = document.getElementById(audioID)
+        myAudio.remove()
     }
 
 

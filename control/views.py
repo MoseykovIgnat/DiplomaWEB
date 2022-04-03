@@ -124,7 +124,6 @@ def get_new_alert_sound(request):
         for element in new_alerts_to_play:
             try:
                 alert = model_to_dict(ScAlertHistory.objects.get(id=element['alert_id']))
-                print(alert)
             except Exception as e:
                 logger.warning(f"-- [ERROR] {e}")
             else:
@@ -134,7 +133,6 @@ def get_new_alert_sound(request):
                     most_primary_alert["priority"] = alert["priority"]
                     most_primary_alert["id"] = alert["id"]
             result["most_primary_alert"] = most_primary_alert
-        print(result)
         ScAlertSoundPlayer.objects.filter(Q(alert_id__in=ids_of_new_alerts_to_play) & Q(user_id=user_id)).delete()
         return HttpResponse(json.dumps(result, default=str), content_type='application/json')
 

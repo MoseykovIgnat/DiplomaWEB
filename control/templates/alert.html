@@ -9,7 +9,7 @@
                 <table id="history_table" class="table table-condensed table-hover shadow p-4 mb-4 bg-white">
                     {% for data in conditions %}
                         <tbody class="labels">
-							<tr {% if data.is_required_condition == 1%} id="required" data-alert-id="{{ data.id }}" {% else %} id="nonrequired" {% endif %}>
+							<tr data-alert-id="{{ data.id }}" {% if data.is_required_condition == 1%} id="required" {% else %} id="nonrequired" {% endif %}>
 								<td colspan="6">
 									<label for={{forloop.counter}}>{{ data.comment }}</label>
 									<input type="checkbox" name={{forloop.counter}} id={{forloop.counter}} data-toggle="toggle">

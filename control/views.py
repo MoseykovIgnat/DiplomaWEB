@@ -92,12 +92,16 @@ def load_alert_data(request) -> render:
     # your_conditions = ScAlertHistory.objects.filter(creator=user, is_required_condition=0).order_by('-time_calc')
     # required_conditions = ScAlertHistory.objects.filter(is_required_condition=1).order_by('-time_calc')
     all_conditions = ScAlertHistory.objects.filter(
-        (Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)).order_by('-time_calc')
+        (Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)).order_by('-time_calc')[:100].values()
     return render(
         request,
         'alert.html',
         context={'conditions': all_conditions},
     )
+
+
+def get_more_alert_history_info(request):
+    pass
 
 
 def get_new_alert_sound(request):

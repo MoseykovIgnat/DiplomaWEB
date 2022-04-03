@@ -27,6 +27,7 @@ urlpatterns = [
     path(PREFIX + 'search_info_for_autocomplite/', views.search_info_for_autocomplete, name='search_info_for_autocomplete'),
     path(PREFIX + 'change_condition_display_method/', views.change_condition_display_method, name='change_condition_display_method'),
     path(PREFIX + 'get_new_alert_sound/', views.get_new_alert_sound, name='get_new_alert_sound'),
+    path(PREFIX + 'get_more_alert_history_info/', views.get_more_alert_history_info, name='get_more_alert_history_info'),
 
 ]
 

@@ -77,7 +77,7 @@
 <script>
 $("body").on('click', '#upload_more_information_to_the_end_of_history_table', function(){
     var obj =$("#history_table").children()
-    var first_alert_id = obj[obj.length - 1].getAttribute('data-alert-id')
+    var first_alert_id = obj[obj.length - 2].getAttribute('data-alert-id')
             $.ajax({
                 type:'GET',
                 url : "{% url 'upload_more_information_to_the_end_of_history_table' %}",

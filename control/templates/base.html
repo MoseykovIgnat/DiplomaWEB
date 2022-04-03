@@ -141,15 +141,10 @@ body_obj.on('click', '#mute_button', function(){
     }
 });
 
-{#body_obj.on('click', '#delete_button_alert', function(){#}
-{#    #}
-{#    $(this).remove()#}
-{#    var child = $(this.children)#}
-{#    if (child.hasClass("fa-bell-slash")) {#}
-{#        child.removeClass("fa-bell-slash").addClass("fa-bell");#}
-{#    } else {#}
-{#        child.removeClass("fa-bell").addClass("fa-bell-slash");#}
-{#    }});#}
+body_obj.on('click', '#delete_button_alert', function(){
+    $(this).next().remove()
+    $(this).remove()
+    });
 
 
 $(document).ready(function(){

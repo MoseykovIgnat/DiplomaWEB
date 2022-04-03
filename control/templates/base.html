@@ -230,7 +230,7 @@ $(document).ready(function() {
                     obj_for_audio.append(audio);
                     var onclick_function_delete_alert_button = 'onclick="deleteAudioAlert('+alert_id+')"';
                     var onclick_function_play_or_pause = 'onclick="playOrPause('+alert_id+')"';
-                    obj_for_audio.append('<button class="btn" id="delete_button_alert"' + onclick_function_delete_alert_button + ' style="position: relative; float: right;""><i class="fa-regular fa-circle-trash"></i></button>');
+                    obj_for_audio.append('<button class="btn" id="delete_button_alert"' + onclick_function_delete_alert_button + ' style="position: relative; float: right;""><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>');
                     obj_for_audio.append('<button class="btn" id="mute_button"' + onclick_function_play_or_pause + ' style="position: relative; float: right;""><i class="fa-regular fa-bell-slash" aria-hidden="true"></i></button>');
                 }
             },
@@ -241,7 +241,7 @@ $(document).ready(function() {
     }
     function playOrPause(audioID) {
         myAudio = document.getElementById(audioID)
-        myAudio.paused ? myaAudio.play() : myaAudio.pause()
+        myAudio.paused ? myAudio.play() : myAudio.pause()
     }
 
     function deleteAudioAlert(audioID){

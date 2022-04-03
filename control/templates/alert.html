@@ -43,40 +43,36 @@
 {% endblock %}
 {% block javascript %}
     <script>
-        function get_new_alert_sound(){
+        function get_more_alert_history_info(){
+            var last_alert_id = $("#history_table").children()[0].getAttribute('data-alert-id')
             $.ajax({
-                type: 'GET',
-                url: "{% url 'get_more_alert_history_info' %}",
-                datatype: 'json',
+                type:'GET',
+                url : "{% url 'get_more_alert_history_info' %}",
+                data:{
+                    last_alert_id:last_alert_id,
+                },
                 success: function (response) {
-                    var submission_date;
-                    if (response["alerts"].length > 0) {
-                        for (i = 0; i < response["alerts"].length; i++) {
-                            submission_date = new Date(response["alerts"][i]["time_calc"]);
-                            submission_date.toISOString();
-                            submission_date = moment(submission_date.toISOString()).subtract(7,"hours").format('DD-MM-YYYY, H:MM:ss');
-                            var is_required = response["alerts"][i]["is_required_condition"] === 1 ? 'required' : 'nonrequired';
-                            $('#alert_table').prepend('<tbody class="labels" style="vertical-align: central"> <tr id="' + is_required + '"> <td colspan="6" id="' + response["alerts"][i]["id"]+ "tdlabel" + '"> <label for="' + response["alerts"][i]["id"]+ "labelfor" + '">' + response["alerts"][i]["comment"] + '</label> <input type="checkbox" name="' + response["alerts"][i]["id"]+ "labelfor" + '" id="' + response["alerts"][i]["id"]+ "labelfor" + '" data-toggle="toggle"> </td> </tr> </tbody><tbody class="hide" style="display: none;"> <tr> <td colspan="2">Time of calculate: ' + submission_date + '</td> <td>Name of creator: ' + response["alerts"][i]["creator"] + '</td> <td>Bool result: ' + response["alerts"][i]["bool_result"] + '</td> <td colspan="2">Value result: ' + response["alerts"][i]["val_result"] + '</td> </tr> <tr> <td colspan="6">Text Formula: ' + response["alerts"][i]["text_formula"] + '</td> </tr> <tr> <td colspan="6">Value formula: ' + response["alerts"][i]["val_formula"] + '</td> </tr> </tbody>')
-                        }
-                        var audio = new Audio(); // Создаём новый элемент Audio
-                        audio.src = '{% static 'music/siren_1.mp3' %}'; // Указываем путь к звуку "клика"
-                        var alert_id = JSON.stringify(response["most_primary_alert"]["id"], null, 4)
-                        audio.id = alert_id;
-                        audio.autoplay = true; // Автоматически запускаем
-                        var obj_for_audio = $("#"+alert_id+"tdlabel");
-                        console.log(alert_id+"tdlabel");
-                        obj_for_audio.append(audio);
-                        var onclick_function_delete_alert_button = 'onclick="deleteAudioAlert('+alert_id+')"';
-                        var onclick_function_play_or_pause = 'onclick="playOrPause('+alert_id+')"';
-                        obj_for_audio.append('<button class="btn" id="delete_button_alert"' + onclick_function_delete_alert_button + ' style="position: relative; float: right;""><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>');
-                        obj_for_audio.append('<button class="btn" id="mute_button"' + onclick_function_play_or_pause + ' style="position: relative; float: right;""><i class="fa-regular fa-bell-slash" aria-hidden="true"></i></button>');
-                    }
+                    console.log(response);
+                    {#var submission_date;#}
+                    {#if (response.length > 0) {#}
+                    {#    for (i = 0; i < response.length; i++) {#}
+                    {#        submission_date = new Date(response[i]["time_calc"]);#}
+                    {#        submission_date.toISOString();#}
+                    {#        submission_date = moment(submission_date.toISOString()).subtract(7,"hours").format('DD-MM-YYYY, H:MM:ss');#}
+                    {#        var is_required = response[i]["is_required_condition"] === 1 ? 'required' : 'nonrequired';#}
+                    {#        $('#alert_table').prepend('<tbody class="labels" style="vertical-align: central"> <tr id="' + is_required + '"> <td colspan="6" id="' + response[i]["id"]+ "tdlabel" + '"> <label for="' + response[i]["id"]+ "labelfor" + '">' + response[i]["comment"] + '</label> <input type="checkbox" name="' + response[i]["id"]+ "labelfor" + '" id="' + response[i]["id"]+ "labelfor" + '" data-toggle="toggle"> </td> </tr> </tbody><tbody class="hide" style="display: none;"> <tr> <td colspan="2">Time of calculate: ' + submission_date + '</td> <td>Name of creator: ' + response[i]["creator"] + '</td> <td>Bool result: ' + response[i]["bool_result"] + '</td> <td colspan="2">Value result: ' + response[i]["val_result"] + '</td> </tr> <tr> <td colspan="6">Text Formula: ' + response[i]["text_formula"] + '</td> </tr> <tr> <td colspan="6">Value formula: ' + response[i]["val_formula"] + '</td> </tr> </tbody>')#}
+                    {#    } }#}
                 },
                 error: function (response) {
                     console.log(response)
                 }
             });
         }
+
+            $(document).ready(function (){
+            get_more_alert_history_info(get_new_alert_sound,5000)
+        })
     </script>
+
 
 {% endblock javascript %}

@@ -121,7 +121,7 @@ def upload_more_information_to_the_end_of_history_table(request):
         user = request.user.username
         result = []
         new = ScAlertHistory.objects.filter(
-            ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id__lt=request.GET.get('last_alert_id'))).order_by('-time_calc')[:10]
+            ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id__lt=request.GET.get('first_alert_id'))).order_by('-time_calc')[:10]
         if not new:
             result = "None"
         else:

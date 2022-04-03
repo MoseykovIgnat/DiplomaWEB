@@ -128,8 +128,9 @@ def upload_more_information_to_the_end_of_history_table(request):
             new = new.values()
             for elem in new:
                 elem['time_calc'] = elem['time_calc'].isoformat()
+                print(elem['time_calc'])
                 result.append(elem)
-        print(result)
+        # print(result)
         return HttpResponse(json.dumps(result, default=str), content_type='application/json')
 
 

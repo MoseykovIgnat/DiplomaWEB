@@ -70,7 +70,7 @@ def update_condition_results():
         if empty_values:
             result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                empty_values=str(empty_values), text_formula=condition.formula,
-                                               time_calc=(datetime.now(tz=timezone.utc)))
+                                               time_calc=(datetime.now()))
             result_for_db.save()
         else:
             result = eval(digit_formula)
@@ -80,13 +80,13 @@ def update_condition_results():
                     ids_for_signal_alarm.append(condition.cond_id)
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                    bool_result=bool_result, text_formula=condition.formula,
-                                                   time_calc=(datetime.now(tz=timezone.utc)))
+                                                   time_calc=(datetime.now()))
                 result_for_db.save()
             if condition.cond_type == '1':
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=formula,
                                                    val_result=result,
                                                    text_formula=condition.formula,
-                                                   time_calc=(datetime.now(tz=timezone.utc)))
+                                                   time_calc=(datetime.now()))
                 result_for_db.save()
             if condition.cond_type == '6':
                 if not condition.max_val.isdigit():
@@ -125,7 +125,7 @@ def update_condition_results():
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=val_formula,
                                                    bool_result=bool_result, text_formula=text_formula,
                                                    val_result=result, result_formula=result_formula,
-                                                   time_calc=(datetime.now(tz=timezone.utc)))
+                                                   time_calc=(datetime.now()))
                 result_for_db.save()
             if condition.cond_type == '2' or condition.cond_type == '3' \
                     or condition.cond_type == '4' or condition.cond_type == '5':
@@ -172,7 +172,7 @@ def update_condition_results():
                 result_for_db = ScConditionsResult(cond_id=condition.cond_id, val_formula=val_formula,
                                                    bool_result=bool_result, text_formula=text_formula,
                                                    val_result=result, result_formula=result_formula,
-                                                   time_calc=(datetime.now(tz=timezone.utc)))
+                                                   time_calc=(datetime.now()))
                 result_for_db.save()
     print('done')
     return ids_for_signal_alarm
@@ -217,7 +217,7 @@ def write_history_of_alerts_and_info_to_player(condition, condition_result):
 
     if alert_object.is_required_condition == 1:
         list_of_active_users = ScUsers.objects.filter(
-            last_activity__gte=(datetime.now(tz=timezone.utc) - timedelta(minutes=60)))  # todo CHANGE TIMEDELTA
+            last_activity__gte=(datetime.now() - timedelta(minutes=60)))  # todo CHANGE TIMEDELTA
         if list_of_active_users:
             for user in list_of_active_users:
                 logger.info(f"-- [INFO] this is alert ID {alert_object.id}")
@@ -228,7 +228,7 @@ def write_history_of_alerts_and_info_to_player(condition, condition_result):
                 logger.info('-- [INFO] Inserted in sc_alert_sound_player. IT required condition')
     else:
         user = ScUsers.objects.get(name=alert_object.creator,
-                                   last_activity__gte=(datetime.now(tz=timezone.utc) - timedelta(minutes=60)))
+                                   last_activity__gte=(datetime.now() - timedelta(minutes=60)))
         if user:
             player_object = ScAlertSoundPlayer(alert=alert_object,
                                                user=user,
@@ -253,7 +253,7 @@ def signal_alarm(siren_ids, connection, cursor):
                     # write_info_of_required_condition_in_db(connection, cursor, condition, condition_result,
                     #                                        query_for_input_messages, query_for_get_id,
                     #                                        query_for_input_attachment)
-                condition.time_create_or_alert = datetime.now(tz=timezone.utc)
+                condition.time_create_or_alert = datetime.now()
                 condition.save()
                 print('Время расчета' + str(condition_result.time_calc))
                 print('Время создания или сигнала' + str(condition.time_create_or_alert))
@@ -272,7 +272,7 @@ def signal_alarm(siren_ids, connection, cursor):
                 #                                        query_for_input_messages, query_for_get_id,
                 #                                        query_for_input_attachment)
             condition.isalert = 1
-            condition.time_create_or_alert = datetime.now(tz=timezone.utc)
+            condition.time_create_or_alert = datetime.now()
             condition.save()
 
 

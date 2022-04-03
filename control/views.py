@@ -105,9 +105,8 @@ def get_more_alert_history_info(request):
         user = request.user.username
         # new = ScAlertHistory.objects.filter(
         #     ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id__gt=request.POST.get('last_alert_id'))).order_by('-time_calc')
-        all_conditions = ScAlertHistory.objects.filter(
-            (Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)).order_by('-time_calc')
-        new = all_conditions.filter(id_gt=request.POST.get('last_alert_id'))
+        new = ScAlertHistory.objects.filter(
+            ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id_gt=request.POST.get('last_alert_id'))).order_by('-time_calc')
         print(new)
         return HttpResponse(json.dumps(new, default=str), content_type='application/json')
 

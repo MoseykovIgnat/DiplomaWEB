@@ -112,7 +112,7 @@ def get_more_alert_history_info(request):
             new = new.values()
             for elem in new:
                 result.append(elem)
-        print(result)
+        # print(result)
         return HttpResponse(json.dumps(result, default=str), content_type='application/json')
 
 

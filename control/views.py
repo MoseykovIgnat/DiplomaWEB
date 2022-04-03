@@ -105,14 +105,17 @@ def get_more_alert_history_info(request):
         user = request.user.username
         # new = ScAlertHistory.objects.filter(
         #     ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id__gt=request.POST.get('last_alert_id'))).order_by('-time_calc')
+        result = []
         new = ScAlertHistory.objects.filter(
             ((Q(creator=user) & Q(is_required_condition=0)) | Q(is_required_condition=1)) & Q(id__gt=request.GET.get('last_alert_id'))).order_by('-time_calc')
         if not new:
-            new = "None"
+            result = "None"
         else:
             new = new.values()
-        print(new)
-        return HttpResponse(json.dumps(new, default=str), content_type='application/json')
+            for elem in new:
+                result.append(elem)
+        print(result)
+        return HttpResponse(json.dumps(result, default=str), content_type='application/json')
 
 
 def get_new_alert_sound(request):

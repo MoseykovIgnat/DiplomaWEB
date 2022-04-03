@@ -127,18 +127,18 @@
     {% block javascript %}
     {% endblock javascript %}
 <script>
-$("body").on('change', '[data-toggle="toggle"]', function(){    // 3rd way
+var body_obj = $("body")
+body_obj.on('change', '[data-toggle="toggle"]', function(){    // 3rd way
     $(this).parents().next('.hide').toggle();
 });
 
-$("body").on('click', '#mute_button', function(){
+body_obj.on('click', '#mute_button', function(){
     var child = $(this.children)
     if (child.hasClass("fa-bell-slash")) {
         child.removeClass("fa-bell-slash").addClass("fa-bell");
     } else {
         child.removeClass("fa-bell").addClass("fa-bell-slash");
     }
-    $(this).find('i').toggleClass('fa-eye-slash').toggleClass('fa-eye');
 });
 
 
@@ -236,6 +236,7 @@ $(document).ready(function() {
     window.onload = function () {
       is_SAM_working();
       is_user_still_online();
+      get_new_alert_sound();
     };
 
     $(document).ready(function (){

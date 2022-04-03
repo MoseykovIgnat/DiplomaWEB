@@ -53,15 +53,15 @@
                 },
                 success: function (response) {
                     console.log(response);
-                    {#var submission_date;#}
-                    {#if (response.length > 0) {#}
-                    {#    for (i = 0; i < response.length; i++) {#}
-                    {#        submission_date = new Date(response[i]["time_calc"]);#}
-                    {#        submission_date.toISOString();#}
-                    {#        submission_date = moment(submission_date.toISOString()).subtract(7,"hours").format('DD-MM-YYYY, H:MM:ss');#}
-                    {#        var is_required = response[i]["is_required_condition"] === 1 ? 'required' : 'nonrequired';#}
-                    {#        $('#alert_table').prepend('<tbody class="labels" style="vertical-align: central"> <tr id="' + is_required + '"> <td colspan="6" id="' + response[i]["id"]+ "tdlabel" + '"> <label for="' + response[i]["id"]+ "labelfor" + '">' + response[i]["comment"] + '</label> <input type="checkbox" name="' + response[i]["id"]+ "labelfor" + '" id="' + response[i]["id"]+ "labelfor" + '" data-toggle="toggle"> </td> </tr> </tbody><tbody class="hide" style="display: none;"> <tr> <td colspan="2">Time of calculate: ' + submission_date + '</td> <td>Name of creator: ' + response[i]["creator"] + '</td> <td>Bool result: ' + response[i]["bool_result"] + '</td> <td colspan="2">Value result: ' + response[i]["val_result"] + '</td> </tr> <tr> <td colspan="6">Text Formula: ' + response[i]["text_formula"] + '</td> </tr> <tr> <td colspan="6">Value formula: ' + response[i]["val_formula"] + '</td> </tr> </tbody>')#}
-                    {#    } }#}
+                    var submission_date;
+                    if (response.length > 0) {
+                        for (i = 0; i < response.length; i++) {
+                            submission_date = new Date(response[i]["time_calc"]);
+                            submission_date.toISOString();
+                            submission_date = moment(submission_date.toISOString()).subtract(7,"hours").format('DD-MM-YYYY, H:MM:ss');
+                            var is_required = response[i]["is_required_condition"] === 1 ? 'required' : 'nonrequired';
+                            $('#alert_table').prepend('<tbody class="labels" style="vertical-align: central"> <tr id="' + is_required + '"> <td colspan="6"> <label for="' + response[i]["id"]+ "history_table" + '">' + response[i]["comment"] + '</label> <input type="checkbox" name="' + response[i]["id"]+ "history_table" + '" id="' + response[i]["id"]+ "history_table" + '" data-toggle="toggle"> </td> </tr> </tbody><tbody class="hide" style="display: none;"> <tr> <td colspan="2">Time of calculate: ' + submission_date + '</td> <td>Name of creator: ' + response[i]["creator"] + '</td> <td>Bool result: ' + response[i]["bool_result"] + '</td> <td colspan="2">Value result: ' + response[i]["val_result"] + '</td> </tr> <tr> <td colspan="6">Text Formula: ' + response[i]["text_formula"] + '</td> </tr> <tr> <td colspan="6">Value formula: ' + response[i]["val_formula"] + '</td> </tr> </tbody>')
+                        } }
                 },
                 error: function (response) {
                     console.log(response)

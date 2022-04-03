@@ -3,26 +3,26 @@
 	border-collapse: collapse;
 	}
 
-th {
+#history_table th {
 	background: #3498db;
 	color: white;
 	font-weight: bold;
 	}
 
-td, th {
+#history_table td, th {
 	padding: 10px;
 	border: 1px solid #ccc;
 	text-align: left;
 	font-size: 18px;
 	}
 
-.labels tr td {
+#history_table .labels tr td {
 	font-weight: bold;
 	color: #fff;
 }
 
 
-.label tr td label {
+#history_table .label tr td label {
 	display: block;
 }
 

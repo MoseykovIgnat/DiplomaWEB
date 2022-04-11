@@ -9,6 +9,7 @@ import SQLParser.xxxdbrc
 from django.contrib.auth.models import User, Group
 import pymysql as MySQLdb
 from loguru import logger
+import sys
 
 
 # connection FOR PRODUCTION

@@ -303,7 +303,7 @@ def condition_create(request):
             for var_formula in vars_formula:
                 counter = 0
                 for formula_check in user_conditions:
-                    print(f"Проверяем {formula_check}")
+                    print(f"Проверяем {var_formula}")
                     print(f"сравниваем с {formula_check.formula}")
                     if var_formula in formula_check.formula:
                         counter += 1

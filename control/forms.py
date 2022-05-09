@@ -36,6 +36,9 @@ class ScGraphInfo(forms.ModelForm):
 
 
 class ScConditionsForm(forms.ModelForm):
+    def __init__(self, form_user_id, *args, **kwargs):
+        super(ScConditionsForm, self).__init__(*args, **kwargs)
+
     comment = forms.CharField(label='Name of your condition')
     cond_type = forms.TypedChoiceField(choices=type_cond_choices, coerce=str, label='Conditional type')
     min_val = forms.CharField(required=False, label='Minimum value',

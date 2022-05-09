@@ -292,28 +292,22 @@ def condition_create(request):
             cond_id = int(cond_id)
             sc_condition = ScConditions.objects.get(cond_id=cond_id)
             prev_formula = sc_condition.formula
-            print(f"Получил значение {sc_condition.formula}")
             form = ScConditionsForm(data=request.POST, form_user_id=user_id, instance=sc_condition)
-            ScConditionsResult.objects.filter(cond_id=cond_id).delete()
-            ScConditionsTags.objects.filter(cond_id=cond_id).delete()
-            user_conditions = ScConditions.objects.filter(user_id=user_id)
-            vars_formula = get_vars_formula(prev_formula)
-            print(f"Получил переменные {vars_formula}")
-            for var_formula in vars_formula:
-                counter = 0
-                for formula_check in user_conditions:
-                    print(f"Проверяем {var_formula}")
-                    print(f"сравниваем с {formula_check.formula}")
-                    if var_formula in formula_check.formula:
-                        counter += 1
-                        print(f"переменная {var_formula}, счетчик {counter}")
-                if counter == 1:
-                    print(f"Удаляю {var_formula}")
-                    ScPaths.objects.filter(path=var_formula).delete()
+            if form.is_valid():
+                ScConditionsResult.objects.filter(cond_id=cond_id).delete()
+                ScConditionsTags.objects.filter(cond_id=cond_id).delete()
+                user_conditions = ScConditions.objects.filter(user_id=user_id)
+                vars_formula = get_vars_formula(prev_formula)
+                for var_formula in vars_formula:
+                    counter = 0
+                    for formula_check in user_conditions:
+                        if var_formula in formula_check.formula:
+                            counter += 1
+                    if counter == 1:
+                        ScPaths.objects.filter(path=var_formula).delete()
         else:
             form = ScConditionsForm(user_id, request.POST)
         if form.is_valid():
-            print(f"Форма валидная")
             formula = request.POST.get('formula')
             formula = formula.replace('0)', '0sec)')
             vars_formula = get_vars_formula(formula)
@@ -337,8 +331,6 @@ def condition_create(request):
                     defaults={}
                 )
             return redirect('custom_settings')
-        else:
-            print(f"Форма не валидная")
     else:
         form = ScConditionsForm(user_id)
     return render(request,

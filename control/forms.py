@@ -35,19 +35,16 @@ class ScGraphInfo(forms.ModelForm):
         fields = ['dot_name']
 
 
-def validate_even(value):
-    if value % 2 != 0:
-        raise ValidationError(
-            _('%(value)s is not an even number'),
-            params={'value': value},
-        )
+def start_with(value):
+  if value[0]!='A':
+    raise forms.ValidationError("Post Code should start with A")
 
 
 class ScConditionsForm(forms.ModelForm):
     def __init__(self, form_user_id, *args, **kwargs):
         super(ScConditionsForm, self).__init__(*args, **kwargs)
 
-    comment = forms.CharField(required=True, label='Name of your condition')
+    comment = forms.CharField(required=True, label='Name of your condition', validators=[start_with])
     cond_type = forms.TypedChoiceField(choices=type_cond_choices, coerce=str, label='Conditional type')
     min_val = forms.CharField(required=False, label='Minimum value',
                               widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
@@ -58,7 +55,7 @@ class ScConditionsForm(forms.ModelForm):
     display_method = forms.TypedChoiceField(choices=display_method_choices, label='Display method', coerce=str)
     formula = forms.CharField(label='Formula', widget=forms.Textarea(attrs={'rows': 4, 'cols': 40}))
     priority = forms.IntegerField(required=False, min_value=0, max_value=10,
-                                  label='Condition priority for signal alert', validators=[validate_even])
+                                  label='Condition priority for signal alert')
     alert_interval = forms.IntegerField(required=False, min_value=30, max_value=600,
                                         label='Interval for condition signal alert')
     is_required_condition = forms.IntegerField(required=False)

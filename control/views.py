@@ -28,6 +28,7 @@ from .utils import *
 import time
 from django.db.models import Q
 from loguru import logger
+from django.core import serializers
 
 
 # Create your views here.
@@ -122,8 +123,10 @@ def get_information_about_condition_to_change_id(request):
         user = request.user.username
         user_id = ScUsers.objects.get(name=user)
         sc_conditions_object_record = ScConditions.objects.get(user_id=user_id, comment=cond_name)
-        data = serialize("json", sc_conditions_object_record)
-        return HttpResponse(data, content_type='application/json')
+        data = serializers.serialize('json', [sc_conditions_object_record,])
+        struct = json.loads(data)
+        data = json.dumps(struct[0])
+        return HttpResponse(data, mimetype='application/json')
 
 
 def upload_more_information_to_the_end_of_history_table(request):

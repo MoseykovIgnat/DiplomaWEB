@@ -215,62 +215,62 @@
 
 {% block javascript %}
     <!-- Form creation hide or show divs -->
-<script>
-     $(document).ready(function (){
-         $(".cond_min_val").hide();
-         $(".cond_max_val").hide();
-         $(".cond_limit_val").hide();
-         $(".cond_priority_for_signal_alert").hide();
-         $(".cond_interval_for_signal_alert").hide();
-         $(".cond_display_method").hide();
-         $(".cond_tags").hide();
-    });
-
-    $('#id_cond_type').on('change', function (){
-
-        if (this.value === '2' || this.value === '3' || this.value === '4' || this.value === '5'){
-            $(".cond_limit_val").show();
-            $(".cond_min_val").hide();
-            $(".cond_max_val").hide();
-            $(".cond_display_method").show();
-        }
-        if (this.value === '6'){
-            $(".cond_min_val").show();
-            $(".cond_max_val").show();
-            $(".cond_limit_val").hide();
-            $(".cond_display_method").show();
-        }
-        if (this.value === '1'){
-            $(".cond_min_val").hide();
-            $(".cond_max_val").hide();
-            $(".cond_limit_val").hide();
-            $(".cond_display_method").hide();
-        }
-        if (this.value === '7'){
-            $(".cond_min_val").hide();
-            $(".cond_max_val").hide();
-            $(".cond_limit_val").hide();
-            $(".cond_display_method").show();
-        }
-    });
-
-
-    $('#id_display_method').on('change', function (){
-        if (this.value === "Text"){
-             $(".cond_priority_for_signal_alert").hide();
-             $(".cond_interval_for_signal_alert").hide();
-             $(".cond_tags").hide();
-        }
-        if (this.value === "Text+Siren"){
-             $(".cond_priority_for_signal_alert").show();
-             $(".cond_interval_for_signal_alert").show();
-             $(".cond_tags").show();
-
-        }
-
-
-    });
-    </script>
+{#<script>#}
+{#     $(document).ready(function (){#}
+{#         $(".cond_min_val").hide();#}
+{#         $(".cond_max_val").hide();#}
+{#         $(".cond_limit_val").hide();#}
+{#         $(".cond_priority_for_signal_alert").hide();#}
+{#         $(".cond_interval_for_signal_alert").hide();#}
+{#         $(".cond_display_method").hide();#}
+{#         $(".cond_tags").hide();#}
+{#    });#}
+{##}
+{#    $('#id_cond_type').on('change', function (){#}
+{##}
+{#        if (this.value === '2' || this.value === '3' || this.value === '4' || this.value === '5'){#}
+{#            $(".cond_limit_val").show();#}
+{#            $(".cond_min_val").hide();#}
+{#            $(".cond_max_val").hide();#}
+{#            $(".cond_display_method").show();#}
+{#        }#}
+{#        if (this.value === '6'){#}
+{#            $(".cond_min_val").show();#}
+{#            $(".cond_max_val").show();#}
+{#            $(".cond_limit_val").hide();#}
+{#            $(".cond_display_method").show();#}
+{#        }#}
+{#        if (this.value === '1'){#}
+{#            $(".cond_min_val").hide();#}
+{#            $(".cond_max_val").hide();#}
+{#            $(".cond_limit_val").hide();#}
+{#            $(".cond_display_method").hide();#}
+{#        }#}
+{#        if (this.value === '7'){#}
+{#            $(".cond_min_val").hide();#}
+{#            $(".cond_max_val").hide();#}
+{#            $(".cond_limit_val").hide();#}
+{#            $(".cond_display_method").show();#}
+{#        }#}
+{#    });#}
+{##}
+{##}
+{#    $('#id_display_method').on('change', function (){#}
+{#        if (this.value === "Text"){#}
+{#             $(".cond_priority_for_signal_alert").hide();#}
+{#             $(".cond_interval_for_signal_alert").hide();#}
+{#             $(".cond_tags").hide();#}
+{#        }#}
+{#        if (this.value === "Text+Siren"){#}
+{#             $(".cond_priority_for_signal_alert").show();#}
+{#             $(".cond_interval_for_signal_alert").show();#}
+{#             $(".cond_tags").show();#}
+{##}
+{#        }#}
+{##}
+{##}
+{#    });#}
+{#    </script>#}
     <!-- JavaScript for variables-->
 
     <!-- Delete exist variable -->

@@ -681,6 +681,95 @@ $(document).on('click',"#change_exist_condition",function (e){
                     action : "Change the exist condition",
                     url : "{% url 'get_information_about_condition_to_change_id' %}",
                     success: function (response) {
+                        var is_required = $("#id_is_required_condition");
+                        var cond_type = $("#id_cond_type");
+                        var min_val = $(".cond_min_val");
+                        var max_val = $(".cond_max_val");
+                        var limit_val = $(".cond_limit_val");
+                        var display_method = $(".cond_display_method");
+                        var priority_for_alert = $(".id_priority_for_alert");
+                        var interval_for_alert = $(".id_interval_for_alert");
+                        var cond_tags = $(".id_cond_tags");
+                        response['fields']['comment'] === 1 ? is_required.prop('checked', true) : is_required.prop('checked', false);
+                        $("#id_cond_name").val(response['fields']['comment']);
+                        $("#id_formula").val(response['fields']['formula']);
+                        switch (response['fields']['formula']) {
+                            case "1":
+                                cond_type.val(1);
+                                min_val.hide();
+                                max_val.hide();
+                                limit_val.hide();
+                                display_method.hide();
+                                break;
+                            case "2":
+                            case "3":
+                            case "4":
+                            case "5":
+                                cond_type.val(parseInt(response['fields']['formula']));
+                                limit_val.show();
+                                min_val.hide();
+                                max_val.hide();
+                                display_method.show();
+                                break;
+                            case "6":
+                                cond_type.val(6);
+                                min_val.show();
+                                max_val.show();
+                                limit_val.hide();
+                                display_method.show();
+                                break;
+                            case "7":
+                                cond_type.val(7);
+                                min_val.hide();
+                                max_val.hide();
+                                limit_val.hide();
+                                display_method.show();
+                                break;
+                        }
+                        display_method.val(response['fields']['display_method'])
+                        priority_for_alert.val(response['fields']['priority'])
+                        interval_for_alert.val(response['fields']['alert_interval'])
+                        limit_val.val(response['fields']['limit_val'])
+                        min_val.val(response['fields']['min_val'])
+                        max_val.val(response['fields']['max_val'])
+                        cond_tags.val(response['tags'])
+
+
+
+
+    {#                        $('#id_cond_type').on('change', function (){#}
+    {##}
+    {#    if (this.value === '2' || this.value === '3' || this.value === '4' || this.value === '5'){#}
+    {#        $(".cond_limit_val").show();#}
+    {#        $(".cond_min_val").hide();#}
+    {#        $(".cond_max_val").hide();#}
+    {#        $(".cond_display_method").show();#}
+    {#    }#}
+    {#    if (this.value === '6'){#}
+    {#        $(".cond_min_val").show();#}
+    {#        $(".cond_max_val").show();#}
+    {#        $(".cond_limit_val").hide();#}
+    {#        $(".cond_display_method").show();#}
+    {#    }#}
+    {#    if (this.value === '1'){#}
+    {#        $(".cond_min_val").hide();#}
+    {#        $(".cond_max_val").hide();#}
+    {#        $(".cond_limit_val").hide();#}
+    {#        $(".cond_display_method").hide();#}
+    {#    }#}
+    {#    if (this.value === '7'){#}
+    {#        $(".cond_min_val").hide();#}
+    {#        $(".cond_max_val").hide();#}
+    {#        $(".cond_limit_val").hide();#}
+    {#        $(".cond_display_method").show();#}
+    {#    }#}
+                    {#    <option selected value="1">Digit result of formula</option>#}
+                    {#<option value="7">Bool result</option>#}
+                    {#<option value="2"><</option>#}
+                    {#<option value="3">></option>#}
+                    {#<option value="4">>=</option>#}
+                    {#<option value="5"><=</option>#}
+                    {#<option value="6">Result in interval</option>#}
                         console.log(response)
 
                 },

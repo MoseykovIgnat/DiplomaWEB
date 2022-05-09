@@ -655,7 +655,7 @@ $(document).on('click',"#add_new_condition",function (e){
                 $('#add_new_condition_modal').modal('show');
                 var modal_title = $(".add-or-change-modal")
                 modal_title.text("Добавление нового условия")
-                modal_title.setAttribute("data-id-of-condition", "")
+                modal_title.attr("data-id-of-condition", "")
             },
         error : function(xhr,errmsg,err) {
         console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
@@ -684,7 +684,7 @@ $(document).on('click',"#change_exist_condition",function (e){
                     success: function (response) {
                         $('#add_new_condition_modal').modal('show')
                         var modal_title = $(".add-or-change-modal")
-                        modal_title.setAttribute("data-id-of-condition", response['pk'])
+                        modal_title.attr("data-id-of-condition", response['pk'])
                         modal_title.text("Изменение существующего условия")
                         var is_required = $("#id_is_required_condition");
                         var cond_type = $("#id_cond_type");

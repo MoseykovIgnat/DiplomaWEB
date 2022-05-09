@@ -127,7 +127,7 @@ def get_information_about_condition_to_change_id(request):
         cond_tags = [condition.tag for condition in tags_query]
         data = serializers.serialize('json', [sc_conditions_object_record, ])
         struct = json.loads(data)
-        struct["tags"] = cond_tags
+        struct[0]["tags"] = cond_tags
         data = json.dumps(struct[0])
         return HttpResponse(data, content_type="application/json")
 

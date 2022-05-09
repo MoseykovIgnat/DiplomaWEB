@@ -331,6 +331,8 @@ def condition_create(request):
                     defaults={}
                 )
             return redirect('custom_settings')
+        else:
+            print(f"Форма не валидная")
     else:
         form = ScConditionsForm(user_id)
     return render(request,

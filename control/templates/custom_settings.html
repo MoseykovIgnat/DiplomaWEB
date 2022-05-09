@@ -693,7 +693,7 @@ $(document).on('click',"#change_exist_condition",function (e){
                         response['fields']['comment'] === 1 ? is_required.prop('checked', true) : is_required.prop('checked', false);
                         $("#id_cond_name").val(response['fields']['comment']);
                         $("#id_formula").val(response['fields']['formula']);
-                        switch (response['fields']['formula']) {
+                        switch (response['fields']['cond_type']) {
                             case "1":
                                 cond_type.val(1);
                                 min_val.hide();

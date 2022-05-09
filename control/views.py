@@ -292,12 +292,14 @@ def condition_create(request):
         if cond_id:
             cond_id = int(cond_id)
             sc_condition = ScConditions.objects.get(cond_id=cond_id)
+            print(f"Получил значение {sc_condition}")
             form = ScConditionsForm(data=request.POST, form_user_id=user_id, instance=sc_condition)
             print(form.errors)
             ScConditionsResult.objects.filter(cond_id=cond_id).delete()
             ScConditionsTags.objects.filter(cond_id=cond_id).delete()
             user_conditions = ScConditions.objects.filter(user_id=user_id)
             vars_formula = get_vars_formula(sc_condition.formula)
+            print(f"Получил переменные {vars_formula}")
             for var_formula in vars_formula:
                 counter = 0
                 for formula_check in user_conditions:

@@ -288,6 +288,7 @@ def condition_create(request):
             request.POST = request.POST.copy()
             request.POST['formula'] = request.POST['formula'].replace('0)', '0sec)')
         cond_id = request.POST["cond_pk"]
+        print(f"Получил значение cond_id: {cond_id}")
         if cond_id:
             cond_id = int(cond_id)
             sc_condition = ScConditions.objects.get(cond_id=cond_id)
@@ -306,6 +307,7 @@ def condition_create(request):
         else:
             form = ScConditionsForm(user_id, request.POST)
         if form.is_valid():
+            print(f"Форма валидная")
             formula = request.POST.get('formula')
             formula = formula.replace('0)', '0sec)')
             vars_formula = get_vars_formula(formula)

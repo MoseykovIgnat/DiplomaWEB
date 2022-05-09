@@ -683,47 +683,53 @@ $(document).on('click',"#change_exist_condition",function (e){
                     success: function (response) {
                         var is_required = $("#id_is_required_condition");
                         var cond_type = $("#id_cond_type");
-                        var min_val = $(".cond_min_val");
-                        var max_val = $(".cond_max_val");
-                        var limit_val = $(".cond_limit_val");
-                        var display_method = $(".cond_display_method");
-                        var priority_for_alert = $(".id_priority_for_alert");
-                        var interval_for_alert = $(".id_interval_for_alert");
-                        var cond_tags = $(".id_cond_tags");
+                        var min_val = $("#id_min_val");
+                        var max_val = $("#id_max_val");
+                        var limit_val = $("#id_limit_val");
+                        var display_method = $("#id_display_method");
+                        var priority_for_alert = $("#id_priority_for_alert");
+                        var interval_for_alert = $("#id_interval_for_alert");
+                        var cond_tags = $("#id_cond_tags");
+
+                        var min_val_div = $(".cond_min_val");
+                        var max_val_div = $(".cond_max_val");
+                        var limit_val_div = $(".cond_limit_val");
+                        var display_method_div = $(".cond_display_method");
+
                         response['fields']['comment'] === 1 ? is_required.prop('checked', true) : is_required.prop('checked', false);
                         $("#id_cond_name").val(response['fields']['comment']);
                         $("#id_formula").val(response['fields']['formula']);
                         display_method.val(response['fields']['display_method']);
                         if (response['fields']['cond_type'] === "1"){
                             cond_type.val(1);
-                            min_val.hide();
-                            max_val.hide();
-                            limit_val.hide();
-                            display_method.hide();
+                            min_val_div.hide();
+                            max_val_div.hide();
+                            limit_val_div.hide();
+                            display_method_div.hide();
                         }
                         else if (["2", "3", "4", "5"].includes(response['fields']['cond_type'])){
                             cond_type.val(parseInt(response['fields']['cond_type']));
-                            limit_val.show();
+                            limit_val_div.show();
                             limit_val.val(response['fields']['limit_val']);
-                            min_val.hide();
-                            max_val.hide();
-                            display_method.show();
+                            min_val_div.hide();
+                            max_val_div.hide();
+                            display_method_div.show();
                         }
                         else if (response['fields']['cond_type'] === "6"){
                             cond_type.val(6);
-                            min_val.show();
-                            max_val.show();
+                            min_val_div.show();
+                            max_val_div.show();
                             min_val.val(response['fields']['min_val']);
                             max_val.val(response['fields']['max_val']);
-                            limit_val.hide();
-                            display_method.show();
+                            limit_val_div.hide();
+                            display_method_div.show();
                         }
                         else if (response['fields']['cond_type'] === "7"){
                             cond_type.val(7);
-                            min_val.hide();
-                            max_val.hide();
-                            limit_val.hide();
-                            display_method.show();
+                            min_val_div.hide();
+                            max_val_div.hide();
+                            limit_val_div.hide();
+                            display_method_div.show();
                         }
                         if (response['fields']['display_method'] === "Text+Siren"){
                             $(".cond_priority_for_signal_alert").show();

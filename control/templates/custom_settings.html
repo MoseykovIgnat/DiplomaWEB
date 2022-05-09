@@ -693,6 +693,13 @@ $(document).on('click',"#change_exist_condition",function (e){
                         response['fields']['comment'] === 1 ? is_required.prop('checked', true) : is_required.prop('checked', false);
                         $("#id_cond_name").val(response['fields']['comment']);
                         $("#id_formula").val(response['fields']['formula']);
+                        display_method.val(response['fields']['display_method'])
+                        priority_for_alert.val(response['fields']['priority'])
+                        interval_for_alert.val(response['fields']['alert_interval'])
+                        limit_val.val(response['fields']['limit_val'])
+                        min_val.val(response['fields']['min_val'])
+                        max_val.val(response['fields']['max_val'])
+                        cond_tags.val(response['tags'])
                         switch (response['fields']['cond_type']) {
                             case "1":
                                 cond_type.val(1);
@@ -726,16 +733,6 @@ $(document).on('click',"#change_exist_condition",function (e){
                                 display_method.show();
                                 break;
                         }
-                        display_method.val(response['fields']['display_method'])
-                        priority_for_alert.val(response['fields']['priority'])
-                        interval_for_alert.val(response['fields']['alert_interval'])
-                        limit_val.val(response['fields']['limit_val'])
-                        min_val.val(response['fields']['min_val'])
-                        max_val.val(response['fields']['max_val'])
-                        cond_tags.val(response['tags'])
-
-
-
 
     {#                        $('#id_cond_type').on('change', function (){#}
     {##}

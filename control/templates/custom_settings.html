@@ -135,7 +135,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Добавление нового условия</h5>
+        <h5 class="modal-title add-or-change-modal" data-id-of-condition="" id="exampleModalLabel">Добавление нового условия</h5>
         <button type="button" class="close btn btn-outline-dark" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -652,8 +652,10 @@ $(document).on('click',"#add_new_condition",function (e){
         url : "{% url 'condition_create' %}",
         success: function (response) {
                 $('.new_condition_form').html(response);
-                $('#add_new_condition_modal').modal('show')
-
+                $('#add_new_condition_modal').modal('show');
+                var modal_title = $(".add-or-change-modal")
+                modal_title.text("Добавление нового условия")
+                modal_title.setAttribute("data-id-of-condition", "")
             },
         error : function(xhr,errmsg,err) {
         console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
@@ -674,13 +676,16 @@ $(document).on('click',"#change_exist_condition",function (e){
         action : "Change the exist condition",
         success: function (response) {
                 $('.new_condition_form').html(response);
-                $('#add_new_condition_modal').modal('show')
                 $.ajax({
                     type:'GET',
                     data: {cond_name:value},
                     action : "Change the exist condition",
                     url : "{% url 'get_information_about_condition_to_change_id' %}",
                     success: function (response) {
+                        $('#add_new_condition_modal').modal('show')
+                        var modal_title = $(".add-or-change-modal")
+                        modal_title.setAttribute("data-id-of-condition", response['pk'])
+                        modal_title.text("Изменение существующего условия")
                         var is_required = $("#id_is_required_condition");
                         var cond_type = $("#id_cond_type");
                         var min_val = $("#id_min_val");

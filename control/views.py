@@ -292,7 +292,8 @@ def condition_create(request):
         if cond_id:
             cond_id = int(cond_id)
             sc_condition = ScConditions.objects.get(cond_id=cond_id)
-            form = ScConditionsForm(request.POST, instance=sc_condition)
+            form = ScConditionsForm(data=request.POST, form_user_id=user_id, instance=sc_condition)
+            print(form.errors())
             ScConditionsResult.objects.filter(cond_id=cond_id).delete()
             ScConditionsTags.objects.filter(cond_id=cond_id).delete()
             user_conditions = ScConditions.objects.filter(user_id=user_id)

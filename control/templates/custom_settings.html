@@ -59,6 +59,7 @@
         </table>
     <div class="row justify-content-center gx-5">
         <button class="btn col-sm-5 btn-outline-dark gx-5" id="add_new_condition">Add a new condition</button>
+         <button class="btn col-sm-5 btn-outline-dark gx-5" id="change_exist_condition">Change the condition</button>
         <button disabled class="btn col-sm-5 btn-outline-dark del_exist_condition" >Delete selected condition</button>
     </div>
 
@@ -152,10 +153,6 @@
                         <span class="teleport-switch-control-description">Yes</span>
                       </label>
                   </div>
-{#            <div class="form-group is_required_condition">#}
-{#                <input class="form-check-input is_required_condition" type="checkbox" id="id_is_required_condition">#}
-{#                <label style="color: black" class="form-check-label" for="id_is_required_condition">Default switch checkbox input</label>#}
-{#            </div>#}
               {% endif %}
             <div class="form-group cond_name">
                 <label style="color: black">Name of your condition</label>
@@ -210,14 +207,6 @@
             </div>
             <button type="submit" class="btn btn-outline-dark">Submit</button>
             </form>
-{#            <form action="{% url 'condition_create' %}"#}
-{#                method="post">#}
-{#                {% csrf_token %}#}
-{#                <div class="new_condition_form">#}
-{##}
-{#                </div>#}
-{#                <button class="button btn btn-primary" type="submit">Create!</button>#}
-{#            </form>#}
       </div>
     </div>
   </div>
@@ -632,17 +621,17 @@
 <script>
 $(document).on("change","#id_cond_type", function(){
         var val = $(this).val();
-        if (val==1){
+        if (val===1){
             $('input#id_max_val').prop('disabled',true);
             $('input#id_min_val').prop('disabled',true);
             $('input#id_limit_val').prop('disabled',true);
         }
-        if (val==2 || val==3 || val==4 || val==5){
+        if (val===2 || val===3 || val===4 || val===5){
             $('input#id_max_val').prop('disabled',true);
             $('input#id_min_val').prop('disabled',true);
             $('input#id_limit_val').prop('disabled',false);
         }
-        if (val==6){
+        if (val===6){
             $('input#id_max_val').prop('disabled',false);
             $('input#id_min_val').prop('disabled',false);
             $('input#id_limit_val').prop('disabled',true);
@@ -674,7 +663,41 @@ $(document).on('click',"#add_new_condition",function (e){
 </script>
 
 
-        <!-- Delete exist condition -->
+    <!-- Button for open modal window for change exist conditions -->
+<script>
+$(document).on('click',"#change_exist_condition",function (e){
+    var value =($(".new_condition_table tr.selected td:first").html());
+    e.preventDefault();
+    $.ajax({
+        type:'GET',
+        url : "{% url 'condition_create' %}",
+        action : "Change the exist condition",
+        success: function (response) {
+                $('.new_condition_form').html(response);
+                $('#add_new_condition_modal').modal('show')
+                $.ajax({
+                    type:'GET',
+                    data: {cond_name:value},
+                    action : "Change the exist condition",
+                    url : "{% url 'get_information_about_condition_to_change_id' %}",
+                    success: function (response) {
+                        console.log(response)
+
+                },
+                    error : function(xhr,errmsg,err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+                });
+            },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
+});
+</script>
+
+
+        <!-- Delete exist condition button -->
 <script>
     $(document).on('click',".del_exist_condition",function (e){
     var value =($(".new_condition_table tr.selected td:first").html());

@@ -116,6 +116,16 @@ def get_more_alert_history_info(request):
         return HttpResponse(json.dumps(result, default=str), content_type='application/json')
 
 
+def get_information_about_condition_to_change_id(request):
+    if request.method == 'GET' and request.is_ajax():
+        cond_name = request.GET.get('cond_name')
+        user = request.user.username
+        user_id = ScUsers.objects.get(name=user)
+        sc_conditions_object_record = ScConditions.objects.get(user_id=user_id, comment=cond_name)
+        data = serialize("json", sc_conditions_object_record)
+        return HttpResponse(data, content_type='application/json')
+
+
 def upload_more_information_to_the_end_of_history_table(request):
     if request.method == 'GET' and request.is_ajax():
         user = request.user.username
@@ -399,7 +409,6 @@ def condition_create(request):
             formula = request.POST.get('formula')
             formula = formula.replace('0)', '0sec)')
             vars_formula = get_vars_formula(formula)
-            print(vars_formula)
             tags_in_condition = re.findall(r'\w+', request.POST['tags'])
             for new_var in vars_formula:
                 obj, created = ScPaths.objects.update_or_create(

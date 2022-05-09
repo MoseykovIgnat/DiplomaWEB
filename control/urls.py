@@ -28,6 +28,7 @@ urlpatterns = [
     path(PREFIX + 'change_condition_display_method/', views.change_condition_display_method, name='change_condition_display_method'),
     path(PREFIX + 'get_new_alert_sound/', views.get_new_alert_sound, name='get_new_alert_sound'),
     path(PREFIX + 'get_more_alert_history_info/', views.get_more_alert_history_info, name='get_more_alert_history_info'),
+    path(PREFIX + 'get_information_about_condition_to_change_id/', views.get_more_alert_history_info, name='get_information_about_condition_to_change_id'),
     path(PREFIX + 'upload_more_information_to_the_end_of_history_table/', views.upload_more_information_to_the_end_of_history_table, name='upload_more_information_to_the_end_of_history_table'),
 
 

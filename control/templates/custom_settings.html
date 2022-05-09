@@ -693,80 +693,53 @@ $(document).on('click',"#change_exist_condition",function (e){
                         response['fields']['comment'] === 1 ? is_required.prop('checked', true) : is_required.prop('checked', false);
                         $("#id_cond_name").val(response['fields']['comment']);
                         $("#id_formula").val(response['fields']['formula']);
-                        display_method.val(response['fields']['display_method'])
-                        priority_for_alert.val(response['fields']['priority'])
-                        interval_for_alert.val(response['fields']['alert_interval'])
-                        limit_val.val(response['fields']['limit_val'])
-                        min_val.val(response['fields']['min_val'])
-                        max_val.val(response['fields']['max_val'])
-                        cond_tags.val(response['tags'])
-                        switch (response['fields']['cond_type']) {
-                            case "1":
-                                cond_type.val(1);
-                                min_val.hide();
-                                max_val.hide();
-                                limit_val.hide();
-                                display_method.hide();
-                                break;
-                            case "2":
-                            case "3":
-                            case "4":
-                            case "5":
-                                cond_type.val(parseInt(response['fields']['formula']));
-                                limit_val.show();
-                                min_val.hide();
-                                max_val.hide();
-                                display_method.show();
-                                break;
-                            case "6":
-                                cond_type.val(6);
-                                min_val.show();
-                                max_val.show();
-                                limit_val.hide();
-                                display_method.show();
-                                break;
-                            case "7":
-                                cond_type.val(7);
-                                min_val.hide();
-                                max_val.hide();
-                                limit_val.hide();
-                                display_method.show();
-                                break;
+                        display_method.val(response['fields']['display_method']);
+                        if (response['fields']['cond_type'] === "1"){
+                            cond_type.val(1);
+                            min_val.hide();
+                            max_val.hide();
+                            limit_val.hide();
+                            display_method.hide();
+                        }
+                        else if (["2", "3", "4", "5"].includes(response['fields']['cond_type'])){
+                            cond_type.val(parseInt(response['fields']['cond_type']));
+                            limit_val.show();
+                            limit_val.val(response['fields']['limit_val']);
+                            min_val.hide();
+                            max_val.hide();
+                            display_method.show();
+                        }
+                        else if (response['fields']['cond_type'] === "6"){
+                            cond_type.val(6);
+                            min_val.show();
+                            max_val.show();
+                            min_val.val(response['fields']['min_val']);
+                            max_val.val(response['fields']['max_val']);
+                            limit_val.hide();
+                            display_method.show();
+                        }
+                        else if (response['fields']['cond_type'] === "7"){
+                            cond_type.val(7);
+                            min_val.hide();
+                            max_val.hide();
+                            limit_val.hide();
+                            display_method.show();
+                        }
+                        if (response['fields']['display_method'] === "Text+Siren"){
+                            $(".cond_priority_for_signal_alert").show();
+                            $(".cond_interval_for_signal_alert").show();
+                            $(".cond_tags").show();
+                            priority_for_alert.val(response['fields']['priority']);
+                            interval_for_alert.val(response['fields']['alert_interval']);
+                            cond_tags.val(response['tags']);
+                        }
+                        else {
+                            $(".cond_priority_for_signal_alert").hide();
+                            $(".cond_interval_for_signal_alert").hide();
+                            $(".cond_tags").hide();
                         }
 
-    {#                        $('#id_cond_type').on('change', function (){#}
-    {##}
-    {#    if (this.value === '2' || this.value === '3' || this.value === '4' || this.value === '5'){#}
-    {#        $(".cond_limit_val").show();#}
-    {#        $(".cond_min_val").hide();#}
-    {#        $(".cond_max_val").hide();#}
-    {#        $(".cond_display_method").show();#}
-    {#    }#}
-    {#    if (this.value === '6'){#}
-    {#        $(".cond_min_val").show();#}
-    {#        $(".cond_max_val").show();#}
-    {#        $(".cond_limit_val").hide();#}
-    {#        $(".cond_display_method").show();#}
-    {#    }#}
-    {#    if (this.value === '1'){#}
-    {#        $(".cond_min_val").hide();#}
-    {#        $(".cond_max_val").hide();#}
-    {#        $(".cond_limit_val").hide();#}
-    {#        $(".cond_display_method").hide();#}
-    {#    }#}
-    {#    if (this.value === '7'){#}
-    {#        $(".cond_min_val").hide();#}
-    {#        $(".cond_max_val").hide();#}
-    {#        $(".cond_limit_val").hide();#}
-    {#        $(".cond_display_method").show();#}
-    {#    }#}
-                    {#    <option selected value="1">Digit result of formula</option>#}
-                    {#<option value="7">Bool result</option>#}
-                    {#<option value="2"><</option>#}
-                    {#<option value="3">></option>#}
-                    {#<option value="4">>=</option>#}
-                    {#<option value="5"><=</option>#}
-                    {#<option value="6">Result in interval</option>#}
+
                         console.log(response)
 
                 },

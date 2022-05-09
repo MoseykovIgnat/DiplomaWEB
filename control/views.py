@@ -280,6 +280,63 @@ def is_SAM_working(request):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 
+def condition_create(request):
+    username = request.user.username
+    user_id = ScUsers.objects.get(name=username)
+    if request.method == 'POST':
+        if '0)' in request.POST['formula']:
+            request.POST = request.POST.copy()
+            request.POST['formula'] = request.POST['formula'].replace('0)', '0sec)')
+        cond_id = request.POST["cond_pk"]
+        if cond_id:
+            cond_id = int(cond_id)
+            sc_condition = ScConditions.objects.get(id=cond_id)
+            form = ScConditionsForm(request.POST, instance=sc_condition)
+            ScConditionsResult.objects.filter(cond_id=cond_id).delete()
+            ScConditionsTags.objects.filter(cond_id=cond_id).delete()
+            user_conditions = ScConditions.objects.filter(user_id=user_id)
+            vars_formula = get_vars_formula(sc_condition.formula)
+            for var_formula in vars_formula:
+                counter = 0
+                for formula_check in user_conditions:
+                    if var_formula in formula_check.formula:
+                        counter += 1
+                if counter == 1:
+                    ScPaths.objects.filter(path=var_formula).delete()
+        else:
+            form = ScConditionsForm(user_id, request.POST)
+        if form.is_valid():
+            formula = request.POST.get('formula')
+            formula = formula.replace('0)', '0sec)')
+            vars_formula = get_vars_formula(formula)
+            tags_in_condition = re.findall(r'\w+', request.POST['tags'])
+            for new_var in vars_formula:
+                obj, created = ScPaths.objects.update_or_create(
+                    user_id=user_id.id,
+                    path=new_var, interval_time=5, status='Online',
+                    defaults={}
+                )
+            instance = form.save(commit=False)
+            instance.user_id = user_id.id
+            instance.isalert = 0
+            instance.time_create_or_alert = datetime.now(tz=timezone.utc)
+            instance.is_required_condition = request.POST['is_required_condition']
+            instance.save()
+            for tag in tags_in_condition:
+                obj, created = ScConditionsTags.objects.update_or_create(
+                    cond_id=instance.cond_id,
+                    tag=tag,
+                    defaults={}
+                )
+            return redirect('custom_settings')
+    else:
+        form = ScConditionsForm(user_id)
+    return render(request,
+                  'custom_setting_condition_form.html',
+                  context={'form': form}
+                  )
+
+
 def del_exist_condition(request):
     cond_name = request.GET.get('cond_name')
     user = request.user.username
@@ -400,46 +457,6 @@ def custom_settings(request):
 def graph_editor(request):
     return render(request,
                   'graph_editor.html')
-
-
-def condition_create(request):
-    username = request.user.username
-    user_id = ScUsers.objects.get(name=username)
-    if request.method == 'POST':
-        if '0)' in request.POST['formula']:
-            request.POST = request.POST.copy()
-            request.POST['formula'] = request.POST['formula'].replace('0)', '0sec)')
-        form = ScConditionsForm(user_id, request.POST)
-        if form.is_valid():
-            formula = request.POST.get('formula')
-            formula = formula.replace('0)', '0sec)')
-            vars_formula = get_vars_formula(formula)
-            tags_in_condition = re.findall(r'\w+', request.POST['tags'])
-            for new_var in vars_formula:
-                obj, created = ScPaths.objects.update_or_create(
-                    user_id=user_id.id,
-                    path=new_var, interval_time=5, status='Online',
-                    defaults={}
-                )
-            instance = form.save(commit=False)
-            instance.user_id = user_id.id
-            instance.isalert = 0
-            instance.time_create_or_alert = datetime.now(tz=timezone.utc)
-            instance.is_required_condition = request.POST['is_required_condition']
-            instance.save()
-            for tag in tags_in_condition:
-                obj, created = ScConditionsTags.objects.update_or_create(
-                    cond_id=instance.cond_id,
-                    tag=tag,
-                    defaults={}
-                )
-            return redirect('custom_settings')
-    else:
-        form = ScConditionsForm(user_id)
-    return render(request,
-                  'custom_setting_condition_form.html',
-                  context={'form': form}
-                  )
 
 
 def create_post(request):

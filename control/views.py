@@ -290,7 +290,7 @@ def condition_create(request):
         cond_id = request.POST["cond_pk"]
         if cond_id:
             cond_id = int(cond_id)
-            sc_condition = ScConditions.objects.get(id=cond_id)
+            sc_condition = ScConditions.objects.get(cond_id=cond_id)
             form = ScConditionsForm(request.POST, instance=sc_condition)
             ScConditionsResult.objects.filter(cond_id=cond_id).delete()
             ScConditionsTags.objects.filter(cond_id=cond_id).delete()

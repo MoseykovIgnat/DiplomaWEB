@@ -303,7 +303,9 @@ def condition_create(request):
                 for formula_check in user_conditions:
                     if var_formula in formula_check.formula:
                         counter += 1
+                        print(f"переменная {var_formula}, счетчик {counter}")
                 if counter == 1:
+                    print(f"Удаляю {var_formula}")
                     ScPaths.objects.filter(path=var_formula).delete()
         else:
             form = ScConditionsForm(user_id, request.POST)

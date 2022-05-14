@@ -558,7 +558,13 @@
             action: 'post'
         },
         success: function (response) {
-            location.reload();
+            if (response['stat'] === "ok") {
+                location.reload();
+            }
+            else{
+                $('.new_condition_form').html(response);
+                $('#add_new_condition_modal').modal('show');
+            }
                     {#$('#post_new_var_form').trigger('reset');#}
                     {#$('.paths_data').remove();#}
                     {#for(i=0;i<response.length;i++) {#}

@@ -280,6 +280,7 @@ def is_SAM_working(request):
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 
+@login_required()
 def condition_create(request):
     username = request.user.username
     user_id = ScUsers.objects.get(name=username)
@@ -306,39 +307,51 @@ def condition_create(request):
                             counter += 1
                     if counter == 1:
                         ScPaths.objects.filter(path=var_formula).delete()
+                create_new_condition(request, user_id, form)
+                data = {"stat": "ok", "action": "Добавление нового условия"}
+                return HttpResponse(json.dumps(data), mimetype="application/json")
         else:
             form = ScConditionsForm(user_id, request.POST)
         if form.is_valid():
             print("Форма Валидная")
-            formula = request.POST.get('formula')
-            formula = formula.replace('0)', '0sec)')
-            vars_formula = get_vars_formula(formula)
-            tags_in_condition = re.findall(r'\w+', request.POST['tags'])
-            for new_var in vars_formula:
-                obj, created = ScPaths.objects.update_or_create(
-                    user_id=user_id.id,
-                    path=new_var, interval_time=5, status='Online',
-                    defaults={}
-                )
-            instance = form.save(commit=False)
-            instance.user_id = user_id.id
-            instance.isalert = 0
-            instance.time_create_or_alert = datetime.now(tz=timezone.utc)
-            instance.is_required_condition = request.POST['is_required_condition']
-            instance.save()
-            for tag in tags_in_condition:
-                obj, created = ScConditionsTags.objects.update_or_create(
-                    cond_id=instance.cond_id,
-                    tag=tag,
-                    defaults={}
-                )
-            return redirect('custom_settings')
+            create_new_condition(request, user_id, form)
+            data = {"stat": "ok", "action": "Добавление нового условия"}
+            return HttpResponse(json.dumps(data), mimetype="application/json")
+        else:
+            data = {"stat": "error"}
+            return render(request, 'custom_setting_condition_form.html', {'form': form})
+
     else:
         form = ScConditionsForm(user_id)
-    return render(request,
-                  'custom_setting_condition_form.html',
-                  context={'form': form}
-                  )
+        return render(request,
+                      'custom_setting_condition_form.html',
+                      context={'form': form}
+                      )
+
+
+def create_new_condition(request, user_id, form):
+    formula = request.POST.get('formula')
+    formula = formula.replace('0)', '0sec)')
+    vars_formula = get_vars_formula(formula)
+    tags_in_condition = re.findall(r'\w+', request.POST['tags'])
+    for new_var in vars_formula:
+        obj, created = ScPaths.objects.update_or_create(
+            user_id=user_id.id,
+            path=new_var, interval_time=5, status='Online',
+            defaults={}
+        )
+    instance = form.save(commit=False)
+    instance.user_id = user_id.id
+    instance.isalert = 0
+    instance.time_create_or_alert = datetime.now(tz=timezone.utc)
+    instance.is_required_condition = request.POST['is_required_condition']
+    instance.save()
+    for tag in tags_in_condition:
+        obj, created = ScConditionsTags.objects.update_or_create(
+            cond_id=instance.cond_id,
+            tag=tag,
+            defaults={}
+        )
 
 
 def del_exist_condition(request):

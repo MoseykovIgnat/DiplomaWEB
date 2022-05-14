@@ -36,8 +36,8 @@ class ScGraphInfo(forms.ModelForm):
 
 
 def start_with(value):
-  if value[0]!='A':
-    raise forms.ValidationError("Post Code should start with A")
+    if value[0] != 'A':
+        raise forms.ValidationError("Post Code should start with A")
 
 
 class ScConditionsForm(forms.ModelForm):
@@ -70,9 +70,6 @@ class ScUsersForm(forms.ModelForm):
     class Meta:
         model = ScUsers
         fields = ('name', 'status')
-
-
-
 
 # class ScPathsForm(forms.ModelForm):
 #     path = forms.CharField(label='path', max_length=40)

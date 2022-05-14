@@ -309,14 +309,14 @@ def condition_create(request):
                         ScPaths.objects.filter(path=var_formula).delete()
                 create_new_condition(request, user_id, form)
                 data = {"stat": "ok", "action": "Добавление нового условия"}
-                return HttpResponse(json.dumps(data), mimetype="application/json")
+                return HttpResponse(json.dumps(data), content_type="application/json")
         else:
             form = ScConditionsForm(user_id, request.POST)
         if form.is_valid():
             print("Форма Валидная")
             create_new_condition(request, user_id, form)
             data = {"stat": "ok", "action": "Добавление нового условия"}
-            return HttpResponse(json.dumps(data), mimetype="application/json")
+            return HttpResponse(json.dumps(data), content_type="application/json")
         else:
             data = {"stat": "error"}
             return render(request, 'custom_setting_condition_form.html', {'form': form})

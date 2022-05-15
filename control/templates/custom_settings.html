@@ -571,7 +571,7 @@
                 location.reload();
             }
             else{
-                $('#condition_create').html(response);
+                alert(response["errors"]);
                 $('#add_new_condition_modal').modal('show');
             }
                     {#$('#post_new_var_form').trigger('reset');#}

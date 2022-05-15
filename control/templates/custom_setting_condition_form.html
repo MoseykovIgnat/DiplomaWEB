@@ -1,15 +1,14 @@
-{#<form action="{% url 'condition_create' %}" method="post">#}
-{#{% load crispy_forms_tags %}#}
-{##}
-{#{% csrf_token %}#}
-{# <div class="new_condition_form ">#}
-{#    {{ form.non_field_errors}}#}
-{#     {{ form.non_field_errors}}#}
-{#     {{ form }}#}
-{#     <div class="col-6">#}
-{#     </div>#}
-{#</div>#}
-{#</form>#}
-{##}
-{#{% block javascript %}#}
-{#{% endblock javascript %}#}
+<form action="{% url 'condition_create' %}" method="post">
+{% load crispy_forms_tags %}
+
+{% csrf_token %}
+ <div class="new_condition_form ">
+{{ form|crispy }}
+     <div class="col-6">
+         <h1>HELLO WORLD</h1>
+      </div>
+</div>
+</form>
+
+{% block javascript %}
+{% endblock javascript %}

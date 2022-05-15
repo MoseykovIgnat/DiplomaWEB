@@ -319,7 +319,7 @@ def condition_create(request):
             return HttpResponse(json.dumps(data), content_type="application/json")
         else:
             data = {"stat": "error"}
-            return render(request, 'custom_setting_condition_form.html', {'form': form})
+            return render(request, 'custom_settings.html', {'form': form})
 
     else:
         form = ScConditionsForm(user_id)

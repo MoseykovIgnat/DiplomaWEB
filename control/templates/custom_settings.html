@@ -142,15 +142,7 @@
       </div>
       <div class="modal-body" >
           <form method="POST" id="condition_create">
-          {% if form.errors %}
-      {% for field in form %}
 
-           {% for error in field.errors %}
-                {{field.label}}: {{ error|escape }}
-           {% endfor %}
-
-      {% endfor %}
-{% endif %}
               {% load control_extras %}
               {% if request.user|has_group:"Expert" %}
                   <div class="form-group is_required">
@@ -571,7 +563,9 @@
                 location.reload();
             }
             else{
-                alert(response["errors"]);
+                for (i=0; i<response["errors"].length; i++){
+                    alert(response["errors"][i]);
+                    }
                 $('#add_new_condition_modal').modal('show');
             }
                     {#$('#post_new_var_form').trigger('reset');#}

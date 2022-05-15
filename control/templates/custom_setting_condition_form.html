@@ -3,7 +3,7 @@
 
 {% csrf_token %}
  <div class="new_condition_form ">
-{{ form|crispy }}
+{{ form.as_table|crispy }}
      <div class="col-6">
       </div>
 </div>

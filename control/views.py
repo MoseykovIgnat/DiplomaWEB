@@ -319,6 +319,7 @@ def condition_create(request):
             return HttpResponse(json.dumps(data), content_type="application/json")
         else:
             data = {"errors": form.errors}
+            print([i for i in form.errors])
             return HttpResponse(json.dumps(data), content_type="application/json")
 
     else:
